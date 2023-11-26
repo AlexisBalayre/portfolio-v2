@@ -1,6 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AcademicCapIcon, Bars3Icon, BriefcaseIcon, CodeBracketIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  AcademicCapIcon,
+  Bars3Icon,
+  BriefcaseIcon,
+  CodeBracketIcon,
+  CpuChipIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
@@ -31,6 +38,11 @@ export const menuLinks: HeaderMenuLink[] = [
     section: "skills",
     icon: <CodeBracketIcon className="h-4 w-4" />,
   },
+  {
+    label: "Ask Me Anything - Chatbot",
+    section: "chatbot",
+    icon: <CpuChipIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {
@@ -39,6 +51,7 @@ export const HeaderMenuLinks = () => {
     education: false,
     experiences: false,
     skills: false,
+    chatbot: false,
   });
 
   const checkVisibility = () => {
@@ -56,11 +69,18 @@ export const HeaderMenuLinks = () => {
     });
 
     // Mettre à jour l'état isActive
-    const newIsActive: { aboutMe: boolean; education: boolean; experiences: boolean; skills: boolean } = {
+    const newIsActive: {
+      aboutMe: boolean;
+      education: boolean;
+      experiences: boolean;
+      skills: boolean;
+      chatbot: boolean;
+    } = {
       aboutMe: closestSection === "aboutMe",
       education: closestSection === "education",
       experiences: closestSection === "experiences",
       skills: closestSection === "skills",
+      chatbot: closestSection === "chatbot",
     };
 
     setIsActive(newIsActive);

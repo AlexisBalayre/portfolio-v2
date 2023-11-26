@@ -1,0 +1,106 @@
+[
+    {
+        "question": "What is his favourite colour?",
+        "answer": "His favourite colour is blue."
+    },
+    {
+        "question": "What are his hobbies?",
+        "answer": "His hobbies include travelling, running, skiing and climbing."
+    },
+    {
+        "question": "How old is he?",
+        "answer": "Alexis is 22 years old."
+    },
+    {
+        "question": "Where did he go to school?",
+        "answer": "Alexis is in his final year at ISEP, a French engineering school. He is currently doing an MSc at Cranfield University until September 2024."
+    },
+    {
+        "question": "When will Alexis graduate?",
+        "answer": "Alexis will graduate in September 2024."
+    },
+    {
+        "question": "Where does he live?",
+        "answer": "He lives in Paris, France. However, he is currently studying in the UK."
+    },
+    {
+        "question": "What is his favorite food?",
+        "answer": "He loves eating burgundian beef."
+    },
+    {
+        "question": "What is his favourite dessert?",
+        "answer": "He loves eating lemon meringue pie."
+    },
+    {
+        "question": "What languages does he speak?",
+        "answer": "He is fluent in French and English and has a basic knowledge of Spanish."
+    },
+    {
+        "question": "What is his profession?",
+        "answer": "He wants to become a data engineer after his studies. However, he is currently a blockchain developer."
+    },
+    {
+        "question": "What kind of music does he like?",
+        "answer": "He loves all kinds of music, from classical to EDM."
+    },
+    {
+        "question": "Has he written any books?",
+        "answer": "No, Alexis has never written a book."
+    },
+    {
+        "question": "What sports does he play?",
+        "answer": "He runs, climbs, and do a daily home workout."
+    },
+    {
+        "question": "Does he have any pets?",
+        "answer": "No, he doesn&#39;t have any pets."
+    },
+    {
+        "question": "What is his favourite movie?",
+        "answer": "His favourite movie is The Blues Brothers."
+    },
+    {
+        "question": "What are his specialisations?",
+        "answer": "He is a specialist in Data Engineering, Data Intelligence, and Blockchain Development."
+    },
+    {
+        "question": "What are its successes?",
+        "answer": "He wont several hackathons:<br/>Chainlink Spring 2022 Hackathon - Winner of Chainlink Top Quality Projects<br/>HackMoney 2022 - Winner of Polygon Best App & Superfluid Best Use With Another Partner"
+    },
+    {
+        "question": "What is he doing now?",
+        "answer": "He is currently studying at Cranfield University."
+    },
+    {
+        "question": "What did he studied?",
+        "answer": "At ISEP, he studied Data Intelligence & Data Science. <br/>At Cranfield University, he is studying Data Engineering, Machine Learning, Artificial Intelligence & Cloud Computing."
+    },
+    {
+        "question": "What is his dream?",
+        "answer": "He wants to create a startup that will become a french unicorn."
+    },
+    {
+        "question": "What is his favourite book?",
+        "answer": "His favourite book is The truth about the Harry Quebert affair."
+    }, 
+    {
+        "question": "What is his name?",
+        "answer": "His name is Alexis."
+    },
+    {
+        "question": "What is his surname?",
+        "answer": "His surname is Balayre."
+    },
+    {
+        "question": "What is his favourite animal?",
+        "answer": "His favourite animal is the dog."
+    },
+    {
+        "question": "Where was he born?",
+        "answer": "He was born in France."
+    },
+    {
+        "question": "What is he doing at Cranfield University in UK?",
+        "answer": "He is doing an MSc: <a class='underline text-primary' href='https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics' target='_blank'>Computational Intelligence for Data Analytics option - MSc in Computational and Software Techniques in Engineering</a>"
+    }
+]

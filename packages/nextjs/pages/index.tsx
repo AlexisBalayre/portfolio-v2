@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { NextPage } from "next";
+import Chatbot from "~~/components/Chatbot";
 import { MetaHeader } from "~~/components/MetaHeader";
 import Skills from "~~/components/Skills";
 import Timeline from "~~/components/Timeline";
@@ -52,8 +53,9 @@ const Home: NextPage = () => {
             <div className="order-2 md:order-1 mx-auto pr-5 pl-5">
               <div className="md:mt-20"></div>
               <h2
-                className={`transition-colors duration-500 text-4xl font-bold mb-3 text-center md:text-left ${isActive ? "" : "text-gray-600"
-                  }`}
+                className={`transition-colors duration-500 text-4xl font-bold mb-3 text-center md:text-left ${
+                  isActive ? "" : "text-gray-600"
+                }`}
               >
                 Who am I?
               </h2>
@@ -112,11 +114,18 @@ const Home: NextPage = () => {
           </div>
 
           {/* Skills Dashboard */}
-          <div className="md:py-12 mx-auto container mb-10" id="skills">
+          <div className="md:py-12 mx-auto container" id="skills">
             <div className="md:mb-20"></div>
             <h2 className="text-4xl font-bold mb-10 md:mb-20 text-center md:text-left">Skills</h2>
             <Skills items={tech} />
           </div>
+        </div>
+
+        {/* Chatbot */}
+        <div className="md:py-12 mx-auto container mb-10 pr-5 pl-5 mt-10 md:mt-0" id="chatbot">
+          <div className="md:mb-20"></div>
+          <h2 className="text-4xl font-bold mb-10 md:mb-20 text-center md:text-left">Ask Me Anything</h2>
+          <Chatbot />
         </div>
       </div>
     </>
