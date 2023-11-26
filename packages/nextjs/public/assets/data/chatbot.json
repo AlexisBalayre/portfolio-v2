@@ -102,5 +102,57 @@
     {
         "question": "What is he doing at Cranfield University in UK?",
         "answer": "He is doing an MSc: <a class='underline text-primary' href='https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics' target='_blank'>Computational Intelligence for Data Analytics option - MSc in Computational and Software Techniques in Engineering</a>"
+    },
+    {
+        "question": "He is a student?",
+        "answer": "Yes, he is a student. He is currently studying at Cranfield University."
+    },
+    {
+        "question": "Who are you?",
+        "answer": "I am Satoshi, the personal assistant of Alexis Balayre."
+    }, 
+    {
+        "question": "Who is your creator|master?",
+        "answer": "My creator is Alexis Balayre."
+    },
+    {
+        "question": "Who is Alexis Balayre?",
+        "answer": "Alexis Balayre is a French degital engineering student at ISEP and Cranfield University."
+    },
+    {
+        "question": "Who is Satoshi?",
+        "answer": "Satoshi is the personal assistant of Alexis Balayre."
+    },
+    {
+        "question": "Who is Satoshi Nakamoto?",
+        "answer": "Satoshi Nakamoto is the pseudonym of the creator of Bitcoin."
+    }, 
+    {
+        "question": "Who is the creator of Bitcoin?",
+        "answer": "The creator of Bitcoin is Satoshi Nakamoto."
+    },
+    {
+        "question": "Why do you call yourself that (satoshi)?",
+        "answer": "I call myself Satoshi in reference to Satoshi Nakamoto, the creator of Bitcoin."
+    },
+    {
+        "question": "What can you do?",
+        "answer": "I can answer your questions about Alexis Balayre."
+    },
+    {
+        "question": "What is his linkedin?",
+        "answer": "Here is the link to Alexis&#39;s linkedin profile: <a class='underline text-primary' href='https://www.linkedin.com/in/alexis-balayre/' target='_blank'>https://www.linkedin.com/in/alexis-balayre/</a>"
+    },
+    {
+        "question": "What is his github?",
+        "answer": "Here is the link to Alexis&#39;s github profile: <a class='underline text-primary' href='https://github.com/AlexisBalayre' target='_blank'>https://github.com/AlexisBalayre</a>"
+    },
+    {
+        "question": "What is his email?",
+        "answer": "Here is the link to Alexis&#39;s email: <a class='underline text-primary' href='mailto:alexis@balayre.com' target='_blank'>alexis@balayre.com</a>"
+    }, 
+    {
+        "question": "What is his phone number?",
+        "answer": "Here is the link to Alexis&#39;s phone number: <a class='underline text-primary' href='tel:+33695831470' target='_blank'>+33 6 95 83 14 70</a>"
     }
 ]
