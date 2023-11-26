@@ -1,0 +1,20 @@
+[
+  {
+    "logo": "garage.png",
+    "title": "Vice President of the <a class=\"font-bold\">Blockchain Lab</a> at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://garageisep.com/\" target=\"_blank\">Garage ISEP</a>",
+    "description": "Garage ISEP is the student association of ISEP dedicated to technology (Blockchain, Artificial Intelligence, ...). Organization of workshops and conferences to learn and master Blockchain technologies.",
+    "period": "Sept. 2022 - Sept. 2023"
+  },
+  {
+    "logo": "cs.png",
+    "title": "Blockchain Developer at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://coinshares.com/\" target=\"_blank\">CoinShares</a>",
+    "description": "CoinShares is Europe&#39;s largest and oldest crypto asset investment company, managing billions of dollars in assets. Discovery of Decentralized Finance within the DeFi team and realization of missions to build a decentralized asset management tool.",
+    "period": "Sept. 2022 - Jan. 2023"
+  },
+  {
+    "logo": "sleepn.png",
+    "title": "Blockchain Developer at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://github.com/SleepnClub/Sleepn-Contracts\" target=\"_blank\">Sleepn</a>",
+    "description": "Sleepn is a decentralized sleep tracking application that allows you to earn money by sleeping. Sleepn won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://showcase.ethglobal.com/hackmoney2022/sleepn-27hyu\" target=\"_blank\">2022 ETHGlobal HackMoney hackathon</a> : \"<a class=\"text-lg font-bold\">Polygon — Best App</a>\" and \"<a class=\"text-lg font-bold\">Superfluid — Best Use With Another Partner</a>\".",
+    "period": "May 2022 - Oct. 2023"
+  }
+]

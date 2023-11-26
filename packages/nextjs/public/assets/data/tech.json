@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Programming Languages",
+    "skills": [
+      {
+        "name": "JavaScript",
+        "percentage": 100
+      },
+      {
+        "name": "Solidity",
+        "percentage": 100
+      },
+      {
+        "name": "Python",
+        "percentage": 90
+      },
+      {
+        "name": "TypeScript",
+        "percentage": 90
+      },
+      {
+        "name": "Java",
+        "percentage": 70
+      },
+      {
+        "name": "Rust",
+        "percentage": 50
+      }
+    ]
+  },
+  {
+    "name": "Frontend",
+    "skills": [
+      {
+        "name": "ReactJS ",
+        "percentage": 80
+      },
+      {
+        "name": "React Native",
+        "percentage": 80
+      },
+      {
+        "name": "TailwindCSS",
+        "percentage": 80
+      },
+      {
+        "name": "VueJS (Framework Nuxt)",
+        "percentage": 75
+      },
+      {
+        "name": "HTML / CSS",
+        "percentage": 70
+      }
+    ]
+  },
+  {
+    "name": "Backend",
+    "skills": [
+      {
+        "name": "NodeJS (Framework NestJS)",
+        "percentage": 90
+      }
+    ]
+  },
+  {
+    "name": "Blockchain",
+    "skills": [
+      {
+        "name": "Hardhat",
+        "percentage": 100
+      },
+      {
+        "name": "Foundry",
+        "percentage": 100
+      },
+      {
+        "name": "Remix",
+        "percentage": 100
+      },
+      {
+        "name": "Chainlink",
+        "percentage": 100
+      },
+      {
+        "name": "Transaction tracking (Etherscan, Polygonscan, ...)",
+        "percentage": 100
+      },
+      {
+        "name": "The Graph",
+        "percentage": 90
+      },
+      {
+        "name": "Cosmos SDK",
+        "percentage": 80
+      }
+    ]
+  },
+  {
+    "name": "Databases",
+    "skills": [
+      {
+        "name": "MongoDB",
+        "percentage": 100
+      },
+      {
+        "name": "MySQL",
+        "percentage": 100
+      },
+      {
+        "name": "PostgreSQL",
+        "percentage": 90
+      },
+      {
+        "name": "Cassandra",
+        "percentage": 90
+      },
+      {
+        "name": "InfluxDB",
+        "percentage": 80
+      },
+      {
+        "name": "Neo4j",
+        "percentage": 70
+      }
+    ]
+  },
+  {
+    "name": "Data Engineering Tools",
+    "skills": [
+      {
+        "name": "Apache Airflow",
+        "percentage": 90
+      },
+      {
+        "name": "Elasticsearch",
+        "percentage": 90
+      },
+      {
+        "name": "Kibana",
+        "percentage": 90
+      },
+      {
+        "name": "Apache Spark",
+        "percentage": 80
+      },
+      {
+        "name": "Apache Kafka",
+        "percentage": 70
+      }
+    ]
+  },
+  {
+    "name": "Hosting Services",
+    "skills": [
+      {
+        "name": "Digital Ocean",
+        "percentage": 90
+      },
+      {
+        "name": "Cloudflare",
+        "percentage": 90
+      },
+      {
+        "name": "AWS",
+        "percentage": 70
+      }
+    ]
+  },
+  {
+    "name": "Server Management",
+    "skills": [
+      {
+        "name": "Docker",
+        "percentage": 90
+      }
+    ]
+  }
+]

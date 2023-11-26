@@ -1,48 +1,97 @@
-import React, { useCallback, useRef, useState } from "react";
-import Image from "next/image";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import { AcademicCapIcon, Bars3Icon, BriefcaseIcon, CodeBracketIcon, UserIcon } from "@heroicons/react/24/outline";
+import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
 interface HeaderMenuLink {
   label: string;
-  href: string;
+  section: string;
   icon?: React.ReactNode;
 }
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Home",
-    href: "/",
+    label: "About Me",
+    section: "aboutMe",
+    icon: <UserIcon className="h-4 w-4" />,
   },
   {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
+    label: "Education",
+    section: "education",
+    icon: <AcademicCapIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Experiences",
+    section: "experiences",
+    icon: <BriefcaseIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Skills",
+    section: "skills",
+    icon: <CodeBracketIcon className="h-4 w-4" />,
   },
 ];
 
 export const HeaderMenuLinks = () => {
-  const router = useRouter();
+  const [isActive, setIsActive] = useState({
+    aboutMe: true,
+    education: false,
+    experiences: false,
+    skills: false,
+  });
+
+  const checkVisibility = () => {
+    let closestSection: string | null = null;
+
+    Object.keys(isActive).forEach(section => {
+      const sectionEl = document.getElementById(section);
+      if (sectionEl) {
+        const rect = sectionEl.getBoundingClientRect();
+        // Si la section est visible à plus de 50%
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          closestSection = section;
+        }
+      }
+    });
+
+    // Mettre à jour l'état isActive
+    const newIsActive: { aboutMe: boolean; education: boolean; experiences: boolean; skills: boolean } = {
+      aboutMe: closestSection === "aboutMe",
+      education: closestSection === "education",
+      experiences: closestSection === "experiences",
+      skills: closestSection === "skills",
+    };
+
+    setIsActive(newIsActive);
+  };
+
+  // Ajouter l'écouteur d'événements pour le défilement
+  useEffect(() => {
+    window.addEventListener("scroll", checkVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", checkVisibility);
+    };
+  }, []);
 
   return (
     <>
-      {menuLinks.map(({ label, href, icon }) => {
-        const isActive = router.pathname === href;
+      {menuLinks.map(({ label, section, icon }) => {
         return (
-          <li key={href}>
-            <Link
-              href={href}
-              passHref
+          <li key={section}>
+            <a
+              onClick={() => {
+                document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+              }}
               className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+                isActive[section as keyof typeof isActive] ? "bg-primary shadow-md text-accent-content" : ""
+              }
+                hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
-            </Link>
+            </a>
           </li>
         );
       })}
@@ -62,7 +111,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
+    <div className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <label
@@ -87,21 +136,40 @@ export const Header = () => {
           )}
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
-          </div>
           <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-ETH</span>
-            <span className="text-xs">Ethereum dev stack</span>
+            <span className="font-bold leading-tight">Alexis Balayre</span>
+            <span className="text-xs">Data Engineer</span>
           </div>
         </Link>
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
         </ul>
       </div>
-      <div className="navbar-end flex-grow mr-4">
-        <RainbowKitCustomConnectButton />
-        <FaucetButton />
+      <div className="flex text-center pr-10">
+        <a
+          href="tel:+33695831470"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition flex text-neutral-content hover:text-primary-content pr-10"
+        >
+          <PhoneIcon className="w-6 h-6" />
+        </a>
+        <a
+          href="mailTo:alexis@balayre.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition flex text-neutral-content hover:text-primary-content pr-10"
+        >
+          <EnvelopeIcon className="w-6 h-6" />
+        </a>
+        <a
+          href="https://calendly.com/alexis-balayre"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition flex text-neutral-content hover:text-primary-content"
+        >
+          <CalendarIcon className="w-6 h-6" />
+        </a>
       </div>
     </div>
   );

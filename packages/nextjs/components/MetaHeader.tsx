@@ -1,52 +1,40 @@
 import React from "react";
 import Head from "next/head";
 
-type MetaHeaderProps = {
-  title?: string;
-  description?: string;
-  image?: string;
-  twitterCard?: string;
-  children?: React.ReactNode;
-};
-
-// Images must have an absolute path to work properly on Twitter.
-// We try to get it dynamically from Vercel, but we default to relative path.
-const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/` : "/";
-
-export const MetaHeader = ({
-  title = "Scaffold-ETH 2 App",
-  description = "Built with 🏗 Scaffold-ETH 2",
-  image = "thumbnail.jpg",
-  twitterCard = "summary_large_image",
-  children,
-}: MetaHeaderProps) => {
-  const imageUrl = baseUrl + image;
-
+export const MetaHeader = () => {
   return (
     <Head>
-      {title && (
-        <>
-          <title>{title}</title>
-          <meta property="og:title" content={title} />
-          <meta name="twitter:title" content={title} />
-        </>
-      )}
-      {description && (
-        <>
-          <meta name="description" content={description} />
-          <meta property="og:description" content={description} />
-          <meta name="twitter:description" content={description} />
-        </>
-      )}
-      {image && (
-        <>
-          <meta property="og:image" content={imageUrl} />
-          <meta name="twitter:image" content={imageUrl} />
-        </>
-      )}
-      {twitterCard && <meta name="twitter:card" content={twitterCard} />}
-      <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-      {children}
+      <title>Alexis Balayre - Data Engineer | Blockchain Developer</title>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1 viewport-fit=cover" />
+      <meta
+        name="description"
+        content="Data engineer and full stack Web and Blockchain developer specialised in Web3 (Smart Contracts, DApp)"
+      />
+      <meta name="format-detection" content="telephone=no" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Alexis Balayre - Data Engineer | Blockchain Developer" />
+      <meta property="og:title" content="Alexis Balayre - Data Engineer | Blockchain Developer" />
+      <meta
+        property="og:description"
+        content="Data engineer and full stack Web and Blockchain developer specialised in Web3 (Smart Contracts, DApp)"
+      />
+      <meta property="og:image" content="https://alexis.balayre.com/preview.png" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta
+        name="twitter:description"
+        content="TData engineer and full stack Web and Blockchain developer specialised in Web3 (Smart Contracts, DApp)"
+      />
+      <meta name="twitter:image" content="https://alexis.balayre.com/preview.png" />
+      <meta
+        name="keywords"
+        content="Alexis Balayre, Blockchain, Solidity, Web3, Developer, Full Stack, Ethereum, DApp, Smart Contracts, Data, Data Engineer"
+      />
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="manifest" href="/site.webmanifest" />
     </Head>
   );
 };
