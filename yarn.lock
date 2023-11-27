@@ -2833,6 +2833,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@netlify/edge-functions@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@netlify/edge-functions@npm:2.2.0"
+  checksum: 14c4d72c15737a8c4b49d5306040b8ccebba706b9e07b06de08970d3bbc838f978759bef9047d43337606b46c08af5bd0fb62a78883bd4ac0ee197e28b249080
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:13.1.6":
   version: 13.1.6
   resolution: "@next/env@npm:13.1.6"
@@ -16200,6 +16207,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "se-2@workspace:."
   dependencies:
+    "@netlify/edge-functions": ^2.2.0
     husky: ~8.0.3
     lint-staged: ~13.2.2
   languageName: unknown

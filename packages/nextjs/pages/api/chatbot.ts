@@ -1,5 +1,6 @@
+import type { Config } from "@netlify/edge-functions";
 import natural from "natural";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest } from "next";
 import chatbot from "~~/public/assets/data/chatbot.json";
 
 const tokenizer = new natural.WordTokenizer();
@@ -37,7 +38,7 @@ function processText(text: string) {
   return tokens?.map(stemmer.stem);
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: NextApiRequest) {
   const { prompt } = req.body;
   const promptProcessed = processText(prompt);
 
@@ -66,9 +67,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   });
 
-  res.status(200).json({ response: bestMatch });
+  return new Response(JSON.stringify({ response: bestMatch }), {
+    headers: {
+      "content-type": "application/json",
+    },
+    status: 200,
+  });
 }
 
-export const config = {
-  runtime: "edge",
+export const config: Config = {
+  path: "/api/chatbot",
 };
