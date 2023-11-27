@@ -33,12 +33,6 @@ const Chatbot = () => {
       return;
     }
 
-    // Lock the Chatbot button
-    const button = document.getElementById("chatbot_button");
-    if (button) {
-      button.setAttribute("disabled", "true");
-    }
-
     // Add the prompt to the conversation
     const newConversation = [...conversation];
     newConversation.push({
@@ -47,6 +41,18 @@ const Chatbot = () => {
     });
     setConversation(newConversation);
     setPrompt("");
+
+    // Lock the Chatbot button
+    const button = document.getElementById("chatbot_button");
+    if (button) {
+      button.setAttribute("disabled", "true");
+    }
+
+    // Lock the Chatbot input
+    const input = document.getElementById("chatbot_input");
+    if (input) {
+      input.setAttribute("disabled", "true");
+    }
 
     // Ask the chatbot for a response
     const response = await fetch("/api/chatbot", {
@@ -72,6 +78,11 @@ const Chatbot = () => {
     // Unlock the Chatbot button
     if (button) {
       button.removeAttribute("disabled");
+    }
+
+    // Unlock the Chatbot input
+    if (input) {
+      input.removeAttribute("disabled");
     }
   };
 
@@ -119,6 +130,7 @@ const Chatbot = () => {
             sendPrompt();
           }
         }}
+        id="chatbot_input"
       />
       <button onClick={sendPrompt} className="btn btn-primary w-full" id="chatbot_button">
         Send
