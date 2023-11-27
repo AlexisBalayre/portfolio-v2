@@ -104,6 +104,10 @@
         "answer": "He is doing an MSc: <a class='underline text-primary' href='https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics' target='_blank'>Computational Intelligence for Data Analytics option - MSc in Computational and Software Techniques in Engineering</a>"
     },
     {
+        "question": "What is he studying at cranfield university?",
+        "answer": "He is doing an MSc: <a class='underline text-primary' href='https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics' target='_blank'>Computational Intelligence for Data Analytics option - MSc in Computational and Software Techniques in Engineering</a>"
+    },
+    {
         "question": "He is a student?",
         "answer": "Yes, he is a student. He is currently studying at Cranfield University."
     },
@@ -154,5 +158,37 @@
     {
         "question": "What is his phone number?",
         "answer": "Here is the link to Alexis&#39;s phone number: <a class='underline text-primary' href='tel:+33695831470' target='_blank'>+33 6 95 83 14 70</a>"
+    },
+    {
+        "question": "Where is he?",
+        "answer": "He is currently in the UK."
+    },
+    {
+        "answer": "Is-is looking for a job?",
+        "question": "Yes, he is looking for a job as a Data Engineer, starting in September 2024."
+    },
+    {
+        "answer": "Which subjects does he like?",
+        "question": "He loves decentralised protocols, Blockchain, Data Engineering and Artificial Intelligence."
+    },
+    {
+        "question": "hello",
+        "answer": "Hi, how can I help you?"
+    },
+    {
+        "question": "Give me a random fact about Alexis Balayre",
+        "answer": "Alexis has an eye for detail and likes everything to be perfect."
+    },
+    {
+        "question": "Give me an example of question",
+        "answer": "What are his specialisations?"
+    },
+    {
+        "question": "What is he currently doing?",
+        "answer": "He is probably coding or learning something new."
+    },
+    {
+        "question": "what are his 5 main qualities?",
+        "answer": "Alexis is resourceful, ambitious, determined, helpful and smiling."
     }
 ]

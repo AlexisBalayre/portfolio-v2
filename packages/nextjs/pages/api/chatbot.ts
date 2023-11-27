@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import chatbot from "~~/public/assets/data/chatbot.json";
 
 const tokenizer = new natural.WordTokenizer();
-const stemmer = natural.LancasterStemmer;
+const stemmer = natural.PorterStemmer;
 const analyser = new natural.SentimentAnalyzer("English", stemmer, "afinn");
 
 // Fonction pour le traitement du texte
@@ -56,9 +56,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     const promptSentiment = analyser.getSentiment(promptProcessed as string[]);
     const questionSentiment = analyser.getSentiment(questionProcessed as string[]);
     const isSamePolarity =
-      (promptSentiment >= 0 && questionSentiment >= 0) || (promptSentiment < 0 && questionSentiment < 0);
+      (promptSentiment >= 0 && questionSentiment >= 0) ||
+      (promptSentiment < 0 && questionSentiment < 0) ||
+      Math.abs(promptSentiment - questionSentiment) < 0.5;
 
-    if (score > maxScore && score > 0.8 && isSamePolarity) {
+    if (score > maxScore && score > 0.85 && isSamePolarity) {
       maxScore = score;
       bestMatch = pair.answer;
     }
