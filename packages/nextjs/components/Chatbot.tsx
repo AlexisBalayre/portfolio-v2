@@ -53,6 +53,9 @@ const Chatbot = () => {
       input.setAttribute("disabled", "true");
     }
 
+    // Measure the time it takes to get a response
+    const startTime = Date.now();
+
     // Ask the chatbot for a response
     const response = await fetch("/api/chatbot", {
       method: "POST",
@@ -62,6 +65,14 @@ const Chatbot = () => {
       body: JSON.stringify({ prompt }),
     });
     const data = await response.json();
+
+    // Measure the time it took to get a response
+    const endTime = Date.now();
+    const time = endTime - startTime;
+    if (time < 1000) {
+      // Wait at least 1 second before showing the response
+      await new Promise(resolve => setTimeout(resolve, 2000 - time));
+    }
 
     // Add the response to the conversation
     newConversation[newConversation.length - 1].response = data.response;

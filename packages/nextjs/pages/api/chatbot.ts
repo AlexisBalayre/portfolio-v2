@@ -1,6 +1,6 @@
+import chatbot from "./chatbot.json";
 import natural from "natural";
 import type { NextApiRequest, NextApiResponse } from "next";
-import chatbot from "~~/public/assets/data/chatbot.json";
 
 const tokenizer = new natural.WordTokenizer();
 const stemmer = natural.PorterStemmer;
