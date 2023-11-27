@@ -46,6 +46,7 @@ const Chatbot = () => {
       response: "",
     });
     setConversation(newConversation);
+    setPrompt("");
 
     // Ask the chatbot for a response
     const response = await fetch("/api/chatbot", {
@@ -61,7 +62,6 @@ const Chatbot = () => {
     // Add the response to the conversation
     newConversation[newConversation.length - 1].response = data.response;
     setConversation(newConversation);
-    setPrompt("");
 
     // Scroll to the end of the chat
     const chatbotScreen = document.getElementById("chatbot_screen");
