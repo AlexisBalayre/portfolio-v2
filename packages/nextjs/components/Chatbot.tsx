@@ -33,6 +33,12 @@ const Chatbot = () => {
       return;
     }
 
+    // Lock the Chatbot button
+    const button = document.getElementById("chatbot_button");
+    if (button) {
+      button.setAttribute("disabled", "true");
+    }
+
     // Add the prompt to the conversation
     const newConversation = [...conversation];
     newConversation.push({
@@ -62,6 +68,11 @@ const Chatbot = () => {
     if (chatbotScreen) {
       chatbotScreen.scrollTop = chatbotScreen.scrollHeight;
     }
+
+    // Unlock the Chatbot button
+    if (button) {
+      button.removeAttribute("disabled");
+    }
   };
 
   return (
@@ -85,7 +96,13 @@ const Chatbot = () => {
                 </div>
               </div>
               <div className="chat-header">Satoshi</div>
-              <div className="chat-bubble" dangerouslySetInnerHTML={{ __html: msg.response }}></div>
+              <div
+                className={`chat-bubble ${!msg.response ? "hidden" : ""}`}
+                dangerouslySetInnerHTML={{ __html: msg.response }}
+              ></div>
+              <div className={`chat-bubble ${!msg.response ? "" : "hidden"}`}>
+                <span className="loading loading-dots loading-sm"></span>
+              </div>
             </div>
           </div>
         ))}
@@ -103,7 +120,7 @@ const Chatbot = () => {
           }
         }}
       />
-      <button onClick={sendPrompt} className="btn btn-primary w-full">
+      <button onClick={sendPrompt} className="btn btn-primary w-full" id="chatbot_button">
         Send
       </button>
     </div>
