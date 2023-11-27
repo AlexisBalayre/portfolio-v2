@@ -39,6 +39,7 @@ const Chatbot = () => {
       prompt,
       response: "",
     });
+    setConversation(newConversation);
 
     // Ask the chatbot for a response
     const response = await fetch("/api/chatbot", {
