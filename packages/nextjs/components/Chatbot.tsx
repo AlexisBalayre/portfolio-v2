@@ -40,7 +40,6 @@ const Chatbot = () => {
       response: "",
     });
     setConversation(newConversation);
-    setPrompt("");
 
     // Lock the Chatbot button
     const button = document.getElementById("chatbot_button");
@@ -62,12 +61,12 @@ const Chatbot = () => {
       },
       body: JSON.stringify({ prompt }),
     });
-
     const data = await response.json();
 
     // Add the response to the conversation
     newConversation[newConversation.length - 1].response = data.response;
     setConversation(newConversation);
+    setPrompt("");
 
     // Scroll to the end of the chat
     const chatbotScreen = document.getElementById("chatbot_screen");
