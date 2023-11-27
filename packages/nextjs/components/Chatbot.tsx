@@ -69,9 +69,9 @@ const Chatbot = () => {
     // Measure the time it took to get a response
     const endTime = Date.now();
     const time = endTime - startTime;
-    if (time < 1000) {
-      // Wait at least 1 second before showing the response
-      await new Promise(resolve => setTimeout(resolve, 2000 - time));
+    if (time < 3500) {
+      // Wait at least 3.5 second before showing the response
+      await new Promise(resolve => setTimeout(resolve, 3500 - time));
     }
 
     // Add the response to the conversation
