@@ -10,7 +10,6 @@ export const MetaHeader = () => {
         name="description"
         content="Data engineer and full stack Web and Blockchain developer specialised in Web3 (Smart Contracts, DApp)"
       />
-      <meta name="format-detection" content="telephone=no" />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content="Alexis Balayre - Data Engineer | Blockchain Developer" />
       <meta property="og:title" content="Alexis Balayre - Data Engineer | Blockchain Developer" />
