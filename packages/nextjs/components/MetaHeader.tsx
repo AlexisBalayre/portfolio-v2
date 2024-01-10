@@ -6,7 +6,6 @@ export const MetaHeader = () => {
     <Head>
       <title>Alexis Balayre - Data Engineer | Blockchain Developer</title>
       <meta charSet="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1 viewport-fit=cover" />
       <meta
         name="description"
         content="Data engineer and full stack Web and Blockchain developer specialised in Web3 (Smart Contracts, DApp)"
