@@ -43,7 +43,7 @@ export const Footer = () => {
             </div>
           </div>
         </ul>
-        <p className="text-center mt-2 text-xs md:text-sm">Copyright © 2023 Alexis Balayre. All Rights Reserved.</p>
+        <p className="text-center mt-2 text-xs md:text-sm">Copyright © 2024 Alexis Balayre. All Rights Reserved.</p>
       </div>
     </div>
   );

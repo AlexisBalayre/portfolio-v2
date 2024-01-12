@@ -3,24 +3,28 @@
     "name": "Programming Languages",
     "skills": [
       {
+        "name": "Python",
+        "percentage": 95
+      },
+      {
         "name": "JavaScript",
-        "percentage": 100
+        "percentage": 95
       },
       {
         "name": "Solidity",
-        "percentage": 100
-      },
-      {
-        "name": "Python",
         "percentage": 90
       },
       {
         "name": "TypeScript",
-        "percentage": 90
+        "percentage": 85
       },
       {
         "name": "Java",
         "percentage": 70
+      },
+      {
+        "name": "C++",
+        "percentage": 60
       },
       {
         "name": "Rust",
@@ -32,16 +36,12 @@
     "name": "Frontend",
     "skills": [
       {
-        "name": "ReactJS ",
-        "percentage": 80
-      },
-      {
-        "name": "React Native",
-        "percentage": 80
+        "name": "NextJS",
+        "percentage": 90
       },
       {
         "name": "TailwindCSS",
-        "percentage": 80
+        "percentage": 90
       },
       {
         "name": "VueJS (Framework Nuxt)",
@@ -50,6 +50,14 @@
       {
         "name": "HTML / CSS",
         "percentage": 70
+      },
+      {
+        "name": "ReactJS ",
+        "percentage": 60
+      },
+      {
+        "name": "React Native",
+        "percentage": 50
       }
     ]
   },
@@ -115,6 +123,10 @@
         "percentage": 90
       },
       {
+        "name": "Timestream",
+        "percentage": 90
+      },
+      {
         "name": "InfluxDB",
         "percentage": 80
       },
@@ -152,6 +164,10 @@
   {
     "name": "Hosting Services",
     "skills": [
+      {
+        "name": "Netlify",
+        "percentage": 100
+      },
       {
         "name": "Digital Ocean",
         "percentage": 90

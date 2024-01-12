@@ -1,0 +1,23 @@
+[
+  {
+    "name": "COVID-19 Data Analysis Project Using Apache Spark",
+    "description": "This project harnesses Big Data and Machine Learning technologies to analyse the global impact of the COVID-19 pandemic. Utilising Apache Spark, it processes extensive datasets of COVID-19 cases, uncovering insights into the virus's spread and effects.",
+    "technologies": ["Apache Spark", "Apache Airflow", "Scikit-learn", "Pyspark", "Pandas", "Seaborn", "Matplotlib"],
+    "url": "https://github.com/AlexisBalayre/covid19-analysis-project",
+    "image": "https://repository-images.githubusercontent.com/709341062/fe520efa-df57-4dab-af2c-05e5cb4edb81"
+  },
+  {
+    "name": "Cloud Computing and IoT for Environmental Monitoring Project",
+    "description": "This project integrates Cloud Computing with the Internet of Things (IoT) for comprehensive environmental monitoring, with a focus on air quality analysis. Utilising Apache Spark and Amazon Timestream, it manages large volumes of data from IoT sensors to calculate the Air Quality Index (AQI) accurately, offering insights into environmental conditions.",
+    "technologies": ["Apache Spark", "Amazon Timestream", "AWS EC2", "Grafana"],
+    "url": "https://github.com/AlexisBalayre/environmental-monitoring-project",
+    "image": "https://repository-images.githubusercontent.com/724560018/65cb114e-7225-491c-bb97-a5c32b2f2e11"
+  },
+  {
+    "name": "PriceSense: Correlating News Sentiment with Stock Prices",
+    "description": "This project examines the relationship between financial news sentiment and stock market prices using two data pipelines. The first pipeline uses LocalStack to mimic Amazon S3 for data storage and messaging, while the second utilises Apache Kafka for real-time streaming and message exchange. Both pipelines process financial news and stock price data, calculate sentiment scores, merge this data, and then index it into Elasticsearch for analysis and visualisation.",
+    "technologies": ["Apache Spark", "Apache Kafka", "Apache Airflow", "Elasticsearch", "Kibana", "LocalStack", "AWS"],
+    "url": "https://github.com/AlexisBalayre/PriceSense",
+    "image": "https://opengraph.githubassets.com/fd0abbe2043cff8345f3e3e439d001533b4b5063fa9e4060ff529796718ffad7/AlexisBalayre/PriceSense"
+  }
+]

@@ -1,6 +1,6 @@
 import React from "react";
 
-interface category {
+interface Category {
   name: string;
   skills: {
     name: string;
@@ -9,7 +9,7 @@ interface category {
 }
 
 interface SkillsProps {
-  items: category[];
+  items: Category[];
 }
 
 const Skills = ({ items }: SkillsProps) => (

@@ -6,6 +6,7 @@ import {
   BriefcaseIcon,
   CodeBracketIcon,
   CpuChipIcon,
+  TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
@@ -39,6 +40,11 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <CodeBracketIcon className="h-4 w-4" />,
   },
   {
+    label: "Projects",
+    section: "projects",
+    icon: <TrophyIcon className="h-4 w-4" />,
+  },
+  {
     label: "Ask Me Anything - Chatbot",
     section: "chatbot",
     icon: <CpuChipIcon className="h-4 w-4" />,
@@ -52,6 +58,7 @@ export const HeaderMenuLinks = () => {
     experiences: false,
     skills: false,
     chatbot: false,
+    projects: false,
   });
 
   const checkVisibility = () => {
@@ -75,12 +82,14 @@ export const HeaderMenuLinks = () => {
       experiences: boolean;
       skills: boolean;
       chatbot: boolean;
+      projects: boolean;
     } = {
       aboutMe: closestSection === "aboutMe",
       education: closestSection === "education",
       experiences: closestSection === "experiences",
       skills: closestSection === "skills",
       chatbot: closestSection === "chatbot",
+      projects: closestSection === "projects",
     };
 
     setIsActive(newIsActive);

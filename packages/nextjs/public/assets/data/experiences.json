@@ -1,20 +1,38 @@
 [
   {
+    "logo": "eth-global.png",
+    "title": "ETHGlobal ETHOnline 2023 Winner",
+    "description": "ETHOnline is a three week long online hackathon with over $200,000 USD in prizes as well as a series of curated summits, celebrating some of the most significant happenings & learnings from the past 12 months in web3. Enigma introduces the Secret NFTs standard: a unique dual URI approach. Each NFT showcases a public and a private layer. Only owners have full access. From art to memberships, prioritizing privacy in the digital domain is paramount. Enigma won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://ethglobal.com/showcase/enigma-q84ek\" target=\"_blank\">2023 ETHGlobal ETHOnline hackathon</a> : \"<a class=\"text-lg font-bold\">The Graph — Best New Subgraph or Substream</a>\" and \"<a class=\"text-lg font-bold\">Scroll — Pool Prize</a>\".",
+    "period": "Oct. 2023"
+  },
+  {
     "logo": "garage.png",
     "title": "Vice President of the <a class=\"font-bold\">Blockchain Lab</a> at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://garageisep.com/\" target=\"_blank\">Garage ISEP</a>",
-    "description": "Garage ISEP is the student association of ISEP dedicated to technology (Blockchain, Artificial Intelligence, ...). Organization of workshops and conferences to learn and master Blockchain technologies.",
+    "description": "Garage ISEP is the student association of ISEP dedicated to technology (Blockchain, Artificial Intelligence, ...). Organisation of workshops and conferences to learn and master Blockchain technologies.",
     "period": "Sept. 2022 - Sept. 2023"
   },
   {
     "logo": "cs.png",
     "title": "Blockchain Developer at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://coinshares.com/\" target=\"_blank\">CoinShares</a>",
-    "description": "CoinShares is Europe&#39;s largest and oldest crypto asset investment company, managing billions of dollars in assets. Discovery of Decentralized Finance within the DeFi team and realization of missions to build a decentralized asset management tool.",
+    "description": "CoinShares is Europe&#39;s largest and oldest crypto asset investment company, managing billions of dollars in assets. Discovery of Decentralised Finance within the DeFi team and realisation of missions to build a decentralised asset management tool.",
     "period": "Sept. 2022 - Jan. 2023"
   },
   {
-    "logo": "sleepn.png",
-    "title": "Blockchain Developer at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://github.com/SleepnClub/Sleepn-Contracts\" target=\"_blank\">Sleepn</a>",
-    "description": "Sleepn is a decentralized sleep tracking application that allows you to earn money by sleeping. Sleepn won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://showcase.ethglobal.com/hackmoney2022/sleepn-27hyu\" target=\"_blank\">2022 ETHGlobal HackMoney hackathon</a> : \"<a class=\"text-lg font-bold\">Polygon — Best App</a>\" and \"<a class=\"text-lg font-bold\">Superfluid — Best Use With Another Partner</a>\".",
-    "period": "May 2022 - Oct. 2023"
+    "logo": "chainlink.png",
+    "title": "Chainlink Spring 2022 Winner",
+    "description": "Hackathon to build the next generation of Web3 apps with $500K+ in prizes. Winner of <b>Chainlink Top Quality Projects</b>.",
+    "period": "May 2022"
+  },
+  {
+    "logo": "eth-global.png",
+    "title": "ETHGlobal HackMoney 2022 Winner",
+    "description": "World's largest DeFi hackathon. Sleepn is a decentralised sleep tracking application that allows you to earn money by sleeping. Sleepn won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://showcase.ethglobal.com/hackmoney2022/sleepn-27hyu\" target=\"_blank\">2022 ETHGlobal HackMoney hackathon</a> : \"<a class=\"text-lg font-bold\">Polygon — Best App</a>\" and \"<a class=\"text-lg font-bold\">Superfluid — Best Use With Another Partner</a>\".",
+    "period": "May 2022"
+  },
+  {
+    "logo": "devoteam.png",
+    "title": "Finalist in Devoteam's Cyber Hackthon",
+    "description": "Finalist in the 'Devogame' cybersecurity competition organised by Devoteam out of more than 3,800 entrants. Proposed a system for verifying a company's logs using a private blockchain and a consensus system based on private keys.",
+    "period": "Oct. 2021 - Nov. 2021"
   }
 ]
