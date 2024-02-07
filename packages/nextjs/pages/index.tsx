@@ -51,9 +51,9 @@ const Home: NextPage = () => {
       <MetaHeader />
       <div className="pt-10 mx-auto w-full overflow-y-auto overflow-x-hidden mt-20">
         <div className="px-5">
-          <h1 className="text-center mb-8">
-            <span className="block text-2xl mb-2">Meet</span>
-            <span className="block text-4xl font-bold text-primary">Alexis Balayre</span>
+          <h1 className="text-center mb-8 text-4xl font-bold text-primary">
+            <span className="block text-2xl mb-2 text-neutral-content font-light">Meet</span>
+            Alexis Balayre
           </h1>
 
           {/* About me */}
