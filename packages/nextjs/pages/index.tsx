@@ -124,7 +124,10 @@ const Home: NextPage = () => {
                 specialising in Data Intelligence and Data Engineering. With a robust skill set in Artificial
                 Intelligence, Big Data and Blockchain technologies, I am deeply passionate about harnessing the power of
                 transforming raw data into actionable information to make informed decisions.{" "}
-                <b>Actively seeking a Data Engineer internship (Individual Research Project) starting in May 2024.</b>
+                <b>
+                  Actively seeking a Data Engineering or Machine Learning Internship (4 Months Individual Research
+                  Project) starting in May 2024.
+                </b>
               </p>
             </div>
             <div className="flex justify-center order-1 md:order-2 mb-8 md:mb-0">
