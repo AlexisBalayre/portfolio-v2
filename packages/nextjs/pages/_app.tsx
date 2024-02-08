@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import type { AppProps } from "next/app";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
+// eslint-disable-next-line import/no-unresolved
+import { Analytics } from "@vercel/analytics/react";
 import NextNProgress from "nextjs-progressbar";
 import { Toaster } from "react-hot-toast";
 import { WagmiConfig } from "wagmi";
@@ -32,6 +34,7 @@ const ScaffoldEthApp = ({ Component, pageProps }: AppProps) => {
           <Header />
           <main className="relative flex flex-col flex-1">
             <Component {...pageProps} />
+            <Analytics />
           </main>
           <Footer />
         </div>
