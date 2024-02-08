@@ -105,7 +105,7 @@ const Chatbot = () => {
             <div className={`chat chat-end ${msg.prompt ? "" : "hidden"}`}>
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                  <Image src="/assets/img/question.png" width={40} height={40} alt={"Chatbot Profile Picture"} />
+                  <Image src="/assets/img/question.png" width={40} height={40} alt={"User Profile Picture"} />
                 </div>
               </div>
               <div className="chat-header">You</div>
@@ -114,7 +114,7 @@ const Chatbot = () => {
             <div className="chat chat-start">
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                  <img src="/assets/img/chatbot.png" />
+                  <Image src="/assets/img/chatbot.png" width={40} height={40} alt={"Chatbot Profile Picture"} />
                 </div>
               </div>
               <div className="chat-header">Satoshi</div>
