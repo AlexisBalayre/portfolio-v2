@@ -17,6 +17,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition text-neutral-content hover:text-primary-content"
+                arria-label="Linkedin of Alexis Balayre"
               >
                 <LinkedinLogo className="w-6 h-6" />
               </a>
@@ -27,6 +28,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition flex text-neutral-content hover:text-primary-content"
+                arria-label="Github of Alexis Balayre"
               >
                 <GithubLogo className="w-6 h-6" />
               </a>
@@ -37,6 +39,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition flex text-neutral-content hover:text-primary-content"
+                arria-label="Twitter of Alexis Balayre"
               >
                 <XLogo className="w-6 h-6" />
               </a>

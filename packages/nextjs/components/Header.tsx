@@ -180,6 +180,7 @@ export const Header = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="transition flex text-neutral-content hover:text-primary-content pr-10"
+          arria-label="Phone number of Alexis Balayre"
         >
           <PhoneIcon className="w-6 h-6" />
         </a>
@@ -188,6 +189,7 @@ export const Header = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="transition flex text-neutral-content hover:text-primary-content pr-10"
+          arria-label="Email of Alexis Balayre"
         >
           <EnvelopeIcon className="w-6 h-6" />
         </a>
@@ -196,6 +198,7 @@ export const Header = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="transition flex text-neutral-content hover:text-primary-content"
+          arria-label="Calendly of Alexis Balayre"
         >
           <CalendarIcon className="w-6 h-6" />
         </a>

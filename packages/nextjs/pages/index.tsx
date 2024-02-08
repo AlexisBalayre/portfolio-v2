@@ -103,6 +103,7 @@ const Home: NextPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition text-neutral-content hover:text-primary-content"
+                    arria-label="Linkedin of Alexis Balayre"
                   >
                     <LinkedinLogo className="w-6 h-6" />
                   </a>
@@ -113,6 +114,7 @@ const Home: NextPage = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="transition flex text-neutral-content hover:text-primary-content"
+                    arria-label="Github of Alexis Balayre"
                   >
                     <GithubLogo className="w-6 h-6" />
                   </a>
@@ -134,7 +136,7 @@ const Home: NextPage = () => {
               <div className="relative">
                 <Image
                   src="/assets/img/alexis.png"
-                  alt="Alexis Balayre"
+                  alt="Alexis Balayre Profile Picture"
                   className="rounded-full"
                   width={180}
                   height={200}
@@ -144,6 +146,7 @@ const Home: NextPage = () => {
                   href="https://alexis-resume.balayre.com/"
                   target="_blank"
                   rel="noreferrer"
+                  arria-label="Download Resume of Alexis Balayre"
                 >
                   Download Resume
                 </a>
