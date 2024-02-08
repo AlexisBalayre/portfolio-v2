@@ -139,14 +139,14 @@ const Home: NextPage = () => {
                   width={180}
                   height={200}
                 />
-                <button
+                <a
                   className="btn btn-primary jutify-center mt-10"
-                  onClick={() => {
-                    window.open("https://alexis-resume.balayre.com/", "_blank");
-                  }}
+                  href="https://alexis-resume.balayre.com/"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   Download Resume
-                </button>
+                </a>
               </div>
             </div>
           </div>

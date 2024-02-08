@@ -1,5 +1,6 @@
 // components/Timeline.js
 import React from "react";
+import Image from "next/image";
 
 interface TimelineProps {
   items: any[];
@@ -16,7 +17,13 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
                 <div className={`containerBis ${index % 2 === 0 ? "right" : "left"}`}>
                   <div className="content bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1">
                     <div className="flex items-center space-x-4">
-                      <img src={"/assets/img/" + item.logo} alt="institution logo" className="w-14 text-white" />
+                      <Image
+                        src={"/assets/img/" + item.logo}
+                        alt="institution logo"
+                        className="w-14 text-white"
+                        width={56}
+                        height={56}
+                      />
                       <div>
                         <h4
                           className="text-lg md:text-xl font-semibold"
@@ -42,7 +49,13 @@ const Timeline: React.FC<TimelineProps> = ({ items }) => {
                 <div className={`${index % 2 === 0 ? "right" : "left"}`}>
                   <div className="content bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1">
                     <div className="flex items-center space-x-4">
-                      <img src={"/assets/img/" + item.logo} alt="institution logo" className="w-14 text-white" />
+                      <Image
+                        src={"/assets/img/" + item.logo}
+                        alt="institution logo"
+                        className="w-14 text-white"
+                        width={56}
+                        height={56}
+                      />
                       <div>
                         <h4
                           className="text-lg md:text-xl font-semibold"

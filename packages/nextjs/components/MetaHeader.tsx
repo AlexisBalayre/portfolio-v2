@@ -28,6 +28,7 @@ export const MetaHeader = () => {
         name="keywords"
         content="Alexis Balayre, French, Data Engineering Expert, Blockchain Development Specialist, Machine Learning, AI, Web3 Technologies, Smart Contracts Developer, Ethereum Blockchain, Data Analytics Engineer, Cryptocurrency Technology, Decentralized Applications (DApps), ISEP, Cranfield University, Paris"
       />
+      <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="icon" sizes="32x32" href="/favicon-32x32.png" />

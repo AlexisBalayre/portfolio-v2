@@ -109,7 +109,7 @@ export const HeaderMenuLinks = () => {
       {menuLinks.map(({ label, section, icon }) => {
         return (
           <li key={section}>
-            <a
+            <span
               onClick={() => {
                 document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
               }}
@@ -120,7 +120,7 @@ export const HeaderMenuLinks = () => {
             >
               {icon}
               <span>{label}</span>
-            </a>
+            </span>
           </li>
         );
       })}

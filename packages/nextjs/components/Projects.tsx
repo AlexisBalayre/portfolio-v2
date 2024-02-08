@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 interface Project {
   name: string;
@@ -20,7 +21,7 @@ const Projects = ({ items }: ProjectsProps) => (
         key={project.name}
       >
         <figure>
-          <img src={project.image} alt="Shoes" />
+          <Image src={project.image} alt="Project Banner" width={400} height={200} />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{project.name}</h2>

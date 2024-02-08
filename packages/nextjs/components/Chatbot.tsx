@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 const Chatbot = () => {
   const [prompt, setPrompt] = useState(""); // Prompt to send to the chatbot
@@ -104,7 +105,7 @@ const Chatbot = () => {
             <div className={`chat chat-end ${msg.prompt ? "" : "hidden"}`}>
               <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                  <img src="/assets/img/question.png" />
+                  <Image src="/assets/img/question.png" width={40} height={40} alt={"Chatbot Profile Picture"} />
                 </div>
               </div>
               <div className="chat-header">You</div>
