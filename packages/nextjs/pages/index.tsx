@@ -122,14 +122,12 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                Versatile Data Engineer about to graduate with a dual degree from ISEP and Cranfield University,
-                specialising in Data Intelligence and Data Engineering. With a robust skill set in Artificial
-                Intelligence, Big Data and Blockchain technologies, I am deeply passionate about harnessing the power of
-                transforming raw data into actionable information to make informed decisions.{" "}
-                <b>
-                  Actively seeking a Data Engineering or Machine Learning Internship (4 Months Individual Research
-                  Project) starting in May 2024.
-                </b>
+                I am a versatile Data Engineer about to graduate with a dual degree from ISEP and Cranfield University
+                in Data Intelligence and Engineering. I excel in AI, Machine Learning, Big Data, and Blockchain,
+                showcasing advanced analytical, communication, and organisational prowess accomplished through intense
+                academic study and personal projects. I am passionate about harnessing the power of transforming raw
+                data into actionable insights to make informed decisions.{" "}
+                <b>I am actively seeking a placement as a Machine Learning Engineer from September 2024.</b>
               </p>
             </div>
             <div className="flex justify-center order-1 md:order-2 mb-8 md:mb-0">
