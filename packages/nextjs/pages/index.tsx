@@ -94,7 +94,7 @@ const Home: NextPage = () => {
                   isActive ? "" : "text-gray-600"
                 }`}
               >
-                <strong>Specialisations:</strong> Data Engineering | Data Intelligence | Blockchain
+                <strong>Specialisations:</strong> Machine Learning | Data Engineering | Blockchain
               </p>
               <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
                 <div className="flex">
@@ -122,8 +122,8 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                I am a versatile Data Engineer about to graduate with a dual degree from ISEP and Cranfield University
-                in Data Intelligence and Engineering. I excel in AI, Machine Learning, Big Data, and Blockchain,
+                I am a versatile Machine Learning Engineer about to graduate with a dual degree from ISEP and Cranfield
+                University in Data Intelligence and Engineering. I excel in Machine Learning, Big Data, and Blockchain,
                 showcasing advanced analytical, communication, and organisational prowess accomplished through intense
                 academic study and personal projects. I am passionate about harnessing the power of transforming raw
                 data into actionable insights to make informed decisions.{" "}
