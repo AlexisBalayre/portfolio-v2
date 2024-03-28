@@ -4,8 +4,7 @@ import {
   AcademicCapIcon,
   Bars3Icon,
   BriefcaseIcon,
-  CodeBracketIcon,
-  CpuChipIcon,
+  CodeBracketIcon, //CpuChipIcon,
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
@@ -44,11 +43,11 @@ export const menuLinks: HeaderMenuLink[] = [
     section: "projects",
     icon: <TrophyIcon className="h-4 w-4" />,
   },
-  {
+  /* {
     label: "Ask Me Anything - Chatbot",
     section: "chatbot",
     icon: <CpuChipIcon className="h-4 w-4" />,
-  },
+  }, */
 ];
 
 export const HeaderMenuLinks = () => {
@@ -57,7 +56,7 @@ export const HeaderMenuLinks = () => {
     education: false,
     experiences: false,
     skills: false,
-    chatbot: false,
+    //chatbot: false,
     projects: false,
   });
 
@@ -81,14 +80,14 @@ export const HeaderMenuLinks = () => {
       education: boolean;
       experiences: boolean;
       skills: boolean;
-      chatbot: boolean;
+      //chatbot: boolean;
       projects: boolean;
     } = {
       aboutMe: closestSection === "aboutMe",
       education: closestSection === "education",
       experiences: closestSection === "experiences",
       skills: closestSection === "skills",
-      chatbot: closestSection === "chatbot",
+      //chatbot: closestSection === "chatbot",
       projects: closestSection === "projects",
     };
 
