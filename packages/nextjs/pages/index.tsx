@@ -4,12 +4,11 @@ import type { NextPage } from "next";
 import {
   AcademicCapIcon,
   BriefcaseIcon,
-  CodeBracketIcon,
-  CpuChipIcon,
+  CodeBracketIcon, // CpuChipIcon,
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import Chatbot from "~~/components/Chatbot";
+//import Chatbot from "~~/components/Chatbot";
 import { MetaHeader } from "~~/components/MetaHeader";
 import Projects from "~~/components/Projects";
 import Skills from "~~/components/Skills";
@@ -193,7 +192,7 @@ const Home: NextPage = () => {
           </div>
         </div>
 
-        {/* Chatbot */}
+        {/*
         <div className="md:py-12 mx-auto container mb-10 pr-5 pl-5 mt-10 md:mt-0" id="chatbot">
           <div className="md:mb-10"></div>
           <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
@@ -201,7 +200,7 @@ const Home: NextPage = () => {
             <h2 className="text-4xl font-bold text-center md:text-left">Ask Me Anything</h2>
           </span>
           <Chatbot />
-        </div>
+        </div> */}
       </div>
     </>
   );
