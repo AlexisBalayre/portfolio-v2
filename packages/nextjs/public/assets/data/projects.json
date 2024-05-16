@@ -1,5 +1,34 @@
 [
   {
+    "name": "GPTAggregator:",
+    "description": "GPTAggregator is a Python-based application that provides a unified interface for interacting with various large language models (LLMs) via their respective APIs. The project is designed to be user-friendly and easily extensible, making it a powerful tool for developers, researchers and anyone interested in exploiting the capabilities of large language models. GPTAggregator makes it possible to switch seamlessly from one model to another within the same conversation, centralise conversation storage, automatically optimise messages, and much more.",
+    "technologies": [
+      "Python",
+      "Streamlit",
+      "Hugging Face Transformers",
+      "OpenAI API",
+      "MistralAI API",
+      "Anthropic API",
+      "Groq API"
+    ],
+    "url": "https://github.com/AlexisBalayre/GPTAggregator",
+    "image": "https://opengraph.githubassets.com/e0ab9966fdd00ed5b027c9f99e6d3bc2b2ba5759b668745ed2be9b59b6d93245/AlexisBalayre/GPTAggregator"
+  },
+  {
+    "name": "Group Project: Deep Learning for Turbulence Modelling",
+    "description": "This project focuses on the innovative integration of machine learning with computational fluid dynamics (CFD) to address the limitations of traditional turbulence models. By incorporating Physically Informed Neural Networks (PINNs) and employing the Sparse Identification of Nonlinear Dynamical Systems (PySINDy) approach, we aim to improve the accuracy and efficiency of turbulent flow simulations. This interdisciplinary effort aims to harness the power of high-performance computing to revolutionise the predictive modelling of fluid dynamics.",
+    "technologies": ["Python", "PyTorch Lightning", "PySINDy", "PINN", "HPC", "AWS"],
+    "url": "https://github.com/AlexisBalayre/Cranfield_Group_Project",
+    "image": "https://repository-images.githubusercontent.com/795520830/d10240a5-e7a4-4498-b612-0b6e33341de3"
+  },
+  {
+    "name": "Chest X-Ray Abnormalities Detection with Faster R-CNN",
+    "description": "This project leverages the Faster R-CNN model with a ResNet-50 backbone, implemented using PyTorch Lightning, for the detection and localisation of thoracic abnormalities in chest X-ray images.",
+    "technologies": ["Python", "PyTorch Lightning", "Faster R-CNN", "ResNet-50"],
+    "url": "https://github.com/AlexisBalayre/chest-x-ray-abnormalities-detection",
+    "image": "https://repository-images.githubusercontent.com/763967100/ebee523b-cdcc-40dc-b8cf-9ef2d3a575f6"
+  },
+  {
     "name": "COVID-19 Data Analysis Project Using Apache Spark",
     "description": "This project harnesses Big Data and Machine Learning technologies to analyse the global impact of the COVID-19 pandemic. Utilising Apache Spark, it processes extensive datasets of COVID-19 cases, uncovering insights into the virus's spread and effects.",
     "technologies": ["Apache Spark", "Apache Airflow", "Scikit-learn", "Pyspark", "Pandas", "Seaborn", "Matplotlib"],

@@ -83,7 +83,7 @@ const Home: NextPage = () => {
                 <strong>Nationality:</strong> French
               </p>
               <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                <strong>Location:</strong> London, UK
+                <strong>Location:</strong> Paris, France
               </p>
               <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
                 <strong>Degrees:</strong> ISEP Engineer | Msc in Computational Intelligence for Data Analytics
@@ -94,6 +94,13 @@ const Home: NextPage = () => {
                 }`}
               >
                 <strong>Specialisations:</strong> Machine Learning | Data Engineering | Blockchain
+              </p>
+              <p
+                className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${
+                  isActive ? "" : "text-gray-600"
+                }`}
+              >
+                <strong>Desired position:</strong> AI / Machine Learning Engineer
               </p>
               <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
                 <div className="flex">
@@ -121,12 +128,23 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                I am a versatile Machine Learning Engineer about to graduate with a dual degree from ISEP and Cranfield
-                University in Data Intelligence and Engineering. I excel in Machine Learning, Big Data, and Blockchain,
-                showcasing advanced analytical, communication, and organisational prowess accomplished through intense
-                academic study and personal projects. I am passionate about harnessing the power of transforming raw
-                data into actionable insights to make informed decisions.{" "}
-                <b>I am actively seeking a placement as a Machine Learning Engineer from September 2024.</b>
+                Versatile and dynamic AI engineer about to graduate with a dual MSc in Computational Intelligence for
+                Data Analytics from Cranfield University and Data Intelligence from ISEP. I excel in Machine Learning,
+                Big Data, and Blockchain, showcasing advanced analytical, communication, and organisational prowess
+                accomplished through intense academic study and personal projects.
+                <br />
+                <br />
+                As an Master&aposs Thesis Researcher at Cranfield University, I am at the forefront of aviation
+                innovation, developing machine learning solutions to improve automated refuelling systems in
+                collaboration with Airbus. Our work promises to revolutionise smart airports through predictive
+                frameworks using cutting-edge technologies such as LSTM, RNN and Transformer.
+                <br />
+                <br />
+                My previous role as Vice President of the Blockchain Lab at GarageISEP and an internship at CoinShares
+                honed my expertise in cutting-edge technologies. I led initiatives ranging from the design of a
+                decentralised voting protocol to the optimisation of a major asset management tool, demonstrating my
+                commitment to technological advancement and collaborative progress.
+                <br />
               </p>
             </div>
             <div className="flex justify-center order-1 md:order-2 mb-8 md:mb-0">

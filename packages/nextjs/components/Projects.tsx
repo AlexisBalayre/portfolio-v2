@@ -14,10 +14,10 @@ interface ProjectsProps {
 }
 
 const Projects = ({ items }: ProjectsProps) => (
-  <div className="container mx-auto rounded-xl md:grid-cols-3 md:flex gap-8 md:gap-0">
+  <div className="container mx-auto w-full rounded-xl md:grid-cols-3 grid gap-8 md:gap-14">
     {items.map(project => (
       <div
-        className="card bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1 shadow-xl md:ml-5 md:mr-5 md:w-1/3 mb-6 md:mb-0"
+        className="card bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1 shadow-xl mb-6 md:mb-0"
         key={project.name}
       >
         <figure>
