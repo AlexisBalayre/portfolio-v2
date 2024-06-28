@@ -31,7 +31,7 @@ const Home: NextPage = () => {
           setIsActive(entry.isIntersecting);
         });
       },
-      { threshold: 0.5 },
+      { threshold: 0.3 },
     ); // 0.5 indique que 50% de l'élément doit être visible
 
     if (sectionRef.current) {
