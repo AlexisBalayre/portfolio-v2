@@ -128,22 +128,22 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                Versatile and dynamic AI engineer about to graduate with a dual MSc in Computational Intelligence for
-                Data Analytics from Cranfield University and Data Intelligence from ISEP. I excel in Machine Learning,
-                Big Data, and Blockchain, showcasing advanced analytical, communication, and organisational prowess
-                accomplished through intense academic study and personal projects.
+                A forward-thinking and versatile AI engineer with a dual Master&apos;s degree in Computational
+                Intelligence for Data Analytics from Cranfield University and Data Intelligence from ISEP. I excel in
+                Data Science, Software Engineering, Machine Learning, and Blockchain, showcasing advanced analytical,
+                communication, and organisational prowess accomplished through intense academic study and personal
+                projects.
                 <br />
                 <br />
-                As an Master&aposs Thesis Researcher at Cranfield University, I am at the forefront of aviation
-                innovation, developing machine learning solutions to improve automated refuelling systems in
-                collaboration with Airbus. Our work promises to revolutionise smart airports through predictive
-                frameworks using cutting-edge technologies such as LSTM, RNN and Transformer.
-                <br />
-                <br />
-                My previous role as Vice President of the Blockchain Lab at GarageISEP and an internship at CoinShares
-                honed my expertise in cutting-edge technologies. I led initiatives ranging from the design of a
-                decentralised voting protocol to the optimisation of a major asset management tool, demonstrating my
-                commitment to technological advancement and collaborative progress.
+                My previous position as Research Student at Cranfield University allowed me to be at the forefront of
+                aviation innovation, developing machine learning solutions to improve automated refuelling systems in
+                collaboration with Airbus. I developed an advanced Machine Learning framework to accurately predict the
+                future position of commercial aircraft&apos;s refuelling port in a video stream, using cutting-edge
+                technologies such as LSTM, GRU and Transformer. In addition, my role as Vice President of the Blockchain
+                Lab at GarageISEP and an internship at CoinShares honed my expertise in cutting-edge technologies. I led
+                initiatives ranging from the design of a decentralised voting protocol to the optimisation of a major
+                asset management tool, demonstrating my commitment to technological advancement and collaborative
+                progress.
                 <br />
               </p>
             </div>
