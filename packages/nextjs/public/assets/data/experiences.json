@@ -1,5 +1,11 @@
 [
   {
+    "logo": "cranfield_logo2.png",
+    "title": "Research Student at Cranfield University",
+    "description": "Master's Thesis in collaboration with <b>Airbus</b>, supported by <b>UK Research and Innovation (UKRI)</b> and the <b>Aerospace Technology Institute (ATI)</b>, focused on enhancing the efficiency and accuracy of automated ground refueling systems for Smart Airports. Developed an advanced machine learning framework combining the object detection model YOLOv10 and a proposed deep learning sequence model (SizPos-GRU) to accurately predict the future position of commercial aircraft's refueling port in a video stream.",
+    "period": "May 2024 - Sept. 2024"
+  },
+  {
     "logo": "eth-global.png",
     "title": "ETHGlobal ETHOnline 2023 Winner",
     "description": "ETHOnline is a three week long online hackathon with over $200,000 USD in prizes as well as a series of curated summits, celebrating some of the most significant happenings & learnings from the past 12 months in web3. Enigma introduces the Secret NFTs standard: a unique dual URI approach. Each NFT showcases a public and a private layer. Only owners have full access. From art to memberships, prioritizing privacy in the digital domain is paramount. Enigma won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://ethglobal.com/showcase/enigma-q84ek\" target=\"_blank\">2023 ETHGlobal ETHOnline hackathon</a> : \"<b>The Graph — Best New Subgraph or Substream</b>\" and \"<b>Scroll — Pool Prize</b>\".",
