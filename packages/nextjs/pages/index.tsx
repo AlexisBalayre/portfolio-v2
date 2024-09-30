@@ -128,11 +128,11 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                A forward-thinking and versatile AI engineer with a dual Master&apos;s degree in Computational
-                Intelligence for Data Analytics from Cranfield University and Data Intelligence from ISEP. I excel in
-                Data Science, Software Engineering, Machine Learning, and Blockchain, showcasing advanced analytical,
-                communication, and organisational prowess accomplished through intense academic study and personal
-                projects.
+                A forward-thinking and versatile Machine Learning Engineer with a dual Master&apos;s degree in
+                Computational Intelligence for Data Analytics from Cranfield University and Data Intelligence from ISEP.
+                I excel in Data Science, Software Engineering, Machine Learning, and Blockchain, showcasing advanced
+                analytical, communication, and organisational prowess accomplished through intense academic study and
+                personal projects
                 <br />
                 <br />
                 My previous position as Research Student at Cranfield University allowed me to be at the forefront of
@@ -144,6 +144,14 @@ const Home: NextPage = () => {
                 initiatives ranging from the design of a decentralised voting protocol to the optimisation of a major
                 asset management tool, demonstrating my commitment to technological advancement and collaborative
                 progress.
+                <br />
+                <br />
+                I&apos;m seeking an internship or International Corporate Volunteering (VIE) position as an AI Engineer
+                in the United States, particularly within innovative R&D departments in the Technology, Retail, or
+                Finance sectors. Eager to focus on Machine Learning product development projects, especially in Natural
+                Language Processing (NLP), to create tools with tangible impact. I thrive in collaborative, fast-paced
+                environments that prioritize continuous learning and professional development, and I’m keen to work with
+                cross-functional teams that encourage idea-sharing.
                 <br />
               </p>
             </div>
