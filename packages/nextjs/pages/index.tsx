@@ -55,6 +55,19 @@ const Home: NextPage = () => {
             Alexis Balayre
           </h1>
 
+          <div className="w-full text-center rounded-xl hidden md:grid">
+            <iframe
+              className="w-1/2 place-self-center rounded-xl"
+              src="https://www.youtube.com/embed/ig1U41RMrhs?si=dTDWGvn6r6xwa_ys"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              style={{ aspectRatio: "16 / 9" }}
+              allowFullScreen
+            ></iframe>
+          </div>
+
           {/* About me */}
           <div
             className="mx-auto container grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center mt-20"
@@ -175,6 +188,19 @@ const Home: NextPage = () => {
                 </a>
               </div>
             </div>
+          </div>
+
+          <div className="w-full text-center rounded-xl grid md:hidden mt-4">
+            <iframe
+              className="w-full place-self-center rounded-xl"
+              src="https://www.youtube.com/embed/ig1U41RMrhs?si=dTDWGvn6r6xwa_ys"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              style={{ aspectRatio: "16 / 9" }}
+              allowFullScreen
+            ></iframe>
           </div>
 
           {/* Education Timeline */}
