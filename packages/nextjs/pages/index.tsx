@@ -171,7 +171,7 @@ const Home: NextPage = () => {
             <div className="flex justify-center order-1 md:order-2 mb-8 md:mb-0">
               <div className="relative">
                 <Image
-                  src="/assets/img/alexis.png"
+                  src="/assets/img/alexis.jpg"
                   alt="Alexis Balayre Profile Picture"
                   className="rounded-full"
                   width={180}
