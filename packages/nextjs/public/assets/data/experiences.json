@@ -1,5 +1,11 @@
 [
   {
+    "logo": "Sidetrade-logoV2.png",
+    "title": "Data Engineer Freelance at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.sidetrade.com/\" target=\"_blank\">Sidetrade</a>",
+    "description": "<p>Sidetrade is a leading AI-powered SaaS platform that helps companies enhance working capital and cash flow performance by optimising customer relationship management and automating financial processes.</p><ul><li>- Automated the collection, processing, and reporting of carbon footprint data, reducing manual work by 2 months and achieving a 50% reduction in reporting time.</li><li>- Integrated data from NetSuite, Egencia, Eurécia, and Navan into Power BI, ensuring 100% data accuracy and enabling real-time insights with dynamic, exportable dashboards.</li><li>- Designed and implemented an ETL solution using Microsoft Fabric, streamlining data processing of structured and unstructured data.</li><li>- Delivered comprehensive user training and documentation, supporting internal teams in leveraging Power BI dashboards for quarterly carbon footprint tracking.</li></ul>",
+    "period": "Oct. 2024 - Present"
+  },
+  {
     "logo": "cranfield_logo2.png",
     "title": "Research Student at Cranfield University",
     "description": "Master's Thesis in collaboration with <b>Airbus</b>, supported by <b>UK Research and Innovation (UKRI)</b> and the <b>Aerospace Technology Institute (ATI)</b>, focused on enhancing the efficiency and accuracy of automated ground refueling systems for Smart Airports. Developed an advanced machine learning framework combining the object detection model YOLOv10 and a proposed deep learning sequence model (SizPos-GRU) to accurately predict the future position of commercial aircraft's refueling port in a video stream.",
