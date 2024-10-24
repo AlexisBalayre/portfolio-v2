@@ -1,4 +1,9 @@
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://alexis.balayre.com/sitemap-alexis.xml
+# Host
+Host: https://alexis.balayre.com/
+
+# Sitemaps
+Sitemap: https://alexis.balayre.com/sitemap.xml
