@@ -1,5 +1,20 @@
 [
   {
+    "name": "RagDocs: RAG-Powered Chatbot for Technical Documentation",
+    "description": "RagDocs is a cutting-edge open-source solution that revolutionizes how you interact with documentation. By combining the power of local LLMs with state-of-the-art Retrieval-Augmented Generation (RAG), developers can instantly get accurate answers from their documentation without any API costs. Say goodbye to expensive API calls and privacy concerns. With RagDocs, all your documentation stays private while providing ChatGPT-like interactions. Built with Milvus vector search and Next.js, it's production-ready and easy to deploy. Experience the future of documentation search with complete data privacy and no usage fees.", 
+    "technologies": [
+      "Python",
+      "Vector Database (Milvus)",
+      "Next.js",
+      "FastAPI",
+      "LLamaIndex",
+      "Ollama",
+      "Docker"
+    ],
+    "url": "https://github.com/AlexisBalayre/RagDocs",
+    "image": "https://opengraph.githubassets.com/80f784e0bd1539badd36453c19365fc8b17e9cd762538f09cd61b9fc892afaf7/AlexisBalayre/RagDocs"
+  },
+  {
     "name": "Master's Thesis: Future Position Prediction for Pressure Refuelling Port of Commercial Aircraft:",
     "description": "This thesis develops a deep learning framework to predict the future position of aircraft refuelling ports, enhancing automated refuelling systems. The approach integrates a fine-tuned YOLOv10 model for detection with the proposed 'SizPos-GRU' sequence model, which captures temporal and spatial relationships from video frames using an encoder-attention-decoder architecture. Results show that the SizPos-GRU model outperforms other models, achieving an Average Displacement Error (ADE) of 4.28% and a Final Displacement Error (FDE) of 9.18% when using 30 past frames to predict 60 future frames. For predictions using 15 past frames to predict 30 future frames, the model achieved an ADE of 2.15% and an FDE of 4.83%. These results demonstrate significant improvements in prediction accuracy, proving the framework’s effectiveness in automating and enhancing aircraft refuelling operation.",
     "technologies": [

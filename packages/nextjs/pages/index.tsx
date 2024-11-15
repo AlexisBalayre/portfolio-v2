@@ -159,12 +159,11 @@ const Home: NextPage = () => {
                 progress.
                 <br />
                 <br />
-                I&apos;m seeking an internship or International Corporate Volunteering (VIE) position as an AI Engineer
-                in the United States, particularly within innovative R&D departments in the Technology, Retail, or
-                Finance sectors. Eager to focus on Machine Learning product development projects, especially in Natural
-                Language Processing (NLP), to create tools with tangible impact. I thrive in collaborative, fast-paced
-                environments that prioritize continuous learning and professional development, and I’m keen to work with
-                cross-functional teams that encourage idea-sharing.
+                I&apos;m seeking a full-time position as an AI Engineer, particularly within innovative R&D departments
+                in the Technology, Retail, or Finance sectors. Eager to focus on Machine Learning product development
+                projects, especially in Natural Language Processing (NLP), to create tools with tangible impact. I
+                thrive in collaborative, fast-paced environments that prioritize continuous learning and professional
+                development, and I’m keen to work with cross-functional teams that encourage idea-sharing.
                 <br />
               </p>
             </div>
