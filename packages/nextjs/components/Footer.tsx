@@ -6,6 +6,8 @@ import { XLogo } from "../public/assets/logos/XLogo";
  * Site footer
  */
 export const Footer = () => {
+  const currentYear = new Date().getFullYear(); // Get the current year dynamically
+
   return (
     <div className="min-h-0 p-4 md:py-5 md:px-1 md:mb-11 lg:mb-0 md:relative">
       <div className="w-full">
@@ -17,18 +19,18 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition text-neutral-content hover:text-primary-content"
-                arria-label="Linkedin of Alexis Balayre"
+                aria-label="Linkedin of Alexis Balayre"
               >
                 <LinkedinLogo className="w-6 h-6" />
               </a>
             </div>
-            <div className="text-cente pr-2 pl-2">
+            <div className="text-center pr-2 pl-2">
               <a
                 href="https://github.com/AlexisBalayre"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition flex text-neutral-content hover:text-primary-content"
-                arria-label="Github of Alexis Balayre"
+                aria-label="Github of Alexis Balayre"
               >
                 <GithubLogo className="w-6 h-6" />
               </a>
@@ -39,14 +41,16 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition flex text-neutral-content hover:text-primary-content"
-                arria-label="Twitter of Alexis Balayre"
+                aria-label="Twitter of Alexis Balayre"
               >
                 <XLogo className="w-6 h-6" />
               </a>
             </div>
           </div>
         </ul>
-        <p className="text-center mt-2 text-xs md:text-sm">Copyright © 2024 Alexis Balayre. All Rights Reserved.</p>
+        <p className="text-center mt-2 text-xs md:text-sm">
+          Copyright © {currentYear} Alexis Balayre. All Rights Reserved.
+        </p>
       </div>
     </div>
   );
