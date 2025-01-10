@@ -106,14 +106,14 @@ const Home: NextPage = () => {
                   isActive ? "" : "text-gray-600"
                 }`}
               >
-                <strong>Specialisations:</strong> Machine Learning | Data Engineering | Blockchain
+                <strong>Specialisations:</strong> Data Science | Machine Learning | Software Engineering
               </p>
               <p
                 className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${
                   isActive ? "" : "text-gray-600"
                 }`}
               >
-                <strong>Desired position:</strong> AI / Machine Learning Engineer
+                <strong>Desired position:</strong> AI Scientist / ML Engineer
               </p>
               <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
                 <div className="flex">
@@ -141,29 +141,25 @@ const Home: NextPage = () => {
               </span>
               <div className="divider md:ml-10 "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                A forward-thinking and versatile Machine Learning Engineer with a dual Master&apos;s degree in
-                Computational Intelligence for Data Analytics from Cranfield University and Data Intelligence from ISEP.
-                I excel in Data Science, Software Engineering, Machine Learning, and Blockchain, showcasing advanced
-                analytical, communication, and organisational prowess accomplished through intense academic study and
-                personal projects
+                As a Machine Learning Engineer with dual Master&apos;s degrees in Computational Intelligence for Data
+                Analytics (Cranfield University) and Data Intelligence (ISEP), I bring expertise in Data Science,
+                Machine Learning, and Software Engineering. My skills have been honed through rigorous academic study,
+                innovative projects, and leadership roles, enabling me to address real-world challenges with
+                cutting-edge solutions.
                 <br />
                 <br />
-                My previous position as Research Student at Cranfield University allowed me to be at the forefront of
-                aviation innovation, developing machine learning solutions to improve automated refuelling systems in
-                collaboration with Airbus. I developed an advanced Machine Learning framework to accurately predict the
-                future position of commercial aircraft&apos;s refuelling port in a video stream, using cutting-edge
-                technologies such as LSTM, GRU and Transformer. In addition, my role as Vice President of the Blockchain
-                Lab at GarageISEP and an internship at CoinShares honed my expertise in cutting-edge technologies. I led
-                initiatives ranging from the design of a decentralised voting protocol to the optimisation of a major
-                asset management tool, demonstrating my commitment to technological advancement and collaborative
-                progress.
+                As a Research Student at Cranfield University, I collaborated with Airbus to develop machine learning
+                solutions for automated refuelling systems. I designed an advanced framework using LSTM, GRU, and
+                Transformer architectures to predict the future position of a commercial aircraft&apos;s refuelling port
+                in video streams. My role as Vice President of the Blockchain Lab at GarageISEP and my internship at
+                CoinShares expanded my experience in emerging technologies, from designing decentralised voting
+                protocols to optimising asset management tools.
                 <br />
                 <br />
-                I&apos;m seeking a full-time position as an AI Engineer, particularly within innovative R&D departments
-                in the Technology, Retail, or Finance sectors. Eager to focus on Machine Learning product development
-                projects, especially in Natural Language Processing (NLP), to create tools with tangible impact. I
-                thrive in collaborative, fast-paced environments that prioritize continuous learning and professional
-                development, and I’m keen to work with cross-functional teams that encourage idea-sharing.
+                Beyond technical expertise, I am deeply committed to the security of AI, which I believe is the defining
+                challenge of the future. Ensuring that AI systems are robust, transparent, and resilient to adversarial
+                threats is at the core of my professional ambitions. I aim to contribute to the development of secure AI
+                systems that drive innovation while safeguarding users and organisations.
                 <br />
               </p>
             </div>

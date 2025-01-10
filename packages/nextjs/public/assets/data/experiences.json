@@ -1,9 +1,16 @@
 [
   {
+    "logo": "3DS.png",
+    "title": "Data Scientist at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.3ds.com/\" target=\"_blank\">Dassault Systèmes</a>",
+    "description": "Dassault Systèmes, the 3DEXPERIENCE Company, empowers businesses and individuals with virtual universes to foster sustainable innovation. As a Data Scientist, I work closely with the Industry Market Intelligence team to automate and optimise data processes, ultimately driving strategic insights and enabling informed decision-making.<br/><br/>- Automating data flows for comprehensive market analysis and strategic reporting, reducing manual effort and turnaround times.<br/>- Contributing to data-driven projects involving Machine Learning, NLP, Time Series Forecasting, and Image Processing to refine business strategies and improve operational efficiency.<br/>- Analysing large datasets using Python and SQL, leveraging internal tools (e.g., BIOVIA Pipeline Pilot, Proxem) to deliver actionable insights that inform executive priorities and resource allocation.",
+    "period": "Jan. 2025 - Now"
+
+  },
+  {
     "logo": "sidetrade-logov2.png",
     "title": "Data Engineer Freelance at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.sidetrade.com/\" target=\"_blank\">Sidetrade</a>",
     "description": "Sidetrade is a leading AI-powered SaaS platform that helps companies enhance working capital and cash flow performance by optimising customer relationship management and automating financial processes.<br/><br/>- Automated the collection, processing, and reporting of carbon footprint data, reducing manual work by 2 months and achieving a 50% reduction in reporting time.<br/>- Integrated data from NetSuite, Egencia, Eurécia, and Navan into Power BI, ensuring 100% data accuracy and enabling real-time insights with dynamic, exportable dashboards.<br/>- Designed and implemented an ETL solution using Microsoft Fabric, streamlining data processing of structured and unstructured data.<br/>- Delivered comprehensive user training and documentation, supporting internal teams in leveraging Power BI dashboards for quarterly carbon footprint tracking.",
-    "period": "Oct. 2024 - Present"
+    "period": "Oct. 2024 - Nov. 2024"
   },
   {
     "logo": "cranfield_logo2.png",
