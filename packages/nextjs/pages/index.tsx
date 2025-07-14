@@ -148,18 +148,19 @@ const Home: NextPage = () => {
                 cutting-edge solutions.
                 <br />
                 <br />
-                As a Research Student at Cranfield University, I collaborated with Airbus to develop machine learning
-                solutions for automated refuelling systems. I designed an advanced framework using LSTM, GRU, and
-                Transformer architectures to predict the future position of a commercial aircraft&apos;s refuelling port
-                in video streams. My role as Vice President of the Blockchain Lab at GarageISEP and my internship at
-                CoinShares expanded my experience in emerging technologies, from designing decentralised voting
-                protocols to optimising asset management tools.
+                At Dassault Systèmes, I designed scalable data workflows and built NLP pipelines incorporating topic
+                modelling, sentiment analysis, Generative AI, and Retrieval-Augmented Generation (RAG). My role focused
+                on delivering actionable competitive and market intelligence insights, leveraging cutting-edge machine
+                learning techniques.
                 <br />
                 <br />
-                Beyond technical expertise, I am deeply committed to the security of AI, which I believe is the defining
-                challenge of the future. Ensuring that AI systems are robust, transparent, and resilient to adversarial
-                threats is at the core of my professional ambitions. I aim to contribute to the development of secure AI
-                systems that drive innovation while safeguarding users and organisations.
+                During my Master&apos;s research at Cranfield University, I collaborated with Airbus to develop an
+                advanced deep learning framework combining LSTM, GRU, and Transformer architectures. This framework
+                significantly improved the predictive accuracy of automated aircraft refuelling systems, enhancing
+                operational safety and efficiency.
+                <br />
+                <br />
+                I am seeking a permanent position as Data Scientist / Machine Learning Engineer.
                 <br />
               </p>
             </div>
