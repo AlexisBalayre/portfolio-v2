@@ -113,7 +113,7 @@ const Home: NextPage = () => {
                   isActive ? "" : "text-gray-600"
                 }`}
               >
-                <strong>Desired position:</strong> AI Scientist / ML Engineer
+                <strong>Desired position:</strong> Data Scientist / AI Engineer
               </p>
               <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
                 <div className="flex">
