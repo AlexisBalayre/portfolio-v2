@@ -58,7 +58,7 @@ const Home: NextPage = () => {
           <div className="w-full text-center rounded-xl hidden md:grid">
             <iframe
               className="w-1/2 place-self-center rounded-xl"
-              src="https://www.youtube.com/embed/ig1U41RMrhs?si=dTDWGvn6r6xwa_ys"
+              src="https://www.youtube.com/embed/aLr04QRIzbQ?si=e-xkmN-wDCRUk-D5"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -189,7 +189,7 @@ const Home: NextPage = () => {
           <div className="w-full text-center rounded-xl grid md:hidden mt-4">
             <iframe
               className="w-full place-self-center rounded-xl"
-              src="https://www.youtube.com/embed/ig1U41RMrhs?si=dTDWGvn6r6xwa_ys"
+              src="https://www.youtube.com/embed/aLr04QRIzbQ?si=e-xkmN-wDCRUk-D5"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
