@@ -1,0 +1,57 @@
+[
+  {
+    "logo": "3DS.png",
+    "title": "Data Scientist at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.3ds.com/\" target=\"_blank\">Dassault Systèmes</a>",
+    "description": "Dassault Systèmes, the 3DEXPERIENCE Company, empowers businesses and individuals with virtual universes to foster sustainable innovation. As a Data Scientist, I worked in the Industry Market Intelligence - Corporate Strategic Planning team to automate and optimise data processes, ultimately driving strategic insights and enabling informed decision-making.<br/><br/>- Accelerated strategic reporting and Market Intelligence by automating data workflows and analysing large-scale datasets (millions of records) using Python and SQL.<br/>- Designed and implemented data-driven solutions leveraging Web Scraping, Natural Language Processing (topic modeling, sentiment analysis), and Generative AI (LLM, RAG, GraphRAG) to extract insights from both structured and unstructured data.<br/>- Built and maintained Competitive Intelligence and monitoring tools to support executive decision-making and strengthen Dassault Systèmes' positioning in its Business sectors.",
+    "period": "Jan. 2025 - Jul. 2025"
+
+  },
+  {
+    "logo": "sidetrade-logov2.png",
+    "title": "Data Engineer Freelance at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.sidetrade.com/\" target=\"_blank\">Sidetrade</a>",
+    "description": "Sidetrade is a leading AI-powered SaaS platform that helps companies enhance working capital and cash flow performance by optimising customer relationship management and automating financial processes.<br/><br/>- Defined the architecture and data workflows for an automated carbon footprint reporting solution, aimed at reducing manual work and improving reporting speed.<br/>- Designed the integration of data from NetSuite, Egencia, Eurécia, and Navan into Power BI to enable dynamic, real-time dashboards with exportable insights.<br/>- Proposed an ETL solution using Microsoft Fabric to streamline the processing of both structured and unstructured data.<br/>- Project was discontinued during implementation due to data privacy constraints related to GDPR compliance.",
+    "period": "Oct. 2024 - Nov. 2024"
+  },
+  {
+    "logo": "cranfield_logo2.png",
+    "title": "Research Student at Cranfield University",
+    "description": "Master's Thesis in collaboration with <b>Airbus</b>, supported by <b>UK Research and Innovation (UKRI)</b> and the <b>Aerospace Technology Institute (ATI)</b>, focused on enhancing the efficiency and accuracy of automated ground refueling systems for Smart Airports. Developed an advanced machine learning framework combining the object detection model YOLOv10 and a proposed deep learning sequence model (SizPos-GRU) to accurately predict the future position of commercial aircraft's refueling port in a video stream.",
+    "period": "May 2024 - Sept. 2024"
+  },
+  {
+    "logo": "eth-global.png",
+    "title": "ETHGlobal ETHOnline 2023 Winner",
+    "description": "ETHOnline is a three week long online hackathon with over $200,000 USD in prizes as well as a series of curated summits, celebrating some of the most significant happenings & learnings from the past 12 months in web3. Enigma introduces the Secret NFTs standard: a unique dual URI approach. Each NFT showcases a public and a private layer. Only owners have full access. From art to memberships, prioritizing privacy in the digital domain is paramount. Enigma won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://ethglobal.com/showcase/enigma-q84ek\" target=\"_blank\">2023 ETHGlobal ETHOnline hackathon</a> : \"<b>The Graph — Best New Subgraph or Substream</b>\" and \"<b>Scroll — Pool Prize</b>\".",
+    "period": "Oct. 2023"
+  },
+  {
+    "logo": "garage.png",
+    "title": "Vice President of the Blockchain Lab at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://garageisep.com/\" target=\"_blank\">Garage ISEP</a>",
+    "description": "Garage ISEP is the student association of ISEP dedicated to technology (Blockchain, Artificial Intelligence, ...). Organisation of workshops and conferences to learn and master Blockchain technologies.",
+    "period": "Sept. 2022 - Sept. 2023"
+  },
+  {
+    "logo": "cs.png",
+    "title": "Blockchain Developer at <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://coinshares.com/\" target=\"_blank\">CoinShares</a>",
+    "description": "CoinShares is Europe&#39;s largest and oldest crypto asset investment company, managing billions of dollars in assets. Discovery of Decentralised Finance within the DeFi team and realisation of missions to build a decentralised asset management tool.",
+    "period": "Sept. 2022 - Jan. 2023"
+  },
+  {
+    "logo": "chainlink.png",
+    "title": "Chainlink Spring 2022 Winner",
+    "description": "Hackathon to build the next generation of Web3 apps with $500K+ in prizes. Winner of <b>Chainlink Top Quality Projects</b>.",
+    "period": "May 2022"
+  },
+  {
+    "logo": "eth-global.png",
+    "title": "ETHGlobal HackMoney 2022 Winner",
+    "description": "World's largest DeFi hackathon. Sleepn is a decentralised sleep tracking application that allows you to earn money by sleeping. Sleepn won 2 prizes at the <a class=\"  font-bold text-primary hover:text-primary-content\" href=\"https://showcase.ethglobal.com/hackmoney2022/sleepn-27hyu\" target=\"_blank\">2022 ETHGlobal HackMoney hackathon</a> : \"<b>Polygon — Best App</b>\" and \"<b>Superfluid — Best Use With Another Partner</b>\".",
+    "period": "May 2022"
+  },
+  {
+    "logo": "devoteam.png",
+    "title": "Finalist in Devoteam's Cyber Hackthon",
+    "description": "Finalist in the 'Devogame' cybersecurity competition organised by Devoteam out of more than 3,800 entrants. Proposed a system for verifying a company's logs using a private blockchain and a consensus system based on private keys.",
+    "period": "Oct. 2021 - Nov. 2021"
+  }
+]

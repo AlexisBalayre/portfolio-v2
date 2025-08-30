@@ -1,0 +1,93 @@
+[
+  {
+    "name": "AuraHelpeskGraph: GraphRAG Support Chatbot",
+    "description": "A support chatbot that leverages local LLMs, vector similarity search, and knowledge graphs to provide contextual assistance by finding and presenting solutions from historical support tickets.",
+    "technologies": [
+      "Python",
+      "Graph Database (Neo4j)",
+      "Streamlit",
+      "openai python client",
+      "function calling",
+      "GraphRAG",
+      "Ollama"
+    ],
+    "url": "https://github.com/AlexisBalayre/AuraHelpeskGraph",
+    "image": "https://opengraph.githubassets.com/e89f592fcfa8d07ab40ac058a7e47186be07634c26d01d916c1c6f7060841a46/AlexisBalayre/AuraHelpeskGraph"
+  },
+  {
+    "name": "RagDocs: RAG-Powered Chatbot for Technical Documentation",
+    "description": "RagDocs is a cutting-edge open-source solution that revolutionizes how you interact with documentation. By combining the power of local LLMs with state-of-the-art Retrieval-Augmented Generation (RAG), developers can instantly get accurate answers from their documentation without any API costs. Say goodbye to expensive API calls and privacy concerns. With RagDocs, all your documentation stays private while providing ChatGPT-like interactions. Built with Milvus vector search and Next.js, it's production-ready and easy to deploy. Experience the future of documentation search with complete data privacy and no usage fees.",
+    "technologies": ["Python", "Vector Database (Milvus)", "Next.js", "FastAPI", "LLamaIndex", "Ollama", "Docker"],
+    "url": "https://github.com/AlexisBalayre/RagDocs",
+    "image": "https://opengraph.githubassets.com/80f784e0bd1539badd36453c19365fc8b17e9cd762538f09cd61b9fc892afaf7/AlexisBalayre/RagDocs"
+  },
+  {
+    "name": "Master's Thesis: Future Position Prediction for Pressure Refuelling Port of Commercial Aircraft:",
+    "description": "This thesis develops a deep learning framework to predict the future position of aircraft refuelling ports, enhancing automated refuelling systems. The approach integrates a fine-tuned YOLOv10 model for detection with the proposed 'SizPos-GRU' sequence model, which captures temporal and spatial relationships from video frames using an encoder-attention-decoder architecture. Results show that the SizPos-GRU model outperforms other models, achieving an Average Displacement Error (ADE) of 4.28% and a Final Displacement Error (FDE) of 9.18% when using 30 past frames to predict 60 future frames. For predictions using 15 past frames to predict 30 future frames, the model achieved an ADE of 2.15% and an FDE of 4.83%. These results demonstrate significant improvements in prediction accuracy, proving the framework’s effectiveness in automating and enhancing aircraft refuelling operation.",
+    "technologies": ["Python", "PyTorch Lightning", "OpenCV", "OpenAI API", "Label Studio", "Docker", "YOLOv10"],
+    "url": "https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling",
+    "image": "https://repository-images.githubusercontent.com/800190584/6f00d1d5-687a-4171-8111-89afe7028f35"
+  },
+  {
+    "name": "GPTAggregator",
+    "description": "GPTAggregator is a Python-based application that provides a unified interface for interacting with various large language models (LLMs) via their respective APIs. The project is designed to be user-friendly and easily extensible, making it a powerful tool for developers, researchers and anyone interested in exploiting the capabilities of large language models. GPTAggregator makes it possible to switch seamlessly from one model to another within the same conversation, centralise conversation storage, automatically optimise messages, and much more.",
+    "technologies": [
+      "Python",
+      "Streamlit",
+      "Hugging Face Transformers",
+      "OpenAI API",
+      "MistralAI API",
+      "Anthropic API",
+      "Groq API"
+    ],
+    "url": "https://github.com/AlexisBalayre/GPTAggregator",
+    "image": "https://opengraph.githubassets.com/e0ab9966fdd00ed5b027c9f99e6d3bc2b2ba5759b668745ed2be9b59b6d93245/AlexisBalayre/GPTAggregator"
+  },
+  {
+    "name": "AI-Powered Meeting Summarizer",
+    "description": "The AI-Powered Meeting Summarizer is a Gradio-powered application that converts audio recordings of meetings into transcripts and provides concise summaries using whisper.cpp for audio-to-text conversion and Ollama for text summarization. This tool is ideal for quickly extracting key points, decisions, and action items from meetings.",
+    "technologies": [
+      "Python",
+      "Gradio",
+      "whisper.cpp",
+      "Ollama"
+    ],
+    "url": "https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer",
+    "image": "https://opengraph.githubassets.com/8503b77742b867af00b87030db3a84e436a0179ac76d4163617e1d48352fe755/AlexisBalayre/AI-Powered-Meeting-Summarizer"
+  },
+  {
+    "name": "Group Project: Deep Learning for Turbulence Modelling",
+    "description": "This project focuses on the innovative integration of machine learning with computational fluid dynamics (CFD) to address the limitations of traditional turbulence models. By incorporating Physically Informed Neural Networks (PINNs) and employing the Sparse Identification of Nonlinear Dynamical Systems (PySINDy) approach, we aim to improve the accuracy and efficiency of turbulent flow simulations. This interdisciplinary effort aims to harness the power of high-performance computing to revolutionise the predictive modelling of fluid dynamics.",
+    "technologies": ["Python", "PyTorch Lightning", "PySINDy", "PINN", "HPC", "AWS"],
+    "url": "https://github.com/AlexisBalayre/Cranfield_Group_Project",
+    "image": "https://repository-images.githubusercontent.com/795520830/d10240a5-e7a4-4498-b612-0b6e33341de3"
+  },
+  {
+    "name": "Chest X-Ray Abnormalities Detection with Faster R-CNN",
+    "description": "This project leverages the Faster R-CNN model with a ResNet-50 backbone, implemented using PyTorch Lightning, for the detection and localisation of thoracic abnormalities in chest X-ray images.",
+    "technologies": ["Python", "PyTorch Lightning", "Faster R-CNN", "ResNet-50"],
+    "url": "https://github.com/AlexisBalayre/chest-x-ray-abnormalities-detection",
+    "image": "https://repository-images.githubusercontent.com/763967100/ebee523b-cdcc-40dc-b8cf-9ef2d3a575f6"
+  },
+  {
+    "name": "COVID-19 Data Analysis Project Using Apache Spark",
+    "description": "This project harnesses Big Data and Machine Learning technologies to analyse the global impact of the COVID-19 pandemic. Utilising Apache Spark, it processes extensive datasets of COVID-19 cases, uncovering insights into the virus's spread and effects.",
+    "technologies": ["Apache Spark", "Apache Airflow", "Scikit-learn", "Pyspark", "Pandas", "Seaborn", "Matplotlib"],
+    "url": "https://github.com/AlexisBalayre/covid19-analysis-project",
+    "image": "https://repository-images.githubusercontent.com/709341062/fe520efa-df57-4dab-af2c-05e5cb4edb81"
+  },
+  {
+    "name": "Cloud Computing and IoT for Environmental Monitoring Project",
+    "description": "This project integrates Cloud Computing with the Internet of Things (IoT) for comprehensive environmental monitoring, with a focus on air quality analysis. Utilising Apache Spark and Amazon Timestream, it manages large volumes of data from IoT sensors to calculate the Air Quality Index (AQI) accurately, offering insights into environmental conditions.",
+    "technologies": ["Apache Spark", "Amazon Timestream", "AWS EC2", "Grafana"],
+    "url": "https://github.com/AlexisBalayre/environmental-monitoring-project",
+    "image": "https://repository-images.githubusercontent.com/724560018/65cb114e-7225-491c-bb97-a5c32b2f2e11"
+  },
+  {
+    "name": "PriceSense: Correlating News Sentiment with Stock Prices",
+    "description": "This project examines the relationship between financial news sentiment and stock market prices using two data pipelines. The first pipeline uses LocalStack to mimic Amazon S3 for data storage and messaging, while the second utilises Apache Kafka for real-time streaming and message exchange. Both pipelines process financial news and stock price data, calculate sentiment scores, merge this data, and then index it into Elasticsearch for analysis and visualisation.",
+    "technologies": ["Apache Spark", "Apache Kafka", "Apache Airflow", "Elasticsearch", "Kibana", "LocalStack", "AWS"],
+    "url": "https://github.com/AlexisBalayre/PriceSense",
+    "image": "https://opengraph.githubassets.com/fd0abbe2043cff8345f3e3e439d001533b4b5063fa9e4060ff529796718ffad7/AlexisBalayre/PriceSense"
+  }
+]

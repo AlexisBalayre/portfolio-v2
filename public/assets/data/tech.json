@@ -1,0 +1,119 @@
+[
+  {
+    "name": "Programming Languages",
+    "skills": [
+      { "name": "Python", "percentage": 95 },
+      { "name": "JavaScript", "percentage": 95 },
+      { "name": "TypeScript", "percentage": 85 },
+      { "name": "Solidity", "percentage": 90 },
+      { "name": "SQL", "percentage": 95 },
+      { "name": "Java", "percentage": 70 },
+      { "name": "C/C++", "percentage": 75 },
+      { "name": "Rust", "percentage": 50 },
+      { "name": "Shell / Bash", "percentage": 80 }
+    ]
+  },
+  {
+    "name": "AI & Data Intelligence",
+    "skills": [
+      { "name": "PyTorch Lightning", "percentage": 85 },
+      { "name": "TensorFlow", "percentage": 70 },
+      { "name": "Scikit-learn", "percentage": 90 },
+      { "name": "NumPy", "percentage": 95 },
+      { "name": "pandas", "percentage": 95 },
+      { "name": "Polars", "percentage": 80 },
+      { "name": "Matplotlib", "percentage": 90 },
+      { "name": "Seaborn", "percentage": 95 },
+      { "name": "Plotly", "percentage": 80 },
+      { "name": "OpenCV", "percentage": 70 },
+      { "name": "spaCy", "percentage": 75 },
+      { "name": "NLTK", "percentage": 70 },
+      { "name": "XGBoost / LightGBM", "percentage": 85 },
+      { "name": "MLflow", "percentage": 70 },
+      { "name": "Hugging Face Transformers", "percentage": 85 },
+      { "name": "LangChain", "percentage": 80 },
+      { "name": "LangGraph", "percentage": 70 },
+      { "name": "LlamaIndex", "percentage": 80 },
+      { "name": "vLLM", "percentage": 70 },
+      { "name": "Ollama", "percentage": 70 }
+    ]
+  },
+  {
+    "name": "Databases",
+    "skills": [
+      { "name": "MongoDB", "percentage": 100 },
+      { "name": "MySQL", "percentage": 100 },
+      { "name": "PostgreSQL", "percentage": 90 },
+      { "name": "Cassandra", "percentage": 90 },
+      { "name": "Timestream", "percentage": 90 },
+      { "name": "InfluxDB", "percentage": 80 },
+      { "name": "Neo4j", "percentage": 80 },
+      { "name": "Redis", "percentage": 80 },
+      { "name": "Elasticsearch", "percentage": 90 },
+      { "name": "Milvus", "percentage": 80 },
+      { "name": "Chroma", "percentage": 80 }
+    ]
+  },
+  {
+    "name": "Data Engineering Tools",
+    "skills": [
+      { "name": "Apache Airflow", "percentage": 90 },
+      { "name": "Apache Spark", "percentage": 80 },
+      { "name": "Apache Kafka", "percentage": 70 }
+    ]
+  },
+  {
+    "name": "Frontend",
+    "skills": [
+      { "name": "Next.js", "percentage": 90 },
+      { "name": "React.js", "percentage": 60 },
+      { "name": "Vue.js / Nuxt", "percentage": 75 },
+      { "name": "TailwindCSS", "percentage": 90 },
+      { "name": "HTML / CSS", "percentage": 70 },
+      { "name": "React Native", "percentage": 50 },
+      { "name": "Streamlit", "percentage": 90 },
+      { "name": "Gradio", "percentage": 85 }
+    ]
+  },
+  {
+    "name": "Backend",
+    "skills": [
+      { "name": "Node.js / NestJS", "percentage": 90 },
+      { "name": "FastAPI", "percentage": 90 },
+      { "name": "Flask", "percentage": 85 },
+      { "name": "Django", "percentage": 70 }
+    ]
+  },
+  {
+    "name": "Hosting & Cloud Services",
+    "skills": [
+      { "name": "Netlify", "percentage": 100 },
+      { "name": "Digital Ocean", "percentage": 80 },
+      { "name": "Vercel", "percentage": 80 },
+      { "name": "RunPod", "percentage": 80 },
+      { "name": "Cloudflare", "percentage": 80 },
+      { "name": "AWS", "percentage": 60 },
+      { "name": "Azure", "percentage": 60 }
+    ]
+  },
+  {
+    "name": "Server Management & DevOps",
+    "skills": [
+      { "name": "Docker", "percentage": 90 },
+      { "name": "Git / GitHub Actions / CI/CD", "percentage": 85 },
+      { "name": "Linux (Ubuntu, CentOS)", "percentage": 85 },
+      { "name": "Kubernetes", "percentage": 40 },
+      { "name": "NGINX", "percentage": 50 }
+    ]
+  },
+  {
+    "name": "Other Tools",
+    "skills": [
+      { "name": "VSCode", "percentage": 100 },
+      { "name": "Power BI", "percentage": 85 },
+      { "name": "Tableau", "percentage": 70 },
+      { "name": "LaTeX", "percentage": 90 },
+      { "name": "Markdown", "percentage": 100 }
+    ]
+  }
+]
