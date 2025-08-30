@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "~~/styles/globals.css";
-import Header from "~~/components/Header";
+import { Header } from "~~/components/Header";
 import { Footer } from "~~/components/Footer";
 
 const siteUrl = "https://alexis.balayre.com";
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
     languages: {
-      "en": `${siteUrl}/`,
+      en: `${siteUrl}/`,
     },
   },
   openGraph: {
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     description:
       "Explore Alexis Balayre’s work at the forefront of Agentic AI, Generative AI, and applied Data Science.",
     images: ["/preview.png"],
-    creator: "@alexisbalayre", // change if you use another handle or remove
+    creator: "@alexisbalayre",
     site: "@alexisbalayre",
   },
   robots: {
@@ -111,22 +111,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     name: "Alexis Balayre",
     url: siteUrl,
     jobTitle: "AI Engineer",
-    sameAs: [
-      "https://github.com/AlexisBalayre",
-      "https://www.linkedin.com/in/alexis-balayre", // adjust if needed
-    ],
+    sameAs: ["https://github.com/AlexisBalayre", "https://www.linkedin.com/in/alexis-balayre"],
     worksFor: {
       "@type": "Organization",
       name: "Independent / Open to opportunities",
     },
-    knowsAbout: [
-      "Machine Learning",
-      "Generative AI",
-      "Agentic AI",
-      "LLM",
-      "NLP",
-      "Software Engineering",
-    ],
+    knowsAbout: ["Machine Learning", "Generative AI", "Agentic AI", "LLM", "NLP", "Software Engineering"],
   };
 
   return (

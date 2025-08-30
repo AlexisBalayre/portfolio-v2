@@ -11,33 +11,15 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
-
-
-function useOutsideClick<T extends HTMLElement>(
-  ref: React.RefObject<T> | React.MutableRefObject<T | null>,
-  handler: () => void,
-) {
-  useEffect(() => {
-    const listener = (event: MouseEvent | TouchEvent) => {
-      const el = ref.current;
-      if (!el || el.contains(event.target as Node)) return;
-      handler();
-    };
-
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler]);
-}
+import { useOutsideClick } from "~~/hooks/useOutsideClick";
 
 interface HeaderMenuLink {
   label: string;
   section: string;
   icon?: React.ReactNode;
 }
+
+const sections = ["aboutMe", "education", "experiences", "skills", "projects"] as const;
 
 export const menuLinks: HeaderMenuLink[] = [
   { label: "About Me", section: "aboutMe", icon: <UserIcon className="h-4 w-4" /> },
@@ -47,7 +29,7 @@ export const menuLinks: HeaderMenuLink[] = [
   { label: "Projects", section: "projects", icon: <TrophyIcon className="h-4 w-4" /> },
 ];
 
-export const HeaderMenuLinks: React.FC = () => {
+export const HeaderMenuLinks = () => {
   const [isActive, setIsActive] = useState({
     aboutMe: true,
     education: false,
@@ -56,49 +38,52 @@ export const HeaderMenuLinks: React.FC = () => {
     projects: false,
   });
 
-  const checkVisibility = () => {
-    let closestSection: string | null = null;
+  const checkVisibility = useCallback(() => {
+    let closest: (typeof sections)[number] | null = null;
 
-    Object.keys(isActive).forEach(section => {
+    for (const section of sections) {
       const sectionEl = document.getElementById(section);
-      if (sectionEl) {
-        const rect = sectionEl.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-          closestSection = section;
-        }
+      if (!sectionEl) continue;
+      const rect = sectionEl.getBoundingClientRect();
+      // section is intersecting the center line of the viewport
+      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+        closest = section;
+        break;
       }
-    });
+    }
 
     setIsActive({
-      aboutMe: closestSection === "aboutMe",
-      education: closestSection === "education",
-      experiences: closestSection === "experiences",
-      skills: closestSection === "skills",
-      projects: closestSection === "projects",
+      aboutMe: closest === "aboutMe",
+      education: closest === "education",
+      experiences: closest === "experiences",
+      skills: closest === "skills",
+      projects: closest === "projects",
     });
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", checkVisibility, { passive: true });
-    return () => window.removeEventListener("scroll", checkVisibility);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    checkVisibility();
+    return () => {
+      window.removeEventListener("scroll", checkVisibility);
+    };
+  }, [checkVisibility]);
 
   return (
     <>
       {menuLinks.map(({ label, section, icon }) => (
         <li key={section}>
-          <span
-            onClick={() => {
-              document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
-            }}
+          <button
+            type="button"
+            onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
             className={`${
               isActive[section as keyof typeof isActive] ? "bg-primary shadow-md text-accent-content" : ""
             } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+            aria-current={isActive[section as keyof typeof isActive] ? "page" : undefined}
           >
             {icon}
             <span>{label}</span>
-          </span>
+          </button>
         </li>
       ))}
     </>
@@ -106,9 +91,9 @@ export const HeaderMenuLinks: React.FC = () => {
 };
 
 /**
- * Site Header
+ * Site header
  */
-const Header: React.FC = () => {
+export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
 
@@ -120,8 +105,10 @@ const Header: React.FC = () => {
   return (
     <div className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
+        {/* Mobile menu */}
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
           <button
+            type="button"
             aria-label="Open menu"
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
             onClick={() => setIsDrawerOpen(prev => !prev)}
@@ -139,6 +126,7 @@ const Header: React.FC = () => {
           )}
         </div>
 
+        {/* Desktop logo + links */}
         <Link href="/" className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Alexis Balayre</span>
@@ -151,9 +139,12 @@ const Header: React.FC = () => {
         </ul>
       </div>
 
+      {/* Contact icons */}
       <div className="flex text-center pr-10">
         <a
           href="tel:+33695831470"
+          target="_blank"
+          rel="noopener noreferrer"
           className="transition flex text-neutral-content hover:text-primary-content pr-10"
           aria-label="Phone number of Alexis Balayre"
         >
@@ -161,6 +152,8 @@ const Header: React.FC = () => {
         </a>
         <a
           href="mailto:alexis@balayre.com"
+          target="_blank"
+          rel="noopener noreferrer"
           className="transition flex text-neutral-content hover:text-primary-content pr-10"
           aria-label="Email of Alexis Balayre"
         >

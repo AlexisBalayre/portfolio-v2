@@ -20,12 +20,22 @@ export default function Page() {
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(entries => entries.forEach(e => setIsActive(e.isIntersecting)), {
-      threshold: 0.3,
-    });
-    if (sectionRef.current) observer.observe(sectionRef.current);
+    const el = sectionRef.current; // snapshot the element once
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          setIsActive(entry.isIntersecting);
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(el);
+
     return () => {
-      if (sectionRef.current) observer.unobserve(sectionRef.current);
+      observer.unobserve(el); // always refers to the same node
     };
   }, []);
 
