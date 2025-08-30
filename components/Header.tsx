@@ -7,7 +7,6 @@ import {
   Bars3Icon,
   BriefcaseIcon,
   CodeBracketIcon,
-  // CpuChipIcon,
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
@@ -54,7 +53,6 @@ export const HeaderMenuLinks = () => {
     education: false,
     experiences: false,
     skills: false,
-    // chatbot: false,
     projects: false,
   });
 
@@ -65,7 +63,6 @@ export const HeaderMenuLinks = () => {
       const sectionEl = document.getElementById(section);
       if (sectionEl) {
         const rect = sectionEl.getBoundingClientRect();
-        // Section visible à plus de 50%
         if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
           closestSection = section;
         }
@@ -77,13 +74,14 @@ export const HeaderMenuLinks = () => {
       education: closestSection === "education",
       experiences: closestSection === "experiences",
       skills: closestSection === "skills",
-      // chatbot: closestSection === "chatbot",
       projects: closestSection === "projects",
     });
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", checkVisibility);
+    // Vérifie à l'init puis sur scroll
+    checkVisibility();
+    window.addEventListener("scroll", checkVisibility, { passive: true });
     return () => {
       window.removeEventListener("scroll", checkVisibility);
     };
@@ -126,27 +124,33 @@ export const Header = () => {
     <div className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         {/* Mobile menu */}
-        <div className="lg:hidden dropdown" ref={burgerMenuRef}>
-          <label
-            tabIndex={0}
+        <div
+          className={`lg:hidden dropdown ${isDrawerOpen ? "dropdown-open" : ""}`}
+          ref={burgerMenuRef}
+        >
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={isDrawerOpen}
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation(); // évite la fermeture immédiate par le hook outside-click
               setIsDrawerOpen(prev => !prev);
             }}
           >
-            <Bars3Icon className="h-1/2" />
-          </label>
-          {isDrawerOpen && (
-            <ul
-              tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-              onClick={() => {
-                setIsDrawerOpen(false);
-              }}
-            >
-              <HeaderMenuLinks />
-            </ul>
-          )}
+            <Bars3Icon className="w-6 h-6" />
+          </button>
+
+          <ul
+            tabIndex={0}
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52 z-50"
+            onClick={() => {
+              // Au clic sur un lien, on ferme
+              setIsDrawerOpen(false);
+            }}
+          >
+            <HeaderMenuLinks />
+          </ul>
         </div>
 
         {/* Desktop logo + links */}
