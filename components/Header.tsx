@@ -7,11 +7,12 @@ import {
   Bars3Icon,
   BriefcaseIcon,
   CodeBracketIcon,
+  // CpuChipIcon,
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
 import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
-import { useOutsideClick } from "~~/hooks/useOutsideClick";
+import { useOutsideClick } from "~~/hooks";
 
 interface HeaderMenuLink {
   label: string;
@@ -19,14 +20,32 @@ interface HeaderMenuLink {
   icon?: React.ReactNode;
 }
 
-const sections = ["aboutMe", "education", "experiences", "skills", "projects"] as const;
-
 export const menuLinks: HeaderMenuLink[] = [
-  { label: "About Me", section: "aboutMe", icon: <UserIcon className="h-4 w-4" /> },
-  { label: "Education", section: "education", icon: <AcademicCapIcon className="h-4 w-4" /> },
-  { label: "Experiences", section: "experiences", icon: <BriefcaseIcon className="h-4 w-4" /> },
-  { label: "Skills", section: "skills", icon: <CodeBracketIcon className="h-4 w-4" /> },
-  { label: "Projects", section: "projects", icon: <TrophyIcon className="h-4 w-4" /> },
+  {
+    label: "About Me",
+    section: "aboutMe",
+    icon: <UserIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Education",
+    section: "education",
+    icon: <AcademicCapIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Experiences",
+    section: "experiences",
+    icon: <BriefcaseIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Skills",
+    section: "skills",
+    icon: <CodeBracketIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Projects",
+    section: "projects",
+    icon: <TrophyIcon className="h-4 w-4" />,
+  },
 ];
 
 export const HeaderMenuLinks = () => {
@@ -35,55 +54,56 @@ export const HeaderMenuLinks = () => {
     education: false,
     experiences: false,
     skills: false,
+    // chatbot: false,
     projects: false,
   });
 
-  const checkVisibility = useCallback(() => {
-    let closest: (typeof sections)[number] | null = null;
+  const checkVisibility = () => {
+    let closestSection: string | null = null;
 
-    for (const section of sections) {
+    Object.keys(isActive).forEach(section => {
       const sectionEl = document.getElementById(section);
-      if (!sectionEl) continue;
-      const rect = sectionEl.getBoundingClientRect();
-      // section is intersecting the center line of the viewport
-      if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-        closest = section;
-        break;
+      if (sectionEl) {
+        const rect = sectionEl.getBoundingClientRect();
+        // Section visible à plus de 50%
+        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          closestSection = section;
+        }
       }
-    }
+    });
 
     setIsActive({
-      aboutMe: closest === "aboutMe",
-      education: closest === "education",
-      experiences: closest === "experiences",
-      skills: closest === "skills",
-      projects: closest === "projects",
+      aboutMe: closestSection === "aboutMe",
+      education: closestSection === "education",
+      experiences: closestSection === "experiences",
+      skills: closestSection === "skills",
+      // chatbot: closestSection === "chatbot",
+      projects: closestSection === "projects",
     });
-  }, []);
+  };
 
   useEffect(() => {
-    window.addEventListener("scroll", checkVisibility, { passive: true });
-    checkVisibility();
+    window.addEventListener("scroll", checkVisibility);
     return () => {
       window.removeEventListener("scroll", checkVisibility);
     };
-  }, [checkVisibility]);
+  }, []);
 
   return (
     <>
       {menuLinks.map(({ label, section, icon }) => (
         <li key={section}>
-          <button
-            type="button"
-            onClick={() => document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })}
+          <span
+            onClick={() => {
+              document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+            }}
             className={`${
               isActive[section as keyof typeof isActive] ? "bg-primary shadow-md text-accent-content" : ""
             } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
-            aria-current={isActive[section as keyof typeof isActive] ? "page" : undefined}
           >
             {icon}
             <span>{label}</span>
-          </button>
+          </span>
         </li>
       ))}
     </>
@@ -95,7 +115,7 @@ export const HeaderMenuLinks = () => {
  */
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const burgerMenuRef = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
   useOutsideClick(
     burgerMenuRef,
@@ -107,19 +127,22 @@ export const Header = () => {
       <div className="navbar-start w-auto lg:w-1/2">
         {/* Mobile menu */}
         <div className="lg:hidden dropdown" ref={burgerMenuRef}>
-          <button
-            type="button"
-            aria-label="Open menu"
+          <label
+            tabIndex={0}
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
-            onClick={() => setIsDrawerOpen(prev => !prev)}
+            onClick={() => {
+              setIsDrawerOpen(prev => !prev);
+            }}
           >
-            <Bars3Icon className="w-6 h-6" />
-          </button>
-
+            <Bars3Icon className="h-1/2" />
+          </label>
           {isDrawerOpen && (
             <ul
+              tabIndex={0}
               className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-              onClick={() => setIsDrawerOpen(false)}
+              onClick={() => {
+                setIsDrawerOpen(false);
+              }}
             >
               <HeaderMenuLinks />
             </ul>
@@ -127,13 +150,12 @@ export const Header = () => {
         </div>
 
         {/* Desktop logo + links */}
-        <Link href="/" className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
+        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex flex-col">
             <span className="font-bold leading-tight">Alexis Balayre</span>
             <span className="text-xs">AI Engineer</span>
           </div>
         </Link>
-
         <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
           <HeaderMenuLinks />
         </ul>
@@ -172,5 +194,3 @@ export const Header = () => {
     </div>
   );
 };
-
-export default Header;
