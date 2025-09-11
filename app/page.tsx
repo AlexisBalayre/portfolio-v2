@@ -48,19 +48,6 @@ export default function Page() {
             Alexis Balayre
           </h1>
 
-          <div className="w-full text-center rounded-xl hidden md:grid mt-10">
-            <iframe
-              className="w-1/2 place-self-center rounded-xl"
-              src="https://www.youtube.com/embed/aLr04QRIzbQ?si=e-xkmN-wDCRUk-D5"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              style={{ aspectRatio: "16 / 9" }}
-              allowFullScreen
-            ></iframe>
-          </div>
-
           {/* About me */}
           <div
             className="mx-auto container grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center mt-20"
@@ -160,20 +147,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-
-          <div className="w-full text-center rounded-xl grid md:hidden mt-4">
-            <iframe
-              className="w-full place-self-center rounded-xl"
-              src="https://www.youtube.com/embed/aLr04QRIzbQ?si=e-xkmN-wDCRUk-D5"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              style={{ aspectRatio: "16 / 9" }}
-              allowFullScreen
-            ></iframe>
-          </div>
-
+          
           {/* Education */}
           <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="education">
             <div className="md:mb-10"></div>
