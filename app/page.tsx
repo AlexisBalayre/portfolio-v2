@@ -70,22 +70,20 @@ export default function Page() {
                 <strong>Name:</strong> Alexis Balayre
               </p>
               <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                <strong>Birth Date:</strong> Avril 15, 2001
-              </p>
-              <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
                 <strong>Nationality:</strong> French
               </p>
               <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
                 <strong>Location:</strong> Paris, France
               </p>
               <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                <strong>Degrees:</strong> ISEP Software Engineering Master Degree | Msc in applied AI at Cranfield
-                University
+                <strong>Degrees:</strong> ISEP Engineering Master&#39;s Degree | MSc in Computational and Software
+                Techniques in Engineering, Cranfield University
               </p>
               <p
                 className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}
               >
-                <strong>Specialisations:</strong> Data Science | Machine Learning | Software Engineering
+                <strong>Specialisations:</strong> Real-Time Speech AI | Generative AI | Agentic Systems | Machine
+                Learning | Software Engineering
               </p>
               <p
                 className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}
@@ -118,11 +116,13 @@ export default function Page() {
               </span>
               <div className="divider divider-neutral "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                AI Engineer with a dual background in Software Engineering and Data Science, experienced in delivering
-                production-ready AI solutions that bridge research and business impact. Skilled in Machine Learning,
-                Generative AI, and Agentic Systems, with a proven ability to turn prototypes into scalable products that
-                create measurable value. Recognised for resourcefulness, determination, and meticulous attention to
-                detail, and driven by a strong interest in AI Safety.
+                AI Engineer specialising in real-time speech AI, with a dual background in Software Engineering and Data
+                Science. I design, build, and operate production systems that turn applied research into scalable
+                products, currently focused on low-latency speech translation at Acolad. Beyond speech, I work across
+                agentic systems, LLM and RAG applications, and applied machine learning, with a track record of taking
+                prototypes into production. I&apos;m particularly passionate about AI security, which I see as one of
+                the most critical challenges ahead. My goal is to build AI that is not only capable, but secure and
+                trustworthy for the people and organisations who depend on it.
               </p>
             </div>
 
@@ -147,7 +147,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-          
+
           {/* Education */}
           <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="education">
             <div className="md:mb-10"></div>

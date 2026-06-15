@@ -6,7 +6,7 @@ import { Footer } from "~~/components/Footer";
 
 const siteUrl = "https://alexis.balayre.com";
 const siteName = "Alexis Balayre — AI Engineer";
-const titleDefault = "AI Engineer";
+const titleDefault = "Alexis Balayre — AI Engineer";
 const titleTemplate = "%s | Alexis Balayre";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: titleTemplate,
   },
   description:
-    "AI Engineer portfolio — Software Engineering, Data Science, Generative AI & Agentic Systems. Projects in LLMs, NLP, multimodal AI, and production-grade ML.",
+    "AI Engineer portfolio — Software Engineering, Data Science, Generative AI & Agentic Systems. Projects in LLMs, NLP, real-time speech AI, and production-grade ML.",
   applicationName: siteName,
   authors: [{ name: "Alexis Balayre", url: siteUrl }],
   creator: "Alexis Balayre",
@@ -98,11 +98,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "WebSite",
     name: siteName,
     url: siteUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: `${siteUrl}/search?q={search_term_string}`,
-      "query-input": "required name=search_term_string",
-    },
+    inLanguage: "en-GB",
+    author: { "@type": "Person", name: "Alexis Balayre", url: siteUrl },
   };
 
   const ldJsonPerson = {
@@ -110,13 +107,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     "@type": "Person",
     name: "Alexis Balayre",
     url: siteUrl,
+    image: `${siteUrl}/assets/img/alexis.jpg`,
     jobTitle: "AI Engineer",
+    description:
+      "AI Engineer specialising in real-time speech AI, generative AI, and agentic systems, with a background in Software Engineering and Data Science.",
+    nationality: "French",
+    address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
+    worksFor: { "@type": "Organization", name: "Acolad", url: "https://www.acolad.com/" },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "Cranfield University", url: "https://www.cranfield.ac.uk/" },
+      { "@type": "CollegeOrUniversity", name: "ISEP", url: "https://www.isep.fr/" },
+    ],
     sameAs: ["https://github.com/AlexisBalayre", "https://www.linkedin.com/in/alexis-balayre"],
-    worksFor: {
-      "@type": "Organization",
-      name: "Independent / Open to opportunities",
-    },
-    knowsAbout: ["Machine Learning", "Generative AI", "Agentic AI", "LLM", "NLP", "Software Engineering"],
+    knowsAbout: [
+      "Real-Time Speech AI",
+      "Generative AI",
+      "Agentic AI",
+      "Machine Learning",
+      "LLM",
+      "NLP",
+      "Software Engineering",
+    ],
   };
 
   return (

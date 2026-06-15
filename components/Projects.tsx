@@ -21,7 +21,7 @@ const Projects = ({ items }: ProjectsProps) => (
         key={project.name}
       >
         <figure>
-          <Image src={project.image} alt="Project Banner" width={400} height={200} />
+          <Image src={project.image} alt={`${project.name} project preview`} width={400} height={200} />
         </figure>
         <div className="card-body">
           <h2 className="card-title">{project.name}</h2>

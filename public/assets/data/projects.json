@@ -1,6 +1,13 @@
 [
   {
-    "name": "AuraHelpeskGraph: GraphRAG Support Chatbot",
+    "name": "Claude Code Power Config: Agentic Development Framework",
+    "description": "An opinionated, production-ready configuration framework for Claude Code that codifies a multi-agent, worktree-first development workflow. It bundles always-on project memory (CLAUDE.md), path-scoped convention rules, auto-discoverable skills, a multi-agent PR review command, isolated domain subagents (conventions, migrations, security, architecture), and zero-LLM shell hooks for git safety and quality gates. Language-agnostic, demonstrated on a TypeScript monorepo. It reflects how I now plan and build software, using Gemini and Claude to plan and then drive implementation with Claude Code.",
+    "technologies": ["Claude Code", "MCP", "Git Worktrees", "Shell / Bash", "TypeScript"],
+    "url": "https://github.com/AlexisBalayre/claude-code-power-config",
+    "image": "https://opengraph.githubassets.com/da2dbcf31e390f25b77ffa743855ee0b44f5dac3d831c439d390436b74bf56db/AlexisBalayre/claude-code-power-config"
+  },
+  {
+    "name": "AuraHelpdeskGraph: GraphRAG Support Chatbot",
     "description": "A support chatbot that leverages local LLMs, vector similarity search, and knowledge graphs to provide contextual assistance by finding and presenting solutions from historical support tickets.",
     "technologies": [
       "Python",
@@ -16,7 +23,7 @@
   },
   {
     "name": "RagDocs: RAG-Powered Chatbot for Technical Documentation",
-    "description": "RagDocs is a cutting-edge open-source solution that revolutionizes how you interact with documentation. By combining the power of local LLMs with state-of-the-art Retrieval-Augmented Generation (RAG), developers can instantly get accurate answers from their documentation without any API costs. Say goodbye to expensive API calls and privacy concerns. With RagDocs, all your documentation stays private while providing ChatGPT-like interactions. Built with Milvus vector search and Next.js, it's production-ready and easy to deploy. Experience the future of documentation search with complete data privacy and no usage fees.",
+    "description": "RagDocs is an open-source tool for querying technical documentation using local LLMs. It indexes documents into a Milvus vector store and answers questions with Retrieval-Augmented Generation (RAG), so documentation stays private and queries run without external API costs. Built with Next.js, FastAPI, LlamaIndex, and Ollama, and deployable via Docker.",
     "technologies": ["Python", "Vector Database (Milvus)", "Next.js", "FastAPI", "LLamaIndex", "Ollama", "Docker"],
     "url": "https://github.com/AlexisBalayre/RagDocs",
     "image": "https://opengraph.githubassets.com/80f784e0bd1539badd36453c19365fc8b17e9cd762538f09cd61b9fc892afaf7/AlexisBalayre/RagDocs"
@@ -45,13 +52,8 @@
   },
   {
     "name": "AI-Powered Meeting Summarizer",
-    "description": "The AI-Powered Meeting Summarizer is a Gradio-powered application that converts audio recordings of meetings into transcripts and provides concise summaries using whisper.cpp for audio-to-text conversion and Ollama for text summarization. This tool is ideal for quickly extracting key points, decisions, and action items from meetings.",
-    "technologies": [
-      "Python",
-      "Gradio",
-      "whisper.cpp",
-      "Ollama"
-    ],
+    "description": "The AI-Powered Meeting Summarizer is a Gradio-powered application that converts audio recordings of meetings into transcripts and provides concise summaries using whisper.cpp for audio-to-text conversion and Ollama for text summarisation. This tool is ideal for quickly extracting key points, decisions, and action items from meetings.",
+    "technologies": ["Python", "Gradio", "whisper.cpp", "Ollama"],
     "url": "https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer",
     "image": "https://opengraph.githubassets.com/8503b77742b867af00b87030db3a84e436a0179ac76d4163617e1d48352fe755/AlexisBalayre/AI-Powered-Meeting-Summarizer"
   },

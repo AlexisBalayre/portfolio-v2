@@ -1,6 +1,5 @@
 import { GithubLogo } from "../public/assets/logos/GithubLogo";
 import { LinkedinLogo } from "../public/assets/logos/LinkedinLogo";
-import { XLogo } from "../public/assets/logos/XLogo";
 
 /**
  * Site footer
@@ -33,17 +32,6 @@ export const Footer = () => {
                 aria-label="Github of Alexis Balayre"
               >
                 <GithubLogo className="w-6 h-6" />
-              </a>
-            </div>
-            <div className="flex text-center pr-2 pl-2">
-              <a
-                href="https://twitter.com/Belas_Eth"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition flex text-neutral-content hover:text-primary-content"
-                aria-label="Twitter of Alexis Balayre"
-              >
-                <XLogo className="w-6 h-6" />
               </a>
             </div>
           </div>

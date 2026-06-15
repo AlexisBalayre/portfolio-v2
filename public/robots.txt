@@ -1,6 +1,9 @@
-# Allow all crawlers
+# *
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Host
+Host: https://alexis.balayre.com
+
+# Sitemaps
 Sitemap: https://alexis.balayre.com/sitemap.xml

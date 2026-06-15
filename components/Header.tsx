@@ -10,7 +10,7 @@ import {
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import { CalendarIcon, EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/solid";
+import { CalendarIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
 import { useOutsideClick } from "~~/hooks";
 
 interface HeaderMenuLink {
@@ -124,16 +124,13 @@ export const Header = () => {
     <div className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         {/* Mobile menu */}
-        <div
-          className={`lg:hidden dropdown ${isDrawerOpen ? "dropdown-open" : ""}`}
-          ref={burgerMenuRef}
-        >
+        <div className={`lg:hidden dropdown ${isDrawerOpen ? "dropdown-open" : ""}`} ref={burgerMenuRef}>
           <button
             type="button"
             aria-label="Open menu"
             aria-expanded={isDrawerOpen}
             className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation(); // évite la fermeture immédiate par le hook outside-click
               setIsDrawerOpen(prev => !prev);
             }}
@@ -167,15 +164,6 @@ export const Header = () => {
 
       {/* Contact icons */}
       <div className="flex text-center pr-10">
-        <a
-          href="tel:+33695831470"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition flex text-neutral-content hover:text-primary-content pr-10"
-          aria-label="Phone number of Alexis Balayre"
-        >
-          <PhoneIcon className="w-6 h-6" />
-        </a>
         <a
           href="mailto:alexis@balayre.com"
           target="_blank"
