@@ -1,0 +1,32 @@
+# Alexis Balayre
+
+> AI Engineer specialising in real-time speech AI, with a dual background in Software Engineering and Data Science. Currently building low-latency speech translation at Acolad.
+
+Alexis Balayre is a French AI Engineer based in Paris. He designs, builds, and operates production systems that take applied speech research into scalable products, and works across agentic systems, LLM/RAG applications, and applied machine learning. He is particularly focused on AI security. He holds an MSc in Computational and Software Techniques in Engineering from Cranfield University and an Engineering Master's Degree from ISEP.
+
+## Profile
+- [Portfolio](https://alexis.balayre.com): Full portfolio — about, education, experience, skills, and projects.
+- [Resume](https://alexis-resume.balayre.com/): Up-to-date CV.
+- [LinkedIn](https://www.linkedin.com/in/alexis-balayre): Professional profile and updates.
+- [GitHub](https://github.com/AlexisBalayre): Open-source projects and code.
+
+## Current Role
+- [AI Engineer, Acolad](https://www.acolad.com/en/lia/live): Works on Lia Live AI, Acolad's real-time AI interpreting platform — building streaming speech translation pipelines (ASR, LLM translation, streaming TTS) with sub-second latency across 30+ languages, the WebRTC/telephony infrastructure behind live multilingual sessions (failover on Kubernetes), agentic clarification features, provider benchmarking/routing, and production operations (observability, security, cost). Also advancing speech model fine-tuning, inference optimisation, and on-device deployment.
+
+## Selected Projects
+- [Claude Code Power Config](https://github.com/AlexisBalayre/claude-code-power-config): An opinionated configuration framework for Claude Code codifying a multi-agent, worktree-first development workflow (project memory, convention rules, skills, multi-agent PR review, domain subagents, zero-LLM shell hooks). Reflects how Alexis now plans with Gemini and Claude and builds with Claude Code.
+- [RagDocs](https://github.com/AlexisBalayre/RagDocs): Open-source tool for querying technical documentation with local LLMs and Retrieval-Augmented Generation over a Milvus vector store (Next.js, FastAPI, LlamaIndex, Ollama, Docker).
+- [AuraHelpdeskGraph](https://github.com/AlexisBalayre/AuraHelpeskGraph): GraphRAG support chatbot combining local LLMs, vector similarity search, and knowledge graphs (Neo4j) over historical support tickets.
+- [AI-Powered Meeting Summarizer](https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer): Converts meeting audio to transcripts and concise summaries using whisper.cpp and Ollama.
+- [Master's Thesis — Aircraft Refuelling Port Prediction](https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling): Deep learning framework (fine-tuned YOLOv10 detection + a proposed SizPos-GRU sequence model) predicting the future position of aircraft refuelling ports from video, in collaboration with Airbus, UKRI, and the ATI.
+- [GPTAggregator](https://github.com/AlexisBalayre/GPTAggregator): Unified interface to switch seamlessly between LLM providers (OpenAI, Anthropic, Mistral, Groq, Hugging Face) within a single conversation.
+
+## Expertise
+- Speech & Real-Time AI: streaming ASR, LLM translation, streaming TTS, LiveKit/WebRTC, Deepgram.
+- Generative AI & LLMs: OpenAI, Gemini, Claude, Hugging Face Transformers, vLLM, Ollama, LangChain, LangGraph, LlamaIndex, RAG.
+- Machine Learning & Data: PyTorch Lightning, scikit-learn, the Python data stack, MLflow.
+- Engineering & Infrastructure: TypeScript, Python, Next.js, FastAPI, Node.js/NestJS, Docker, Kubernetes, AWS, CI/CD.
+
+## Contact
+- Email: alexis@balayre.com
+- [Book a call](https://calendly.com/alexis-balayre): Schedule a meeting via Calendly.
