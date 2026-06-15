@@ -7,6 +7,7 @@ import {
   Bars3Icon,
   BriefcaseIcon,
   CodeBracketIcon,
+  RocketLaunchIcon,
   TrophyIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
@@ -26,14 +27,14 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <UserIcon className="h-4 w-4" />,
   },
   {
-    label: "Education",
-    section: "education",
-    icon: <AcademicCapIcon className="h-4 w-4" />,
-  },
-  {
     label: "Experiences",
     section: "experiences",
     icon: <BriefcaseIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Projects",
+    section: "projects",
+    icon: <TrophyIcon className="h-4 w-4" />,
   },
   {
     label: "Skills",
@@ -41,9 +42,14 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <CodeBracketIcon className="h-4 w-4" />,
   },
   {
-    label: "Projects",
-    section: "projects",
-    icon: <TrophyIcon className="h-4 w-4" />,
+    label: "Hackathons",
+    section: "hackathons",
+    icon: <RocketLaunchIcon className="h-4 w-4" />,
+  },
+  {
+    label: "Education",
+    section: "education",
+    icon: <AcademicCapIcon className="h-4 w-4" />,
   },
 ];
 
@@ -52,6 +58,7 @@ export const HeaderMenuLinks = () => {
     aboutMe: true,
     education: false,
     experiences: false,
+    hackathons: false,
     skills: false,
     projects: false,
   });
@@ -73,6 +80,7 @@ export const HeaderMenuLinks = () => {
       aboutMe: closestSection === "aboutMe",
       education: closestSection === "education",
       experiences: closestSection === "experiences",
+      hackathons: closestSection === "hackathons",
       skills: closestSection === "skills",
       projects: closestSection === "projects",
     });

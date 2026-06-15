@@ -3,12 +3,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AcademicCapIcon, BriefcaseIcon, CodeBracketIcon, TrophyIcon, UserIcon } from "@heroicons/react/24/outline";
+import {
+  AcademicCapIcon,
+  BriefcaseIcon,
+  CodeBracketIcon,
+  RocketLaunchIcon,
+  TrophyIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 
 import Projects from "~~/components/Projects";
 import Skills from "~~/components/Skills";
 import Timeline from "~~/components/Timeline";
 import experiences from "~~/public/assets/data/experiences.json";
+import hackathons from "~~/public/assets/data/hackathons.json";
 import education from "~~/public/assets/data/formation.json";
 import projects from "~~/public/assets/data/projects.json";
 import tech from "~~/public/assets/data/tech.json";
@@ -148,16 +156,6 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Education */}
-          <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="education">
-            <div className="md:mb-10"></div>
-            <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
-              <AcademicCapIcon className="h-8 w-8 mr-2 flex place-self-center" />
-              <h2 className="text-4xl font-bold text-center md:text-left">Education</h2>
-            </span>
-            <Timeline items={education} />
-          </div>
-
           {/* Experiences */}
           <div className="md:py-12 mx-auto container" id="experiences">
             <div className="md:mb-10"></div>
@@ -166,6 +164,16 @@ export default function Page() {
               <h2 className="text-4xl font-bold text-center md:text-left">Experiences</h2>
             </span>
             <Timeline items={experiences} />
+          </div>
+
+          {/* Projects */}
+          <div className="md:py-12 mx-auto container" id="projects">
+            <div className="md:mb-10"></div>
+            <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
+              <TrophyIcon className="h-8 w-8 mr-2 flex" />
+              <h2 className="text-4xl font-bold text-center md:text-left place-self-center">Projects</h2>
+            </span>
+            <Projects items={projects} />
           </div>
 
           {/* Skills */}
@@ -178,14 +186,24 @@ export default function Page() {
             <Skills items={tech} />
           </div>
 
-          {/* Projects */}
-          <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="projects">
+          {/* Hackathons */}
+          <div className="md:py-12 mx-auto container" id="hackathons">
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
-              <TrophyIcon className="h-8 w-8 mr-2 flex" />
-              <h2 className="text-4xl font-bold text-center md:text-left place-self-center">Projects</h2>
+              <RocketLaunchIcon className="h-8 w-8 mr-2 flex place-self-center" />
+              <h2 className="text-4xl font-bold text-center md:text-left">Hackathons</h2>
             </span>
-            <Projects items={projects} />
+            <Timeline items={hackathons} />
+          </div>
+
+          {/* Education */}
+          <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="education">
+            <div className="md:mb-10"></div>
+            <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
+              <AcademicCapIcon className="h-8 w-8 mr-2 flex place-self-center" />
+              <h2 className="text-4xl font-bold text-center md:text-left">Education</h2>
+            </span>
+            <Timeline items={education} />
           </div>
         </div>
       </div>
