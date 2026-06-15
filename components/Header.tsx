@@ -56,10 +56,10 @@ export const HeaderMenuLinks = () => {
     projects: false,
   });
 
-  const checkVisibility = () => {
+  const checkVisibility = useCallback(() => {
     let closestSection: string | null = null;
 
-    Object.keys(isActive).forEach(section => {
+    menuLinks.forEach(({ section }) => {
       const sectionEl = document.getElementById(section);
       if (sectionEl) {
         const rect = sectionEl.getBoundingClientRect();
@@ -76,7 +76,7 @@ export const HeaderMenuLinks = () => {
       skills: closestSection === "skills",
       projects: closestSection === "projects",
     });
-  };
+  }, []);
 
   useEffect(() => {
     // Vérifie à l'init puis sur scroll
@@ -85,7 +85,7 @@ export const HeaderMenuLinks = () => {
     return () => {
       window.removeEventListener("scroll", checkVisibility);
     };
-  }, []);
+  }, [checkVisibility]);
 
   return (
     <>
