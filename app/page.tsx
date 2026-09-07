@@ -25,7 +25,7 @@ import { LinkedinLogo } from "~~/public/assets/logos/LinkedinLogo";
 
 export default function Page() {
   const [isActive, setIsActive] = useState(false);
-  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current; // snapshot the element once
@@ -55,17 +55,25 @@ export default function Page() {
             <span className="block text-2xl mb-2 text-neutral-content font-light">Meet</span>
             Alexis Balayre
           </h1>
+          <div className="max-w-2xl mx-auto">
+            <p className="text-center text-lg text-neutral-content">
+              AI Engineer specialising in real-time speech AI, LLM systems and production ML. Building Lia Live AI,
+              Acolad&apos;s real-time AI interpreting platform, in Paris.
+            </p>
+          </div>
 
           {/* About me */}
-          <div
-            className="mx-auto container grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center mt-20"
+          <section
+            className="mx-auto container grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center mt-20 scroll-mt-24"
             ref={sectionRef}
             id="aboutMe"
+            aria-labelledby="aboutMe-heading"
           >
             <div className="order-2 md:order-1 mx-auto container">
               <span className="flex flex-row items-center justify-center md:justify-start mb-3">
                 <UserIcon className="h-8 w-8 mr-2 flex place-self-center" />
                 <h2
+                  id="aboutMe-heading"
                   className={`transition-colors duration-500 text-4xl font-bold text-center md:text-left ${
                     isActive ? "" : "text-gray-600"
                   }`}
@@ -142,73 +150,96 @@ export default function Page() {
               <div className="relative">
                 <Image
                   src="/assets/img/alexis.jpg"
-                  alt="Alexis Balayre Profile Picture"
+                  alt="Portrait of Alexis Balayre, AI Engineer"
                   className="rounded-full"
                   width={180}
-                  height={200}
+                  height={180}
+                  priority
                 />
                 <a
                   className="btn btn-primary justify-center mt-10 rounded-lg"
                   href="https://alexis-resume.balayre.com/"
                   target="_blank"
-                  rel="noreferrer nofollow"
+                  rel="noopener noreferrer"
                   aria-label="Download Resume of Alexis Balayre"
                 >
                   Download Resume
                 </a>
               </div>
             </div>
-          </div>
+          </section>
 
           {/* Experiences */}
-          <div className="md:py-12 mx-auto container" id="experiences">
+          <section
+            className="md:py-12 mx-auto container scroll-mt-24"
+            id="experiences"
+            aria-labelledby="experiences-heading"
+          >
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <BriefcaseIcon className="h-8 w-8 mr-2 flex place-self-center" />
-              <h2 className="text-4xl font-bold text-center md:text-left">Experiences</h2>
+              <h2 id="experiences-heading" className="text-4xl font-bold text-center md:text-left">
+                Experiences
+              </h2>
             </span>
             <Timeline items={experiences} />
-          </div>
+          </section>
 
           {/* Projects */}
-          <div className="md:py-12 mx-auto container" id="projects">
+          <section className="md:py-12 mx-auto container scroll-mt-24" id="projects" aria-labelledby="projects-heading">
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <TrophyIcon className="h-8 w-8 mr-2 flex" />
-              <h2 className="text-4xl font-bold text-center md:text-left place-self-center">Projects</h2>
+              <h2 id="projects-heading" className="text-4xl font-bold text-center md:text-left place-self-center">
+                Projects
+              </h2>
             </span>
             <Projects items={projects} />
-          </div>
+          </section>
 
           {/* Skills */}
-          <div className="md:py-12 mx-auto container" id="skills">
+          <section className="md:py-12 mx-auto container scroll-mt-24" id="skills" aria-labelledby="skills-heading">
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <CodeBracketIcon className="h-8 w-8 mr-2 flex place-self-center" />
-              <h2 className="text-4xl font-bold text-center md:text-left">Skills</h2>
+              <h2 id="skills-heading" className="text-4xl font-bold text-center md:text-left">
+                Skills
+              </h2>
             </span>
             <Skills items={tech} />
-          </div>
+          </section>
 
           {/* Hackathons */}
-          <div className="md:py-12 mx-auto container" id="hackathons">
+          <section
+            className="md:py-12 mx-auto container scroll-mt-24"
+            id="hackathons"
+            aria-labelledby="hackathons-heading"
+          >
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <RocketLaunchIcon className="h-8 w-8 mr-2 flex place-self-center" />
-              <h2 className="text-4xl font-bold text-center md:text-left">Hackathons</h2>
+              <h2 id="hackathons-heading" className="text-4xl font-bold text-center md:text-left">
+                Hackathons
+              </h2>
             </span>
             <Timeline items={hackathons} />
-          </div>
+          </section>
 
           {/* Education */}
-          <div className="md:py-12 mx-auto container mt-10 md:mt-0" id="education">
+          <section
+            className="md:py-12 mx-auto container mt-10 md:mt-0 scroll-mt-24"
+            id="education"
+            aria-labelledby="education-heading"
+          >
             <div className="md:mb-10"></div>
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <AcademicCapIcon className="h-8 w-8 mr-2 flex place-self-center" />
-              <h2 className="text-4xl font-bold text-center md:text-left">Education</h2>
+              <h2 id="education-heading" className="text-4xl font-bold text-center md:text-left">
+                Education
+              </h2>
             </span>
             <Timeline items={education} />
-          </div>
+          </section>
         </div>
       </div>
     </>

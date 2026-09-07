@@ -99,17 +99,16 @@ export const HeaderMenuLinks = () => {
     <>
       {menuLinks.map(({ label, section, icon }) => (
         <li key={section}>
-          <span
-            onClick={() => {
-              document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
-            }}
+          <a
+            href={`#${section}`}
+            aria-current={isActive[section as keyof typeof isActive] ? "location" : undefined}
             className={`${
               isActive[section as keyof typeof isActive] ? "bg-primary shadow-md text-accent-content" : ""
             } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
           >
             {icon}
             <span>{label}</span>
-          </span>
+          </a>
         </li>
       ))}
     </>
@@ -129,7 +128,7 @@ export const Header = () => {
   );
 
   return (
-    <div className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
+    <header className="fixed top-0 navbar bg-base-100 min-h-0 flex-shrink-0 justify-between z-20 shadow-md shadow-primary px-0 sm:px-2">
       <div className="navbar-start w-auto lg:w-1/2">
         {/* Mobile menu */}
         <div className={`lg:hidden dropdown ${isDrawerOpen ? "dropdown-open" : ""}`} ref={burgerMenuRef}>
@@ -165,9 +164,11 @@ export const Header = () => {
             <span className="text-xs">AI Engineer</span>
           </div>
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
-          <HeaderMenuLinks />
-        </ul>
+        <nav aria-label="Primary" className="hidden lg:flex">
+          <ul className="flex flex-nowrap menu menu-horizontal px-1 gap-2">
+            <HeaderMenuLinks />
+          </ul>
+        </nav>
       </div>
 
       {/* Contact icons */}
@@ -191,6 +192,6 @@ export const Header = () => {
           <CalendarIcon className="w-6 h-6" />
         </a>
       </div>
-    </div>
+    </header>
   );
 };

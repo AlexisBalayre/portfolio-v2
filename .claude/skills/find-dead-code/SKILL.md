@@ -29,7 +29,7 @@ Named exports nothing imports (e.g. a second export next to a component's defaul
 
 ### C. Orphan images
 
-Files in `public/assets/img/` not referenced by any `logo` / `image` field in `public/assets/data/*.json`, any `src=` in TSX, or `app/layout.tsx` metadata (`/preview.png`, favicons, `alexis.jpg`).
+Files in `public/assets/img/` not referenced by any `logo` / `image` field in `public/assets/data/*.json`, any `src=` in TSX, or `app/layout.tsx` metadata or `app/opengraph-image.tsx` (favicons, `alexis.jpg`).
 
 ```sh
 for f in public/assets/img/*; do b=$(basename "$f"); grep -rq "$b" app components public/assets/data public/site.webmanifest || echo "$f"; done

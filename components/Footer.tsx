@@ -1,5 +1,5 @@
-import { GithubLogo } from "../public/assets/logos/GithubLogo";
-import { LinkedinLogo } from "../public/assets/logos/LinkedinLogo";
+import { GithubLogo } from "~~/public/assets/logos/GithubLogo";
+import { LinkedinLogo } from "~~/public/assets/logos/LinkedinLogo";
 
 /**
  * Site footer
@@ -8,38 +8,32 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear(); // Get the current year dynamically
 
   return (
-    <div className="min-h-0 p-4 md:py-5 md:px-1 md:mb-11 lg:mb-0 md:relative">
+    <footer className="min-h-0 p-4 md:py-5 md:px-1 md:mb-11 lg:mb-0 md:relative">
       <div className="w-full">
-        <ul className="menu menu-horizontal w-full">
-          <div className="flex justify-center items-center gap-4 text-sm w-full">
-            <div className="text-center pr-2 pl-2">
-              <a
-                href="https://www.linkedin.com/in/alexis-balayre"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition text-neutral-content hover:text-primary-content"
-                aria-label="Linkedin of Alexis Balayre"
-              >
-                <LinkedinLogo className="w-6 h-6" />
-              </a>
-            </div>
-            <div className="text-center pr-2 pl-2">
-              <a
-                href="https://github.com/AlexisBalayre"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition flex text-neutral-content hover:text-primary-content"
-                aria-label="Github of Alexis Balayre"
-              >
-                <GithubLogo className="w-6 h-6" />
-              </a>
-            </div>
-          </div>
-        </ul>
+        <nav aria-label="Social links" className="flex justify-center items-center gap-4 text-sm w-full">
+          <a
+            href="https://www.linkedin.com/in/alexis-balayre"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition text-neutral-content hover:text-primary-content px-2"
+            aria-label="Linkedin of Alexis Balayre"
+          >
+            <LinkedinLogo className="w-6 h-6" />
+          </a>
+          <a
+            href="https://github.com/AlexisBalayre"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition flex text-neutral-content hover:text-primary-content px-2"
+            aria-label="Github of Alexis Balayre"
+          >
+            <GithubLogo className="w-6 h-6" />
+          </a>
+        </nav>
         <p className="text-center mt-2 text-xs md:text-sm">
           Copyright © {currentYear} Alexis Balayre. All Rights Reserved.
         </p>
       </div>
-    </div>
+    </footer>
   );
 };

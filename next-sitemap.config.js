@@ -1,11 +1,35 @@
 /** @type {import('next-sitemap').IConfig} */
+const siteUrl = "https://alexis.balayre.com";
+
+// Answer engines and AI assistants that honour robots.txt. "*" already allows them; listing them
+// makes the intent explicit for operators that look for a dedicated rule.
+const aiCrawlers = [
+  "GPTBot",
+  "OAI-SearchBot",
+  "ChatGPT-User",
+  "ClaudeBot",
+  "Claude-SearchBot",
+  "Claude-User",
+  "anthropic-ai",
+  "PerplexityBot",
+  "Perplexity-User",
+  "Google-Extended",
+  "Applebot-Extended",
+  "DuckAssistBot",
+  "meta-externalagent",
+  "Amazonbot",
+  "CCBot",
+];
+
 module.exports = {
-  siteUrl: "https://alexis.balayre.com",
+  siteUrl,
   generateRobotsTxt: true,
   autoLastmod: true,
   changefreq: "weekly",
   priority: 1.0,
   robotsTxtOptions: {
-    policies: [{ userAgent: "*", allow: "/" }],
+    policies: [{ userAgent: "*", allow: "/" }, ...aiCrawlers.map(userAgent => ({ userAgent, allow: "/" }))],
+    transformRobotsTxt: async (_config, robotsTxt) =>
+      `${robotsTxt}\n# AI-agent summary of this site\n# See: ${siteUrl}/llms.txt\n`,
   },
 };
