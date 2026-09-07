@@ -79,6 +79,6 @@ the only copy that lives in code (see [general.md](general.md)).
 A content change rarely stops at one file. When you edit the JSON:
 
 1. **`public/llms.txt`**: the hand-maintained summary for AI agents (profile, current role, selected projects, skills, education, links). Mirror any new role, project, or degree. The spot-check hook reminds you when data changed and `llms.txt` did not.
-2. **`app/layout.tsx`**: `metadata.description`, `keywords`, and the Person JSON-LD (`jobTitle`, `worksFor`, `alumniOf`, `knowsAbout`) when the role, employer, or specialisations change.
+2. **`app/layout.tsx`**: `metadata.description`, `keywords`, and the `profile` constants (`jobTitle`, `description`, `knowsAbout`) when the role or specialisations change. Employers, degrees, awards, Core skills and projects in the JSON-LD are derived from the JSON by `lib/structuredData.ts`, so keep titles in the parseable shapes: `<role> at <organisation>` for experiences, `<school> - <degree>` for formation.
 3. **About Me** in `app/page.tsx`: the `Role`, `Specialisations`, and bio paragraph when they drift from the newest experience entry.
 4. **Resume**: the site links to `https://alexis-resume.balayre.com/`; update it separately if the change belongs on the CV.

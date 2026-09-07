@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-   themes: night --default
- }
+  themes: night --default;
+}
 
 /* Set the default theme by adding: <html data-theme="night"> */
 /* If you really want a forced black page background regardless of theme: */
@@ -12,6 +12,12 @@
 
 body {
   min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 h1,
@@ -38,7 +44,7 @@ p {
 }
 
 .timeline::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 6px;
   background-color: white;
@@ -56,7 +62,7 @@ p {
 }
 
 .containerBis::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 25px;
   height: 25px;
@@ -68,8 +74,12 @@ p {
   z-index: 1;
 }
 
-.left { left: 0; }
-.right { left: 50%; }
+.left {
+  left: 0;
+}
+.right {
+  left: 50%;
+}
 
 .left::before {
   content: " ";
@@ -132,7 +142,8 @@ p {
   }
 
   /* Make sure all circles are at the same spot */
-  .left::after, .right::after {
+  .left::after,
+  .right::after {
     left: 15px;
   }
 

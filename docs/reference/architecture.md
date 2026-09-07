@@ -12,12 +12,12 @@ public/assets/data/*.json ──import──▶ app/page.tsx ──props──�
 app/layout.tsx (server) ── <Header/> ─────┤── sections with id="…" ◀── Header.menuLinks[].section
         │                  <Footer/>      │
         ├── metadata (title, OG, Twitter, icons, robots)
-        └── JSON-LD: WebSite + Person
+        └── JSON-LD graph (lib/structuredData.ts): WebSite, ProfilePage, Person, ItemList
 ```
 
-- **`app/layout.tsx`** (server component) wraps the page with `Header` and `Footer`, exports the `metadata` object, and injects two JSON-LD blocks. It is the single home of SEO.
-- **`app/page.tsx`** (client component) renders six sections in order: About Me, Experiences, Projects, Skills, Hackathons, Education. Each is a `<div id>` with an icon + `<h2>` header and one generic component. The About-Me section uses an `IntersectionObserver` to fade its text in when 30% visible; that observer is why the page is a client component.
-- **`components/Header.tsx`** (client) holds `menuLinks` (label, section id, Heroicon), a desktop nav and a mobile burger menu closed by `useOutsideClick`, and the Calendly CTA. Navigation is scroll-to-id, not routing: there is exactly one route.
+- **`app/layout.tsx`** (server component) wraps the page with `Header` and `Footer`, exports `metadata` and `viewport`, and injects one JSON-LD `@graph` built by `lib/structuredData.ts` from the content JSON. It is the single home of SEO. `app/opengraph-image.tsx` renders the 1200×630 social card at build time with `next/og`.
+- **`app/page.tsx`** (client component) renders six sections in order: About Me, Experiences, Projects, Skills, Hackathons, Education. Each is a `<section id aria-labelledby>` with an icon + `<h2>` header and one generic component; `scroll-mt-24` keeps anchored headings clear of the fixed header. The About-Me section uses an `IntersectionObserver` to fade its text in when 30% visible; that observer is why the page is a client component.
+- **`components/Header.tsx`** (client) holds `menuLinks` (label, section id, Heroicon), a desktop nav and a mobile burger menu closed by `useOutsideClick`, and the Calendly CTA. Navigation is plain `<a href="#section">` anchors (smooth via CSS `scroll-behavior`, disabled under `prefers-reduced-motion`), not routing: there is exactly one route.
 - **`components/Timeline.tsx`** renders the three chronological JSON files. It has two markup branches: a desktop alternating left/right timeline driven by the hand-written CSS in `styles/globals.css`, and a stacked mobile list. Titles and descriptions are HTML strings injected with `dangerouslySetInnerHTML`.
 - **`components/Projects.tsx`** renders daisyUI cards (image, name, description, technology badges, link). **`components/Skills.tsx`** renders categories of badges colour-coded by tier with a legend.
 
@@ -39,9 +39,10 @@ app/layout.tsx (server) ── <Header/> ─────┤── sections with 
 | Artefact | Source | Generated? |
 | :--- | :--- | :--- |
 | `<title>`, description, keywords, Open Graph, Twitter card, robots, icons, manifest link | `metadata` in `app/layout.tsx` | No |
-| JSON-LD `WebSite` and `Person` | constants in `app/layout.tsx` | No |
-| `public/sitemap.xml`, `public/sitemap-0.xml`, `public/robots.txt` | `next-sitemap` on `postbuild`, config in `next-sitemap.config.js` (`siteUrl`, weekly changefreq) | **Yes** (committed output; never edit by hand) |
-| `public/preview.png` (1200×630 OG image), favicons, `site.webmanifest`, `llms.txt` | static files | No |
+| JSON-LD `@graph` (`WebSite`, `ProfilePage`, `Person` with employers, degrees, awards, skills; `ItemList` of projects) | `buildStructuredData` in `lib/structuredData.ts`, fed by the `profile` constants in `app/layout.tsx` and the content JSON | At render, from the JSON |
+| `opengraph-image` (1200×630 PNG) | `app/opengraph-image.tsx` (`next/og`, embeds `alexis.jpg`) | **Yes** (at build) |
+| `public/sitemap.xml`, `public/sitemap-0.xml`, `public/robots.txt` | `next-sitemap` on `postbuild`, config in `next-sitemap.config.js` (`siteUrl`, weekly changefreq, explicit allow rules for AI crawlers, `llms.txt` pointer) | **Yes** (committed output; never edit by hand) |
+| Favicons, `site.webmanifest`, `llms.txt` | static files | No |
 
 ## Toolchain and build
 
@@ -54,6 +55,6 @@ app/layout.tsx (server) ── <Header/> ─────┤── sections with 
 
 ## Extension points
 
-- **New section**: JSON file (if new content type) → generic component in `components/` → `<div id>` block in `page.tsx` → `menuLinks` entry in `Header.tsx` → mention in `llms.txt`.
+- **New section**: JSON file (if new content type) → generic component in `components/` → `<section id aria-labelledby>` block in `page.tsx` → `menuLinks` entry in `Header.tsx` → mention in `llms.txt`.
 - **New project / experience**: JSON entry only, plus the sync list in [content.md](../conventions/content.md#keep-in-sync).
 - **New page / route**: would be the first. Reconsider whether a section does the job; if not, add `app/<route>/page.tsx` (`next-sitemap` picks it up automatically) and switch `Header` navigation to `next/link`.

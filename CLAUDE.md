@@ -12,7 +12,9 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 
 | Path                           | What it is                                                                                        |
 | :----------------------------- | :------------------------------------------------------------------------------------------------ |
-| `app/layout.tsx`               | Server component: Header/Footer shell, **all SEO** (`metadata` + WebSite/Person JSON-LD)           |
+| `app/layout.tsx`               | Server component: Header/Footer shell, **all SEO** (`metadata`, `viewport`, JSON-LD graph)          |
+| `app/opengraph-image.tsx`      | Build-time 1200×630 social card (`next/og`)                                                        |
+| `lib/structuredData.ts`        | Builds the schema.org `@graph` (WebSite, ProfilePage, Person, projects ItemList) from the JSON     |
 | `app/page.tsx`                 | The one page: six sections (`id` must match `menuLinks` in `Header.tsx`)                           |
 | `components/`                  | `Header`, `Footer`, and the generic renderers `Timeline`, `Projects`, `Skills`                    |
 | `hooks/`                       | `useOutsideClick`, re-exported from `index.ts`                                                     |

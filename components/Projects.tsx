@@ -16,7 +16,7 @@ interface ProjectsProps {
 const Projects = ({ items }: ProjectsProps) => (
   <div className="container mx-auto w-full rounded-xl md:grid-cols-3 grid gap-8 md:gap-14">
     {items.map(project => (
-      <div
+      <article
         className="card bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1 shadow-xl mb-6 md:mb-0"
         key={project.name}
       >
@@ -24,20 +24,26 @@ const Projects = ({ items }: ProjectsProps) => (
           <Image src={project.image} alt={`${project.name} project preview`} width={400} height={200} />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{project.name}</h2>
+          <h3 className="card-title">{project.name}</h3>
           <p>{project.description}</p>
-          <div className="card-actions justify">
+          <ul className="card-actions justify list-none m-0 p-0" aria-label="Technologies">
             {project.technologies.map(technology => (
-              <div className="badge badge-outline badge-primary" key={technology}>
+              <li className="badge badge-outline badge-primary" key={technology}>
                 {technology}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
-        <a className="btn btn-primary" href={project.url} target="_blank" rel="noreferrer">
+        <a
+          className="btn btn-primary"
+          href={project.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`View ${project.name} on GitHub`}
+        >
           View Project
         </a>
-      </div>
+      </article>
     ))}
   </div>
 );

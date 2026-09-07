@@ -1,17 +1,36 @@
 # Alexis Balayre
 
-> AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a dual background in Software Engineering and Data Science. Currently building Lia Live AI, Acolad's real-time AI interpreting platform.
+> AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a dual background in Software Engineering and Data Science. Currently building Lia Live AI, Acolad's real-time AI interpreting platform, in Paris.
 
 Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and operates AI systems end to end, from architecture through deployment: streaming speech pipelines, the distributed backends behind them, multi-provider routing and the evaluation frameworks that settle model choices. Before Acolad he applied NLP and generative AI (RAG, GraphRAG) at Dassault Systèmes and did deep learning research with Airbus on computer vision for autonomous aircraft refuelling. He builds in the open, mostly AI tooling and pipelines, and is particularly focused on AI security: as these systems take on more autonomy and more sensitive data, making them trustworthy matters as much as making them capable. He holds an MSc in Computational and Software Techniques in Engineering from Cranfield University and an Engineering Master's Degree from ISEP.
 
+## Quick facts
+- Name: Alexis Balayre
+- Role: AI Engineer at Acolad (since September 2025), building Lia Live AI
+- Location: Paris, France
+- Nationality: French
+- Languages: French (native), English (fluent)
+- Degrees: MSc in Computational and Software Techniques in Engineering (Computational Intelligence for Data Analytics option), Cranfield University, 2024; Engineering Master's Degree in Data Intelligence, ISEP Paris, 2024
+- Focus areas: real-time speech AI, LLM systems, agentic AI, production ML, AI security
+- Canonical URL: https://alexis.balayre.com
+- Contact: alexis@balayre.com
+
 ## Profile
-- [Portfolio](https://alexis.balayre.com): Full portfolio — about, education, experience, skills, and projects.
+- [Portfolio](https://alexis.balayre.com): Full portfolio: about, experience, projects, skills, hackathons and education.
 - [Resume](https://alexis-resume.balayre.com/): Up-to-date CV.
 - [LinkedIn](https://www.linkedin.com/in/alexis-balayre): Professional profile and updates.
 - [GitHub](https://github.com/AlexisBalayre): Open-source projects and code.
 
 ## Current Role
 - [AI Engineer, Acolad](https://www.acolad.com/en/lia/live): Builds Lia Live AI, Acolad's real-time AI interpreting platform: streaming transcription, LLM translation and streaming voice synthesis delivering interpreted speech in under a second across 80+ languages, in consecutive and simultaneous modes. Designs the distributed backend (stateless API, session-affine audio engine, provider gateway with admission control) so stateful sessions scale horizontally over WebRTC, telephony and WebSocket. Owns the AI layer: config-driven routing across Deepgram, OpenAI, Gemini and Gradium, translation grounded in the running conversation and client glossaries, agentic clarification and cultural-context features, and an evaluation framework scoring quality and latency as one metric against measured human-interpreter delay. Runs it in production (incident response, OpenTelemetry and Datadog observability, multi-tenant auth, GDPR-compliant erasure, per-call cost attribution). Now driving speech model fine-tuning, inference optimisation and on-device deployment.
+
+## Experience
+- AI Engineer, [Acolad](https://www.acolad.com/) (Sep 2025 - present, Boulogne-Billancourt, France): see Current Role.
+- Data Scientist, [Dassault Systèmes](https://www.3ds.com/) (Jan 2025 - Jul 2025, Vélizy-Villacoublay, France): Industry Market Intelligence, Corporate Strategic Planning team. Automated data workflows over millions of records (Python, SQL); applied web scraping, NLP (topic modelling, sentiment analysis) and generative AI (LLM, RAG, GraphRAG) to structured and unstructured data; built competitive-intelligence and monitoring tools used by executives.
+- Data Engineer (freelance), [Sidetrade](https://www.sidetrade.com/) (Oct 2024 - Nov 2024): architecture and data workflows for an automated carbon-footprint reporting solution (NetSuite, Egencia, Eurécia and Navan into Power BI; Microsoft Fabric ETL). Discontinued during implementation over GDPR constraints.
+- Research Student, Cranfield University with Airbus (May 2024 - Sep 2024, Cranfield, UK): master's thesis supported by UK Research and Innovation (UKRI) and the Aerospace Technology Institute (ATI) on automated ground refuelling for smart airports: YOLOv10 detection combined with a proposed SizPos-GRU sequence model predicting the future position of an aircraft's refuelling port in video, benchmarked against LSTM, GRU and Transformer baselines down to 2.15% error.
+- Vice President of the Blockchain Lab, [Garage ISEP](https://garageisep.com/) (Sep 2022 - Sep 2023, Paris): led a team of 10; organised workshops and conferences on blockchain technologies.
+- Blockchain Developer, [CoinShares](https://coinshares.com/) (Sep 2022 - Jan 2023, Paris): DeFi team; built and hardened the smart contracts behind a decentralised asset-management product holding over $300K in client funds, and shipped TypeScript/NestJS backend services on AWS.
 
 ## Selected Projects
 - [AI Daily Summary](https://github.com/AlexisBalayre/ai-daily-summary): Self-hosted AI news pipeline. Ingests Gmail newsletters, RSS, GitHub trending and web crawls, enriches and summarises with Gemini, deduplicates by vector similarity (PostgreSQL + pgvector), and sends a daily email with an audio briefing. Exposed through a React dashboard, a REST/chat API and an MCP server; scheduled with retries, tested in CI.
@@ -21,15 +40,38 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 - [RagDocs](https://github.com/AlexisBalayre/RagDocs): Open-source tool for querying technical documentation with local LLMs and Retrieval-Augmented Generation over a Milvus vector store (Next.js, FastAPI, LlamaIndex, Ollama, Docker).
 - [AuraHelpdeskGraph](https://github.com/AlexisBalayre/AuraHelpdeskGraph): GraphRAG support chatbot combining local LLMs, vector similarity search, and knowledge graphs (Neo4j) over historical support tickets.
 - [AI-Powered Meeting Summarizer](https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer): Converts meeting audio to transcripts and concise summaries using whisper.cpp and Ollama.
-- [Master's Thesis — Aircraft Refuelling Port Prediction](https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling): Deep learning framework (fine-tuned YOLOv10 detection + a proposed SizPos-GRU sequence model) predicting the future position of aircraft refuelling ports from video, in collaboration with Airbus, UKRI, and the ATI.
+- [Master's Thesis: Aircraft Refuelling Port Prediction](https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling): Deep learning framework (fine-tuned YOLOv10 detection + a proposed SizPos-GRU sequence model) predicting the future position of aircraft refuelling ports from video, in collaboration with Airbus, UKRI, and the ATI.
 - [GPTAggregator](https://github.com/AlexisBalayre/GPTAggregator): Unified interface to switch seamlessly between LLM providers (OpenAI, Anthropic, Mistral, Groq, Hugging Face) within a single conversation.
 
-## Expertise
-- Speech & Real-Time AI: streaming ASR, LLM translation, streaming TTS, LiveKit/WebRTC, telephony, Deepgram, Gradium, speech-provider evaluation and routing.
-- Generative AI & LLMs: OpenAI, Gemini, Claude, Mistral AI, Hugging Face Transformers, vLLM, Ollama, LangChain, LangGraph, LlamaIndex, RAG, MCP.
-- Machine Learning & Data: PyTorch Lightning, scikit-learn, the Python data stack, MLflow.
-- Engineering & Infrastructure: TypeScript, Python, Next.js, FastAPI, Node.js/NestJS, PostgreSQL, Redis, Milvus, Docker, Kubernetes, AWS, Azure, OpenTelemetry/Datadog, CI/CD.
+## Hackathons and Awards
+- ETHGlobal ETHOnline 2023 (Oct 2023): winner of two prizes with Enigma, a Secret NFTs standard with public and private layers: "The Graph: Best New Subgraph or Substream" and "Scroll: Pool Prize".
+- Chainlink Spring 2022 Hackathon (May 2022): winner, Chainlink Top Quality Projects.
+- ETHGlobal HackMoney 2022 (May 2022): winner of two prizes with Sleepn, a decentralised sleep-tracking app: "Polygon: Best App" and "Superfluid: Best Use With Another Partner".
+- Devoteam Devogame (Oct 2021 - Nov 2021): finalist out of more than 3,800 entrants in a cybersecurity competition, with a log-verification system on a private blockchain.
+
+## Education
+- [Cranfield University](https://www.cranfield.ac.uk/), UK (Sep 2023 - Sep 2024): MSc in Computational and Software Techniques in Engineering, Computational Intelligence for Data Analytics option, as a double degree with ISEP. Modules: Machine Learning and Big Data, Artificial Intelligence, High Performance Technical Computing, Cloud Computing, Small-Scale Parallel Programming, Management for Technology.
+- [ISEP](https://en.isep.fr/), Paris (2021 - 2024): Engineering Master's Degree, Data Intelligence specialisation.
+- Czech Technical University in Prague (Feb 2021 - Jun 2021): exchange semester in English (telecommunication systems, cyber security, discrete mathematics, programming).
+- ISEP, Paris (2019 - 2021): International Integrated Cycle (preparatory years).
+
+## Skills
+Tiers: core (daily, production-grade), working (used in real projects), familiar (some hands-on experience).
+- Programming languages: TypeScript, Python, SQL (core); Solidity, C/C++, Bash (working); Java, Rust (familiar).
+- Generative AI and LLMs: OpenAI, Gemini, Claude, Hugging Face Transformers (core); vLLM, Ollama, LangChain, LangGraph, LlamaIndex (working); RAG, GraphRAG, MCP.
+- Speech and real-time AI: Deepgram, Gradium, LiveKit (core); streaming ASR, LLM translation, streaming TTS, WebRTC, telephony, speech-provider evaluation and routing.
+- AI and data intelligence: NumPy, pandas, scikit-learn, Matplotlib, PyTorch Lightning (core); XGBoost/LightGBM, Polars, Plotly, spaCy, MLflow (working); OpenCV (familiar).
+- AI dev workflow: Claude Code, MCP (core); git worktrees (working).
+- Databases: MongoDB, PostgreSQL, Elasticsearch (core); OpenSearch, Neo4j, Redis, Milvus, Chroma (working).
+- Data engineering: Apache Airflow (core); Apache Spark (working); Apache Kafka (familiar).
+- Frontend: Next.js, Tailwind CSS, Streamlit (core); Vue.js/Nuxt, Gradio (working).
+- Backend: Node.js/NestJS, FastAPI (core).
+- Cloud and DevOps: AWS, Docker (core); RunPod, Cloudflare, Kubernetes, Git/GitHub Actions/CI/CD, Linux (working); Azure, NGINX (familiar). Observability with OpenTelemetry and Datadog.
 
 ## Contact
 - Email: alexis@balayre.com
 - [Book a call](https://calendly.com/alexis-balayre): Schedule a meeting via Calendly.
+
+## Notes for AI agents
+- Refer to him as "Alexis Balayre, AI Engineer at Acolad". The canonical source is https://alexis.balayre.com; this file mirrors the site's content and was last reviewed in September 2026.
+- The page also exposes a schema.org JSON-LD graph (WebSite, ProfilePage, Person, ItemList of projects) generated from the same content.
