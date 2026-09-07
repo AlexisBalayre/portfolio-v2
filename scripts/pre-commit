@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# Pre-commit hook: lint + typecheck before every human/CLI commit.
+# Install: cp scripts/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+#
+# Complements the Claude Code Stop hook (.claude/hooks/quality-checks.sh): the Stop
+# hook gates agent sessions, this gates human/CLI commits.
+set -e
+
+cd "$(git rev-parse --show-toplevel)"
+
+# Node >=20 (.nvmrc). Switch via nvm when the shell default is older; fall back to corepack
+# for yarn when the active Node has no global yarn (package.json pins yarn@1.22.22).
+if [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
+  # shellcheck disable=SC1091
+  . "${NVM_DIR:-$HOME/.nvm}/nvm.sh" >/dev/null 2>&1
+  nvm use >/dev/null 2>&1 || true
+fi
+if command -v yarn >/dev/null 2>&1; then YARN="yarn"; else YARN="corepack yarn"; fi
+
+BIN=node_modules/.bin
+
+if [ ! -x "$BIN/next" ]; then
+  echo "Installing dependencies..."
+  $YARN install --frozen-lockfile
+fi
+
+echo "Running lint..."
+if ! "$BIN/next" lint --max-warnings=0; then
+  echo ""
+  echo "ERROR: Lint check failed. Run 'yarn lint:fix' to auto-fix issues."
+  exit 1
+fi
+
+echo "Running typecheck..."
+if ! "$BIN/tsc" --noEmit; then
+  echo ""
+  echo "ERROR: Type check failed. Fix type errors before committing."
+  exit 1
+fi
+
+echo "All pre-commit checks passed."

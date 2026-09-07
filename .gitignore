@@ -19,3 +19,17 @@ yarn-error.log*
 
 # OS/editor junk
 .DS_Store
+
+# Claude Code local overrides (copy .claude/settings.local.json.example to start)
+.claude/settings.local.json
+
+# Git worktrees created by `yarn worktree:create`
+.worktrees/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# TypeScript incremental build state (rewritten by every tsc run)
+tsconfig.tsbuildinfo

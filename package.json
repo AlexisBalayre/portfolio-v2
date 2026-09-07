@@ -2,6 +2,7 @@
   "name": "portfolio-alexis-v2",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@1.22.22",
   "engines": {
     "node": ">=20"
   },
@@ -9,7 +10,14 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "postbuild": "next-sitemap",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint --max-warnings=0",
+    "lint:fix": "next lint --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "worktree:create": "bash scripts/worktree-create.sh",
+    "worktree:clean": "bash scripts/worktree-clean.sh"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

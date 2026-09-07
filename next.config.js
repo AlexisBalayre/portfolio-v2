@@ -3,6 +3,9 @@
 const nextConfig = {
   reactStrictMode: true,
 
+  // Pin the tracing root so a checkout nested under .worktrees/ does not pick up the parent's lockfile
+  outputFileTracingRoot: __dirname,
+
   // Toggle ignoring build/lint errors via env if you need it
   typescript: {
     ignoreBuildErrors: process.env.NEXT_PUBLIC_IGNORE_BUILD_ERROR === "true",
