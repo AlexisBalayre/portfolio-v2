@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: titleTemplate,
   },
   description:
-    "AI Engineer portfolio — Software Engineering, Data Science, Generative AI & Agentic Systems. Projects in LLMs, NLP, real-time speech AI, and production-grade ML.",
+    "AI Engineer portfolio: real-time speech AI, LLM systems, agentic AI and production ML. Building Lia Live AI, Acolad's real-time AI interpreting platform. Projects in speech translation, LLMs, RAG, NLP and applied deep learning.",
   applicationName: siteName,
   authors: [{ name: "Alexis Balayre", url: siteUrl }],
   creator: "Alexis Balayre",
@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   keywords: [
     "Alexis Balayre",
     "AI Engineer",
+    "Real-Time Speech AI",
+    "Speech Translation",
     "Data Scientist",
     "Generative AI",
     "Agentic AI",
@@ -110,7 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     image: `${siteUrl}/assets/img/alexis.jpg`,
     jobTitle: "AI Engineer",
     description:
-      "AI Engineer specialising in real-time speech AI, generative AI, and agentic systems, with a background in Software Engineering and Data Science.",
+      "AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a background in Software Engineering and Data Science. Builds Lia Live AI, Acolad's real-time AI interpreting platform.",
     nationality: "French",
     address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
     worksFor: { "@type": "Organization", name: "Acolad", url: "https://www.acolad.com/" },
@@ -121,12 +123,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     sameAs: ["https://github.com/AlexisBalayre", "https://www.linkedin.com/in/alexis-balayre"],
     knowsAbout: [
       "Real-Time Speech AI",
+      "Speech Translation",
+      "LLM Systems",
       "Generative AI",
       "Agentic AI",
+      "Production ML",
       "Machine Learning",
       "LLM",
       "NLP",
       "Software Engineering",
+      "AI Security",
     ],
   };
 

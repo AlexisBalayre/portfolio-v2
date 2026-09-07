@@ -90,13 +90,13 @@ export default function Page() {
               <p
                 className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}
               >
-                <strong>Specialisations:</strong> Real-Time Speech AI | Generative AI | Agentic Systems | Machine
-                Learning | Software Engineering
+                <strong>Specialisations:</strong> Real-Time Speech AI | LLM Systems | Agentic Systems | Production ML |
+                Software Engineering
               </p>
               <p
                 className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}
               >
-                <strong>Role:</strong> AI Engineer
+                <strong>Role:</strong> AI Engineer at Acolad, building Lia Live AI
               </p>
               <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
                 <div className="flex">
@@ -124,13 +124,17 @@ export default function Page() {
               </span>
               <div className="divider divider-neutral "></div>
               <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-                AI Engineer specialising in real-time speech AI, with a dual background in Software Engineering and Data
-                Science. I design, build, and operate production systems that turn applied research into scalable
-                products, currently focused on low-latency speech translation at Acolad. Beyond speech, I work across
-                agentic systems, LLM and RAG applications, and applied machine learning, with a track record of taking
-                prototypes into production. I&apos;m particularly passionate about AI security, which I see as one of
-                the most critical challenges ahead. My goal is to build AI that is not only capable, but secure and
-                trustworthy for the people and organisations who depend on it.
+                AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a dual background
+                in Software Engineering and Data Science. I design, build and operate AI systems end to end, from
+                architecture through deployment. At Acolad I build Lia Live AI, our real-time AI interpreting platform:
+                speech in, interpreted speech out in under a second, across 80+ languages. That covers the streaming
+                ASR, LLM translation and TTS pipelines, the distributed backend behind live sessions, multi-provider
+                routing, and the evaluation framework that settles every model choice on quality and latency. Next:
+                fine-tuning, inference optimisation and on-device deployment. Before that, I applied NLP and generative
+                AI (RAG, GraphRAG) at Dassault Systèmes and did deep learning research with Airbus on computer vision
+                for autonomous aircraft refuelling. I also build in the open, mostly AI tooling and pipelines. And I
+                care about AI security: as these systems take on more autonomy and more sensitive data, making them
+                trustworthy matters as much as making them capable.
               </p>
             </div>
 
