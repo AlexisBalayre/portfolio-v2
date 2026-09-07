@@ -1,0 +1,80 @@
+# Frontend Conventions
+
+Rules for `app/`, `components/`, `hooks/`, and `styles/`. Builds on [general.md](general.md).
+Auto-loaded by `.claude/rules/frontend-conventions.md`. For how the pieces fit together, read
+[../reference/architecture.md](../reference/architecture.md).
+
+## Stack
+
+Next.js 15 App Router (Turbopack), React 19, TypeScript strict, Tailwind CSS v4, daisyUI v5.
+Single route (`/`). No state library, no data fetching, no tests.
+
+## Components
+
+- **Generic, data-driven.** `Timeline`, `Projects`, `Skills` take an `items` prop and render whatever the JSON provides. A new content type gets a new generic component plus a JSON file; it does not get copy in the component.
+- **Props**: an `interface XProps` at the top of the file, destructured in the signature. Match the neighbour's component style (`React.FC<Props>` in `Timeline.tsx`, plain arrow function in `Projects.tsx`); do not introduce a third.
+- **Keys**: stable content keys (`project.name`), not array indices, except in `Timeline.tsx` where items have no id (legacy; add an `id` to the JSON if you need stable keys).
+- **`"use client"`** only when needed (hooks, browser APIs, handlers). `Header.tsx` and `page.tsx` are client; `Footer`, `Projects`, `Skills`, `Timeline` are server-renderable and must stay free of hooks.
+
+## Sections and navigation
+
+`app/page.tsx` renders every section in order inside one client component. Each section is:
+
+```tsx
+<div className="md:py-12 mx-auto container" id="projects">
+  <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
+    <TrophyIcon className="h-8 w-8 mr-2 flex" />
+    <h2 className="text-4xl font-bold text-center md:text-left">Projects</h2>
+  </span>
+  <Projects items={projects} />
+</div>
+```
+
+- The `id` **must** match a `section` value in `menuLinks` in `components/Header.tsx`; the header scroll-navigates by id. Adding a section = add the `<div id>` in `page.tsx` **and** a `menuLinks` entry (label, section, Heroicon).
+- Section order in `page.tsx` and `menuLinks` order stay identical.
+- One `<h1>` on the page (the name). Sections use `<h2>`; timeline item titles use `<h4>`.
+
+## Styling
+
+- **Tailwind v4 + daisyUI are configured only in `styles/globals.css`** (`@import "tailwindcss"; @plugin "daisyui" { themes: night --default }`). There is no `tailwind.config.*`; do not create one.
+- **Use daisyUI semantic tokens**, not raw palette colours: `text-primary`, `text-primary-content`, `text-neutral-content`, `bg-base-100`, `btn btn-primary`, `card`, `badge-primary|secondary|ghost`, `divider`. Raw `text-gray-600` exists only for the About-Me "inactive" fade; do not spread it.
+- **Theme is forced to `night`** with a black page background (`:root, [data-theme] { background: black }`). Do not add a theme switcher without also revisiting the hardcoded `ring-white/20`, `bg-black` values.
+- **Mobile-first**: base classes are mobile, `md:` overrides for desktop. Every section centres on mobile (`text-center`, `justify-center`) and left-aligns on `md:`.
+- **Hand-written CSS is the exception.** The desktop timeline (`.timeline`, `.containerBis`, `.left`, `.right`, `.content` and their pseudo-elements) lives at the bottom of `globals.css` because it needs `::after` connectors. Anything else goes in utilities. If you add CSS there, prefix a comment block naming the component it serves.
+- Cards and tiles share the "ring" treatment: `bg-base-100 ring-offset-white ring-offset-1/2 ring-white/20 ring-1`. Reuse it verbatim for visual consistency.
+
+## Images
+
+- **Always `next/image`**, never `<img>`. Set `width` and `height`.
+- Local assets live in `public/assets/img/` and are referenced as `/assets/img/<file>`. Timeline logos are built as `"/assets/img/" + item.logo`.
+- Remote images (project previews) are allowed only from hosts listed in `images.remotePatterns` in `next.config.js` (GitHub asset hosts + `balayre.com` domains). Adding a host is a deliberate config change.
+- The profile picture is `public/assets/img/alexis.jpg`; the Open Graph image is `public/preview.png` (1200×630).
+
+## Links
+
+- External links: `target="_blank" rel="noopener noreferrer"`. Icon-only links carry an `aria-label` naming the destination ("GitHub of Alexis Balayre").
+- In-page navigation uses the section ids (see above), not `next/link` routes; `next/link` is only for `/` (the logo).
+- The resume link (`https://alexis-resume.balayre.com/`) and Calendly link are the only external CTAs; keep them in `page.tsx` / `Header.tsx` respectively.
+
+## Hooks
+
+- Custom hooks live in `hooks/`, one per file, re-exported from `hooks/index.ts`, imported as `import { useOutsideClick } from "~~/hooks"`.
+- `useEffect` cleanups must snapshot the ref (`const el = ref.current`) before subscribing, as `page.tsx` does with `IntersectionObserver`.
+
+## SEO and metadata
+
+- **Everything SEO lives in `app/layout.tsx`**: the `metadata` export (title template, description, keywords, Open Graph, Twitter, robots, icons, manifest) and the two JSON-LD `<script type="application/ld+json">` blocks (WebSite, Person). Do not scatter `<Head>`/meta elsewhere.
+- Update the Person JSON-LD (`jobTitle`, `worksFor`, `alumniOf`, `knowsAbout`) whenever the About-Me copy or the current role changes. Same for `public/llms.txt` (see [content.md](content.md)).
+- `public/sitemap.xml`, `public/sitemap-0.xml`, `public/robots.txt` are **generated** by `next-sitemap` on `postbuild` from `next-sitemap.config.js`. Never edit them; the `protect-generated` hook blocks it. `public/site.webmanifest` and the favicons are static.
+
+## Accessibility
+
+- Meaningful `alt` on every image (`"Alexis Balayre Profile Picture"`, `` `${project.name} project preview` ``); logos in the timeline currently share `"institution logo"`, improve it when you touch that file.
+- Interactive elements are `<a>` or `<button>`, never a `<div onClick>`.
+- Keep the `transition-colors duration-500` fade for section activation; do not add motion that ignores `prefers-reduced-motion` without a media query.
+
+## Build and tooling
+
+- `yarn dev` / `yarn build` use Turbopack. `yarn build` fails on lint or type errors unless `NEXT_PUBLIC_IGNORE_BUILD_ERROR=true`; never set that in CI or committed config.
+- ESLint is `next/core-web-vitals` + `@typescript-eslint/recommended` + Prettier (`.eslintrc.json`, legacy format run through `next lint`). Prettier: `printWidth` 120, `arrowParens: avoid`, `trailingComma: all`.
+- The Stop hook runs Prettier, ESLint, and `tsc --noEmit` on what you touched; you do not need to run them by hand.

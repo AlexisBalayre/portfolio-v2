@@ -1,0 +1,13 @@
+{
+  "_comment": "Personal, machine-local overrides. Copy to settings.local.json (gitignored). These extend settings.json; they never replace it. Put anything personal here: extra permissions, machine-specific tools, MCP servers you opt into.",
+  "permissions": {
+    "allow": [
+      "Bash(yarn dev*)",
+      "Bash(yarn start*)",
+      "WebSearch",
+      "WebFetch(domain:nextjs.org)",
+      "WebFetch(domain:daisyui.com)",
+      "WebFetch(domain:tailwindcss.com)"
+    ]
+  }
+}
