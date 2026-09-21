@@ -23,8 +23,8 @@ yarn worktree:create my-change        # .worktrees/my-change on branch feature/m
   └─ cd .worktrees/my-change
        ├─ explore + plan (read 2-3 neighbours; match patterns)
        ├─ edit (content JSON, components, docs)
-       ├─ Stop hook gates every response   (Prettier + ESLint on dirty files · tsc)
-       ├─ spot-check warns on content shape, llms.txt drift, <img>, unsafe links
+       ├─ Stop hook gates every response   (ESLint + Prettier on dirty files · tsc)
+       ├─ spot-check flags content shape, llms.txt drift, <img>, unsafe links (once)
        ├─ convention-checker before commit  (>= 3 files touched)
        ├─ commit (pre-commit runs lint + typecheck; lands on feature/, never main)
        └─ open PR  →  /pr-description  →  /pr-ci-review
@@ -36,13 +36,13 @@ yarn worktree:clean                   # remove worktrees whose remote branch is 
 | Mechanism | File | What it guarantees |
 | :-------- | :--- | :----------------- |
 | Branch protection | `.claude/hooks/git-safety.sh` | Blocks creating a branch while on `main`, pushing to `main`, hard resets, force pushes, and recursive force-deletes. |
-| Worktree creation | `scripts/worktree-create.sh` + `package.json` | `yarn worktree:create <name>` makes `.worktrees/<name>` on `feature/<name>` and runs `yarn install --frozen-lockfile`. |
+| Worktree creation | `scripts/worktree-create.sh` + `package.json` | `yarn worktree:create <name>` makes `.worktrees/<name>` on `feature/<name>`, runs `INSTALL_CMD`, and builds a worktree-local CodeGraph index when the main checkout has one. |
 | Worktree cleanup | `scripts/worktree-clean.sh` | `yarn worktree:clean` removes worktrees whose remote branch is gone. |
 | Quality gate | `.claude/hooks/quality-checks.sh` | On every `Stop`, formats + lints the dirty TS files and typechecks the repo; blocks on failure. |
-| Content gate | `.claude/hooks/convention-spot-check.sh` | Advisory: JSON validity/shape, logo files exist, image hosts allowed, `llms.txt` sync reminder. |
+| Content gate | `.claude/hooks/convention-spot-check.sh` + `.claude/spot-checks.tsv` | JSON validity/shape, logo files exist, image hosts allowed, `llms.txt` sync; reported once per Stop cycle. |
 | Generated-file protection | `.claude/hooks/protect-generated.sh` | Blocks edits to the sitemap, robots, `next-env.d.ts`, build output, `yarn.lock`. |
 | Context survival | `.claude/hooks/pre-compact-preserve.sh` | Preserves the current branch, worktree path, modified files, and check results across compaction. |
-| Visibility | `.claude/statusline.sh` | Shows the active branch, context usage, and cost. |
+| Visibility | `.claude/statusline.sh` | Shows the active branch (red on `main`), model and effort, context usage, 5h/7d rate limits, and cost. |
 | `CLAUDE.md` | repo root | States the rule in always-on context: PRs only, worktrees only, never `main`. |
 
 ## Setup on a new machine
@@ -50,16 +50,22 @@ yarn worktree:clean                   # remove worktrees whose remote branch is 
 ```sh
 nvm use                              # Node 20 from .nvmrc
 yarn install
-cp .env.example .env                 # GIT_TRUNK / WORKTREE_BRANCH_PREFIX (defaults are fine)
+cp .env.example .env                 # optional: issue-tracker IDs for to-spec / to-tickets
 cp .claude/settings.local.json.example .claude/settings.local.json   # optional personal permissions
 cp scripts/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
+
+Optional: CodeGraph (the `codegraph` MCP server in `.mcp.json`) answers symbol and call-graph
+questions from a local index. Build it once with `npx -y @colbymchenry/codegraph@1.6.0 init --yes`
+(writes the gitignored `.codegraph/`) and opt in via `enabledMcpjsonServers` in
+`.claude/settings.local.json`; new worktrees then get their own index automatically.
 
 The hooks load nvm themselves, so the Stop hook works even when the shell's default Node is
 older than 20.
 
 ## Adapting it
 
-The scripts assume `feature/<name>` branches and an `origin` remote. To change the prefix or
-trunk, set `WORKTREE_BRANCH_PREFIX` / `GIT_TRUNK` in `.env`; the helper scripts and the
-git-safety hook read the same file so they stay in agreement.
+The scripts assume `feature/<name>` branches and an `origin` remote. Commands, generated
+paths, the branch prefix and the trunk all live in the committed profile
+`.claude/project.env`; the hooks, the worktree scripts, the pre-commit hook, and the skills
+read the same file so they stay in agreement.

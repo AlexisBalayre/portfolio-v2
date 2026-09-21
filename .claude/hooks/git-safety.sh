@@ -8,8 +8,8 @@ COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
 
 [ -z "$COMMAND" ] && exit 0
 
-# Trunk branch is configurable via .env (defaults to main).
-if [ -f "${CLAUDE_PROJECT_DIR:-.}/.env" ]; then set -a; . "${CLAUDE_PROJECT_DIR:-.}/.env"; set +a; fi
+# Trunk branch is configurable via .claude/project.env (defaults to main).
+[ -f "${CLAUDE_PROJECT_DIR:-.}/.claude/project.env" ] && . "${CLAUDE_PROJECT_DIR:-.}/.claude/project.env"
 TRUNK="${GIT_TRUNK:-main}"
 
 # --- Destructive shell patterns ---------------------------------------------

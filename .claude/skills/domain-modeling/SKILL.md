@@ -1,67 +1,62 @@
 ---
 name: domain-modeling
-description: Maintain this repo's documented language as design decisions land. Use when pinning down domain terminology, recording an architectural decision, or when another skill needs the docs kept current during a session.
+description: Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing `docs/glossary.md`, or recording or editing an ADR.
 ---
 
 # Domain Modeling
 
-Actively sharpen the project's documented language as you design: challenge terms, stress-test them with edge-case scenarios, and update the docs the moment a decision crystallises. Merely *reading* the docs for vocabulary is not this skill; reach for it when the language is being *changed*, not just consumed.
+Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `docs/glossary.md` for vocabulary is not this skill: that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
-## Where the documented language lives in this repo
+## File structure
 
-| Source                        | What it covers                                                            |
-| :---------------------------- | :------------------------------------------------------------------------ |
-| `docs/README.md` (Glossary)   | Cross-cutting nouns: Organization, Member, Session, Participant, Provider, Channel, etc. |
-| `docs/conventions/naming.md`  | Role taxonomy and naming stems for modules / classes                      |
-| `docs/explanation/<topic>.md` | Current narrative for a subsystem (system architecture, security model)   |
-| `docs/adr/`                   | Dated log of why a hard-to-reverse choice was made                        |
+This repo keeps its domain model under `docs/`. There is no `CONTEXT.md` or `CONTEXT-MAP.md`; never create one.
 
-Before a session, skim the Glossary, the relevant `docs/explanation/` doc, and any ADRs already filed for the area. For *why*/*how* questions that span multiple services, delegate to the `architecture-explainer` subagent rather than re-reading docs in the main context.
+```
+/
+├── CLAUDE.md                  ← repo-wide agent rules
+└── docs/
+    ├── glossary.md            ← the domain language (one table)
+    ├── conventions/           ← general / frontend / content rules
+    ├── adr/                   ← decisions (template in README.md)
+    └── reference/
+        └── architecture.md    ← site shape: page, sections, content, SEO, build
+```
+
+Before a session, skim the glossary and any ADRs already filed for the area. For *why*/*how* questions that span several components, delegate to the `architecture-explainer` subagent rather than re-reading docs in the main context.
 
 ## During the session
 
-### Challenge against the existing language
+### Challenge against the glossary
 
-When the user uses a term that conflicts with the Glossary or `naming.md`, call it out. Example: "Glossary defines `Session` as the live client connection context; you're using it for the engine process that runs it. Which do you mean?"
+When the user uses a term that conflicts with the existing language in `docs/glossary.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
 
 ### Sharpen fuzzy language
 
-Propose precise canonical terms; pull from the existing Glossary first, only invent when nothing fits. Common ambiguities here:
+When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account': do you mean the Customer or the User? Those are different things."
 
-- "Session" (the user-facing connection context vs. the engine process running it)
-- "Message" (the inbound event vs. the rendered delivery to a Channel)
-- "Tenant" vs. `Organization` (BetterAuth term wins)
-- "Member" vs. "Participant" vs. "User"
+### Discuss concrete scenarios
 
-### Stress-test with concrete scenarios
-
-Force precision with edge cases that touch service boundaries:
-
-- "What happens to an in-flight Message dispatch when the Participant disconnects mid-send?"
-- "If the Gateway and Session Engine disagree on a Session's active state, who wins?"
-- "A Message fans out to email and SMS; the SMS Provider fails: is the Message delivered, partial, or failed?"
+When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
 
 ### Cross-reference with code
 
-When the user states how something works, verify against the code in the relevant area (`app/`, `components/`, `public/assets/data/`). Surface contradictions: "`Header.tsx` scroll-navigates to section ids, but you said navigation is route-based. Which is right?"
+When the user states how something works, check whether the code agrees (`docs/reference/architecture.md` maps where each component lives). If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?"
 
-### Update the existing docs inline
+### Update the glossary inline
 
-When something resolves, update it in place. Capture as it happens; don't batch.
+When a term is resolved, update `docs/glossary.md` right there. Don't batch these up: capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
 
-- **New cross-cutting noun?** Add to the Glossary table in `docs/README.md`.
-- **Naming stem or role suffix decision?** Update `docs/conventions/naming.md`.
-- **Subsystem narrative has drifted from reality?** Update the relevant `docs/explanation/<topic>.md`.
-- **Hard-to-reverse choice with non-obvious rejected alternatives?** Open an ADR.
+The glossary should be totally devoid of implementation details. Do not treat it as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else. What resolves outside the glossary goes where it already lives:
 
-Do not create a parallel `CONTEXT.md`. See [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md) for the underlying glossary discipline if you need a reminder of what a good entry looks like.
+- **Naming or structure rule?** The relevant doc in `docs/conventions/`.
+- **Rationale for how a part of the site works, or its shape has drifted from reality?** `docs/reference/architecture.md`.
 
 ### Offer ADRs sparingly
 
-Only offer an ADR when all three are true:
+Only offer to create an ADR when all three are true:
 
 1. **Hard to reverse**: the cost of changing your mind later is meaningful
 2. **Surprising without context**: a future reader will wonder "why did they do it this way?"
-3. **The result of a real trade-off**: there were genuine alternatives and one was picked for specific reasons
+3. **The result of a real trade-off**: there were genuine alternatives and you picked one for specific reasons
 
-If any of the three is missing, skip it. See [ADR-FORMAT.md](./ADR-FORMAT.md) and [docs/adr/README.md](../../../docs/adr/README.md) for the bar and template.
+If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).

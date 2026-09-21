@@ -1,0 +1,10 @@
+# Convention spot-checks run by .claude/hooks/convention-spot-check.sh on Stop.
+# One check per line, three TAB-separated fields:
+#   <path ERE>	<forbidden content ERE (grep -E)>	<message citing the conventions doc>
+# A file changed this session whose path matches field 1 and whose content matches
+# field 2 is reported once. Checks that need jq or cross-file logic (content JSON
+# shapes, logo files, image hosts, llms.txt sync, the raw-HTML allowlist) live in the
+# project-specific block of the hook itself.
+\.tsx$	<img[[:space:]>]	uses <img>; use next/image (frontend.md §Images)
+\.(ts|tsx)$	console\.(log|debug)\(	leftover console.log/debug
+^components/.*\.tsx$	https://alexis\.balayre\.com	hardcoded site URL; the canonical siteUrl lives in app/layout.tsx (general.md §Content stays in JSON)

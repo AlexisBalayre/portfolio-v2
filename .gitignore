@@ -26,6 +26,12 @@ yarn-error.log*
 # Git worktrees created by `yarn worktree:create`
 .worktrees/
 
+# CodeGraph index (built by `codegraph init`, per checkout)
+.codegraph/
+
+# Local-only plans written by to-spec / to-tickets when no tracker is configured
+docs/plans/
+
 # Env / secrets
 .env
 .env.*

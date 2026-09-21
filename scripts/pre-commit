@@ -1,12 +1,35 @@
 #!/usr/bin/env bash
-# Pre-commit hook: lint + typecheck before every human/CLI commit.
+# Pre-commit hook: block local-only paths, lint the staged files, typecheck the repo.
 # Install: cp scripts/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 #
 # Complements the Claude Code Stop hook (.claude/hooks/quality-checks.sh): the Stop
-# hook gates agent sessions, this gates human/CLI commits.
+# hook gates agent sessions, this gates human/CLI commits. Commands come from
+# .claude/project.env; an empty command is skipped.
 set -e
 
-cd "$(git rev-parse --show-toplevel)"
+ROOT=$(git rev-parse --show-toplevel)
+cd "$ROOT"
+[ -f .claude/project.env ] && . .claude/project.env
+
+# --- Block local-only paths ---
+
+# docs/plans/ is where to-spec / to-tickets write when no issue tracker is configured.
+BLOCKED_PATHS="docs/plans/ docs/scratch/"
+
+for path in $BLOCKED_PATHS; do
+  # Only block additions/modifications, not deletions (allow removing tracked files)
+  STAGED=$(git diff --cached --diff-filter=d --name-only -- "$path")
+  if [ -n "$STAGED" ]; then
+    echo "ERROR: Attempting to commit files under '$path' which is local-only."
+    echo "Blocked files:"
+    echo "$STAGED" | sed 's/^/  /'
+    echo ""
+    echo "Run 'git reset HEAD -- $path' to unstage them."
+    exit 1
+  fi
+done
+
+# --- Code quality checks ---
 
 # Node >=20 (.nvmrc). Switch via nvm when the shell default is older; fall back to corepack
 # for yarn when the active Node has no global yarn (package.json pins yarn@1.22.22).
@@ -17,25 +40,35 @@ if [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
 fi
 if command -v yarn >/dev/null 2>&1; then YARN="yarn"; else YARN="corepack yarn"; fi
 
-BIN=node_modules/.bin
-
-if [ ! -x "$BIN/next" ]; then
+if [ ! -x node_modules/.bin/eslint ] || [ ! -x node_modules/.bin/tsc ]; then
   echo "Installing dependencies..."
   $YARN install --frozen-lockfile
 fi
 
-echo "Running lint..."
-if ! "$BIN/next" lint --max-warnings=0; then
-  echo ""
-  echo "ERROR: Lint check failed. Run 'yarn lint:fix' to auto-fix issues."
-  exit 1
+EXT_RE=$(printf '%s' "${SOURCE_EXTENSIONS:-}" | tr -s ' ' '|')
+STAGED_SOURCE=""
+if [ -n "$EXT_RE" ]; then
+  STAGED_SOURCE=$(git diff --cached --diff-filter=d --name-only | grep -E "\.($EXT_RE)$" || true)
 fi
 
-echo "Running typecheck..."
-if ! "$BIN/tsc" --noEmit; then
-  echo ""
-  echo "ERROR: Type check failed. Fix type errors before committing."
-  exit 1
+if [ -n "${LINT_CMD:-}" ] && [ -n "$STAGED_SOURCE" ]; then
+  echo "Running lint on staged files..."
+  if ! printf '%s\n' "$STAGED_SOURCE" | tr '\n' '\0' | xargs -0 sh -c "$LINT_CMD \"\$@\"" _; then
+    echo ""
+    echo "ERROR: Lint failed on staged files. Run 'yarn lint:fix' to auto-fix issues."
+    exit 1
+  fi
 fi
+
+for step in TYPECHECK_CMD TEST_CMD; do
+  cmd="${!step:-}"
+  [ -z "$cmd" ] && continue
+  echo "Running $step: $cmd"
+  if ! bash -c "$cmd"; then
+    echo ""
+    echo "ERROR: $step failed. Fix it before committing."
+    exit 1
+  fi
+done
 
 echo "All pre-commit checks passed."
