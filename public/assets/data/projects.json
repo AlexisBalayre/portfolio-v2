@@ -1,17 +1,31 @@
 [
   {
+    "name": "Pupitre: Control Plane for Parallel Claude Code Sessions",
+    "description": "A CLI for running many Claude Code sessions in parallel without losing track of the code they write. Each agent works in its own git worktree under a task spec whose scope is enforced by a hook before any edit lands. A conflict radar flags sessions touching the same files, and every merge goes through a gate: build, tests, lint, a scope audit, then technical-debt deltas (duplication, dead code, complexity, coverage) measured against a baseline that only tightens. Shortcuts either get refused or go into a debt ledger with a review-by condition, and every merge writes a decision record. An optional conductor session plans and steers the workers, but the merge stays with the human. Pupitre is built with Pupitre: its own PRs go through its own gate.",
+    "technologies": ["TypeScript", "Node.js", "Claude Code", "Git Worktrees", "tmux", "CLI"],
+    "url": "https://github.com/AlexisBalayre/pupitre",
+    "image": "https://opengraph.githubassets.com/1/AlexisBalayre/pupitre"
+  },
+  {
+    "name": "agentspine: One Agent Setup for Every Coding Assistant",
+    "description": "An npm scaffolder (npx agentspine) that writes conventions, skills and blocking hooks once into .agents/ and wires Claude Code, Codex, opencode, Mistral Vibe and Cursor to read them, so five tools stop drifting across five config directories. Shared hook policies are written once, and a per-tool adapter speaks each host's protocol. A doctor command checks that each block actually took effect. Opt-in skill packs add TDD, diagnosis, planning, a six-area multi-agent code review and a GitHub Actions PR review where the model has no write access to the PR. The output is plain Markdown and POSIX shell, so it works in any stack.",
+    "technologies": ["TypeScript", "npm", "Claude Code", "Codex", "Cursor", "Agent Skills", "GitHub Actions"],
+    "url": "https://github.com/AlexisBalayre/agentspine",
+    "image": "https://opengraph.githubassets.com/1/AlexisBalayre/agentspine"
+  },
+  {
+    "name": "Claude Code Config: Agentic Development Framework",
+    "description": "A stack-agnostic Claude Code configuration template that turns agentic coding into a repeatable, reviewed workflow: layered project memory (AGENTS.md + CLAUDE.md), path-scoped convention rules, 34 skills, 12 subagents and 7 deterministic shell hooks enforcing checks no model can skip, such as the quality gate, file naming and never committing to main. It also ships a multi-agent PR review in GitHub Actions: six reviewers report and a validator refutes weak findings. A poster script then writes the result, so the model has no write channel to the PR. Running /adapt-to-project fits it to any repository. This portfolio runs on it.",
+    "technologies": ["Claude Code", "MCP", "Git Worktrees", "Shell / Bash", "GitHub Actions"],
+    "url": "https://github.com/AlexisBalayre/claude-code-config",
+    "image": "https://opengraph.githubassets.com/1/AlexisBalayre/claude-code-config"
+  },
+  {
     "name": "AI Daily Summary: Self-Hosted AI News Pipeline",
-    "description": "A self-hosted pipeline that reads the day's AI news for you. It ingests Gmail newsletters, RSS feeds, GitHub trending and web crawls, enriches every article with Gemini (relevance, category, summary, tags, embeddings), drops near-duplicates by vector similarity in PostgreSQL + pgvector, and sends one daily HTML newsletter with a spoken audio briefing attached. A React dashboard, a REST API, a chat endpoint over your own data and an MCP server sit on top of the same database, scheduled with retries and tested in CI.",
+    "description": "A self-hosted pipeline that reads the day's AI news for you. It ingests Gmail newsletters, RSS feeds, GitHub trending and web crawls, enriches every article with Gemini (relevance, category, summary, tags, embeddings), drops near-duplicates by vector similarity in PostgreSQL + pgvector, and sends one daily HTML newsletter with a Release Radar section and a spoken audio briefing attached. It emails instant alerts when a new model is released and tracks changes on public model leaderboards. A React dashboard, a REST API, a chat endpoint over your own data and an MCP server sit on top of the same database, scheduled with retries and tested in CI.",
     "technologies": ["Python", "FastAPI", "Gemini", "PostgreSQL + pgvector", "MCP", "React", "Docker"],
     "url": "https://github.com/AlexisBalayre/ai-daily-summary",
     "image": "https://opengraph.githubassets.com/1/AlexisBalayre/ai-daily-summary"
-  },
-  {
-    "name": "Claude Code Power Config: Agentic Development Framework",
-    "description": "A configuration template that turns Claude Code into a repeatable, reviewed workflow: always-on project memory (CLAUDE.md), path-scoped convention rules, 30 reusable workflows, 12 agents reviewing a PR in parallel, 7 deterministic shell hooks enforcing checks no model can skip, and git worktree isolation for concurrent sessions. Language-agnostic, demonstrated on a TypeScript monorepo. It reflects how I now plan with Gemini and Claude and build with Claude Code.",
-    "technologies": ["Claude Code", "MCP", "Git Worktrees", "Shell / Bash", "TypeScript"],
-    "url": "https://github.com/AlexisBalayre/claude-code-power-config",
-    "image": "https://opengraph.githubassets.com/da2dbcf31e390f25b77ffa743855ee0b44f5dac3d831c439d390436b74bf56db/AlexisBalayre/claude-code-power-config"
   },
   {
     "name": "AuraHelpdeskGraph: GraphRAG Support Chatbot",
