@@ -1,0 +1,3 @@
+# Default owner for everything in the repo; later, more specific patterns override this line.
+# main is protected: a code-owner approval is required to merge (docs/workflow.md).
+* @AlexisBalayre

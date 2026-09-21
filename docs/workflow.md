@@ -36,6 +36,8 @@ yarn worktree:clean                   # remove worktrees whose remote branch is 
 | Mechanism | File | What it guarantees |
 | :-------- | :--- | :----------------- |
 | Branch protection | `.claude/hooks/git-safety.sh` | Blocks creating a branch while on `main`, pushing to `main`, hard resets, force pushes, and recursive force-deletes. |
+| GitHub protection | `main` branch rule + `.github/CODEOWNERS` | Every change reaches `main` through a PR approved by the code owner (`@AlexisBalayre`); stale approvals are dismissed on new pushes, open review threads must be resolved, and force pushes and deletion are refused. GitHub never lets an author approve their own PR, so the owner's own PRs merge through admin bypass (`gh pr merge --admin`). |
+| Releases | git tags `vX.Y.Z` + GitHub Releases | `package.json` `version` matches the latest tag; cut one with `gh release create vX.Y.Z --target main --generate-notes`. |
 | Worktree creation | `scripts/worktree-create.sh` + `package.json` | `yarn worktree:create <name>` makes `.worktrees/<name>` on `feature/<name>`, runs `INSTALL_CMD`, and builds a worktree-local CodeGraph index when the main checkout has one. |
 | Worktree cleanup | `scripts/worktree-clean.sh` | `yarn worktree:clean` removes worktrees whose remote branch is gone. |
 | Quality gate | `.claude/hooks/quality-checks.sh` | On every `Stop`, formats + lints the dirty TS files and typechecks the repo; blocks on failure. |
