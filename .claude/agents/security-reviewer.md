@@ -15,7 +15,7 @@ Review the specified files or recent changes for real, reachable security issues
 
 - `components/Timeline.tsx` injects `title` and `description` from `public/assets/data/*.json` with `dangerouslySetInnerHTML`, and `app/layout.tsx` injects JSON-LD the same way. Content is author-controlled, so the risk is a careless edit, not an attacker: scan any new or changed HTML string for `<script`, `on*=` handlers, `javascript:` URLs, `<iframe`, `<style`, or unbalanced tags. Allowed inline markup is `a`, `strong`, `em`, `br` (see `docs/conventions/content.md`).
 - Flag any **new** `dangerouslySetInnerHTML` outside those two files.
-- The JSON-LD payload is built from constants; flag any user- or URL-derived value reaching it.
+- The JSON-LD `@graph` is built by `lib/structuredData.ts` from constants and the content JSON, and serialised with `serialiseStructuredData` (which escapes `<` so a string cannot close the `<script>`). Flag any user- or URL-derived value reaching it, and any injection that bypasses that serialiser.
 
 ### 2. External links and third-party content
 

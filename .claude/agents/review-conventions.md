@@ -11,7 +11,7 @@ Your question is "does this change follow the project's written rules". The orch
 
 ## Rule sources
 
-- `docs/conventions/*`: the primary, authoritative rules. The doc governing the changed file's area applies (`api.md`, `frontend.md`, `gateway.md`, `session-engine.md`, `providers.md`, `database.md`, `grpc.md`, `testing.md`, plus the universal `general.md` and `naming.md`) and auto-loads via `.claude/rules` when you read a file in that area. Weight these first.
+- `docs/conventions/*`: the primary, authoritative rules. The doc governing the changed file's area applies (`frontend.md` for `app/`, `components/`, `hooks/`, `styles/`; `content.md` for `public/assets/data/`, `public/assets/img/`, `public/llms.txt`; plus the universal `general.md` for every `.ts`/`.tsx`) and auto-loads via `.claude/rules` when you read a file in that area. Weight these first.
 - `docs/adr/*`: accepted ADRs binding architectural decisions. A change that contradicts an accepted ADR (uses a rejected alternative, reintroduces a retired pattern) is a violation; cite the ADR.
 - `CLAUDE.md`: a smaller complementary set of guidelines. Apply it too.
 

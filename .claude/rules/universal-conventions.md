@@ -15,7 +15,7 @@ paths:
 | `app/` | Next.js reserved names only | `page.tsx`, `layout.tsx`, `route.ts` |
 | `components/`, `public/assets/logos/` | PascalCase component | `Header.tsx`, `ProjectCard.tsx` |
 | `hooks/` | `use` + PascalCase, re-exported from `hooks/index.ts` | `useOutsideClick.ts` |
-| `lib/` (if introduced) | camelCase | `formatDate.ts` |
+| `lib/` | camelCase | `structuredData.ts` |
 
 ## Imports
 

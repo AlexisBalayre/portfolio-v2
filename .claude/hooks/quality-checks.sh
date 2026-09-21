@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
-# Stop hook: Prettier + ESLint auto-fix on the session's dirty .ts/.tsx files, then a
-# whole-repo typecheck. Blocks (exit 2) on any remaining failure. No-ops when no TS changed.
-# Calls node_modules/.bin directly so it works without a global yarn on the active Node.
+# Stop hook: format/lint the session's dirty source files + repo typecheck.
+# Commands come from .claude/project.env; an empty command is skipped. Blocks (exit 2)
+# on any remaining failure. Whole-repo lint is deliberately avoided so unrelated red on
+# the trunk can't block an unrelated session.
 set -o pipefail
 
 cd "${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null)}" || exit 1
+[ -f .claude/project.env ] && . .claude/project.env
+
+[ -z "${FORMAT_FIX_CMD:-}${LINT_CMD:-}${TYPECHECK_CMD:-}" ] && exit 0
+
+EXT_RE=$(printf '%s' "${SOURCE_EXTENSIONS:-}" | tr -s ' ' '|')
+[ -z "$EXT_RE" ] && exit 0
+
+# Includes untracked files (Write-created files aren't staged yet).
+DIRTY=$(
+  {
+    git diff --name-only 2>/dev/null
+    git diff --cached --name-only 2>/dev/null
+    git ls-files --others --exclude-standard 2>/dev/null
+  } | grep -E "\.($EXT_RE)$" | sort -u | while read -r f; do [ -f "$f" ] && echo "$f"; done
+)
+
+[ -z "$DIRTY" ] && exit 0
 
 # The project requires Node >=20 (.nvmrc). Switch via nvm when the shell default is older.
 if [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
@@ -13,56 +31,33 @@ if [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
   nvm use >/dev/null 2>&1 || true
 fi
 
-BIN=node_modules/.bin
-
-# Includes untracked files (Write-created files are not staged yet).
-DIRTY_TS=$(
-  {
-    git diff --name-only 2>/dev/null
-    git diff --cached --name-only 2>/dev/null
-    git ls-files --others --exclude-standard 2>/dev/null
-  } | grep -E '\.(ts|tsx)$' | sort -u | while read -r f; do [ -f "$f" ] && echo "$f"; done
-)
-
-[ -z "$DIRTY_TS" ] && exit 0
-
-if [ ! -x "$BIN/next" ] || [ ! -x "$BIN/tsc" ] || [ ! -x "$BIN/prettier" ]; then
+if [ ! -x node_modules/.bin/eslint ] || [ ! -x node_modules/.bin/tsc ]; then
   echo "Quality checks skipped: node_modules is missing. Run 'yarn install' (Node >=20) and re-run." >&2
   exit 2
 fi
 
-FILE_ARGS=()
-while IFS= read -r f; do FILE_ARGS+=(--file "$f"); done <<< "$DIRTY_TS"
-
-# next lint prints a deprecation banner on every run; strip it from the output we forward.
-lint() {
-  "$BIN/next" lint --max-warnings=0 "$@" 2>&1 \
-    | grep -vE '^(`next lint` is deprecated|For new projects|For existing projects|npx @next/codemod|[[:space:]]*$)' >&2
-  return "${PIPESTATUS[0]}"
-}
-
 echo "Running quality checks..." >&2
 
-echo "-> Prettier + ESLint auto-fix on dirty files..." >&2
-echo "$DIRTY_TS" | xargs "$BIN/prettier" --log-level error --write 1>&2
-lint --fix "${FILE_ARGS[@]}" || true
-
-echo "-> Verifying format..." >&2
-if ! echo "$DIRTY_TS" | xargs "$BIN/prettier" --log-level error --check 1>&2; then
-  echo "Prettier check failed on the files this session touched. Run 'yarn format' and fix what remains." >&2
-  exit 2
+if [ -n "${FORMAT_FIX_CMD:-}" ]; then
+  echo "-> Format/fix dirty files" >&2
+  printf '%s\n' "$DIRTY" | tr '\n' '\0' | xargs -0 sh -c "$FORMAT_FIX_CMD \"\$@\"" _ >/dev/null 2>&1
 fi
 
-echo "-> Verifying lint..." >&2
-if ! lint "${FILE_ARGS[@]}"; then
-  echo "ESLint failed on the files this session touched. Fix the issues above." >&2
-  exit 2
+if [ -n "${LINT_CMD:-}" ]; then
+  echo "-> Lint dirty files" >&2
+  if ! printf '%s\n' "$DIRTY" | tr '\n' '\0' | xargs -0 sh -c "$LINT_CMD \"\$@\"" _ 1>&2; then
+    echo "Lint failed on the files this session touched (ESLint + Prettier). Fix the remaining issues above." >&2
+    exit 2
+  fi
 fi
 
-echo "-> Typecheck (whole repo)..." >&2
-if ! "$BIN/tsc" --noEmit 1>&2; then
-  echo "Typecheck failed. Fix the type errors above." >&2
-  exit 2
+# Whole repo: type errors cross file boundaries.
+if [ -n "${TYPECHECK_CMD:-}" ]; then
+  echo "-> Typecheck (whole repo)" >&2
+  if ! bash -c "$TYPECHECK_CMD" 1>&2; then
+    echo "Typecheck failed. Fix the type errors above." >&2
+    exit 2
+  fi
 fi
 
 echo "All quality checks passed!" >&2

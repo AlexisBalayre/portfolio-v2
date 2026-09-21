@@ -8,8 +8,16 @@ FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 [ -z "$FILE_PATH" ] && exit 0
 [[ "$FILE_PATH" =~ \.(ts|tsx)$ ]] || exit 0
 
-ROOT="${CLAUDE_PROJECT_DIR:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
-REL="${FILE_PATH#"$ROOT"/}"
+# Hooks are per-session, keyed on the directory the session started in, so a session launched here
+# and working in a sibling repo would otherwise hold that repo to this convention. Only paths under
+# this checkout are ours.
+[ -z "${CLAUDE_PROJECT_DIR:-}" ] && exit 0
+[[ "$FILE_PATH" != "$CLAUDE_PROJECT_DIR"/* ]] && exit 0
+
+# Overwriting an existing file doesn't choose a name, so legacy names stay writable.
+[ -e "$FILE_PATH" ] && exit 0
+
+REL="${FILE_PATH#"$CLAUDE_PROJECT_DIR"/}"
 FILENAME=$(basename "$REL")
 
 block() {

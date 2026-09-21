@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Create an isolated worktree for a feature, on its own branch, with deps installed.
 #   yarn worktree:create <name>   ->  .worktrees/<name> on branch <prefix>/<name>
-# Branch prefix is configurable via WORKTREE_BRANCH_PREFIX in .env (default: feature).
+# Branch prefix and install command come from .claude/project.env.
 set -euo pipefail
 
 ROOT=$(git rev-parse --show-toplevel)
@@ -14,10 +14,10 @@ if [ -s "${NVM_DIR:-$HOME/.nvm}/nvm.sh" ]; then
   . "${NVM_DIR:-$HOME/.nvm}/nvm.sh" >/dev/null 2>&1
   nvm use >/dev/null 2>&1 || true
 fi
-if command -v yarn >/dev/null 2>&1; then YARN="yarn"; else YARN="corepack yarn"; fi
+command -v yarn >/dev/null 2>&1 || yarn() { corepack yarn "$@"; }
+export -f yarn 2>/dev/null || true
 
-# Load personalization (.env) if present.
-[ -f .env ] && { set -a; . ./.env; set +a; }
+[ -f .claude/project.env ] && . .claude/project.env
 PREFIX="${WORKTREE_BRANCH_PREFIX:-feature}"
 
 NAME="${1:?Usage: yarn worktree:create <name>}"
@@ -32,8 +32,20 @@ fi
 mkdir -p .worktrees
 git worktree add "$WORKTREE_DIR" -b "$BRANCH"
 
-# Install dependencies in the new worktree (fresh worktrees start without node_modules)
-(cd "$WORKTREE_DIR" && $YARN install --frozen-lockfile)
+# Fresh worktrees start without installed dependencies.
+if [ -n "${INSTALL_CMD:-}" ]; then
+  (cd "$WORKTREE_DIR" && bash -c "$INSTALL_CMD")
+fi
+
+# Worktree-local CodeGraph index: without one, codegraph answers from the main
+# tree's index, missing symbols changed on this branch. Only when the main
+# checkout opted in, and non-fatal so an indexer hiccup never blocks creation.
+# Same env as .mcp.json: --yes skips the consent prompt, and telemetry defaults on.
+if [ -d .codegraph ]; then
+  (cd "$WORKTREE_DIR" && DO_NOT_TRACK=1 CODEGRAPH_TELEMETRY=0 CODEGRAPH_NO_UPDATE_CHECK=1 CODEGRAPH_NO_DOWNLOAD=1 \
+    npx -y @colbymchenry/codegraph@1.6.0 init --yes) ||
+    echo "Warning: codegraph init failed; run it manually in $WORKTREE_DIR" >&2
+fi
 
 echo ""
 echo "Worktree created:"

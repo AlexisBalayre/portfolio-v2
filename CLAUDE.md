@@ -26,7 +26,10 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 
 ## Conventions
 
-Path-scoped rules in `.claude/rules/*.md` auto-load the matching `docs/conventions/<area>.md` when you touch a file in that area (`general`, `frontend`, `content`). `docs/conventions/` is the single source of truth; `docs/reference/architecture.md` explains how the pieces connect; `docs/README.md` holds the glossary.
+`docs/conventions/` is the single source of truth (`general`, `frontend`, `content`); `docs/reference/architecture.md` explains how the pieces connect; `docs/glossary.md` holds the domain nouns. Stack commands, generated paths, and the trunk live in `.claude/project.env`.
+
+- Conventions reach you through `.claude/rules/`: the first Read, Edit, or Write of a file in an area injects that area's doc for the rest of the session. Never Read a conventions doc yourself; that duplicates 1-2k tokens already in context.
+- MCP results (codegraph) do not fire rules. Before your first edit in an area, Read one existing file there with the Read tool; the core rule above already asks for this.
 
 ## Git workflow (CRITICAL)
 

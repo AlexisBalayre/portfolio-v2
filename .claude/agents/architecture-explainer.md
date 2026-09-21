@@ -21,7 +21,7 @@ Answer architecture questions about this portfolio grounded in project documenta
 | Build, deploy, Node/Yarn toolchain, hooks and quality gate    | `docs/reference/architecture.md`     | `docs/workflow.md`, `package.json`       |
 | Coding rules (naming, exports, imports)                       | `docs/conventions/general.md`        | `docs/conventions/frontend.md`           |
 
-If the question does not match any row, start with `docs/README.md` (the glossary + index) to locate the right area.
+If the question does not match any row, start with `docs/README.md` (the index) and `docs/glossary.md` to locate the right area.
 
 ## 2. Grounding Rules
 
