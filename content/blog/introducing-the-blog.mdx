@@ -1,0 +1,94 @@
+---
+title: "Why this site has a blog now, and how a Pupitre session built it"
+description: "The first post: what this blog is for, how a post is an MDX file published by a pull request, and how one scoped Pupitre session built the whole feature while I kept the merge."
+date: "2026-09-24"
+tags: ["blog", "pupitre", "claude-code", "next.js"]
+projects: ["pupitre", "claude-code-config"]
+---
+
+For two years this site was a single page: who I am, where I have worked, what I have built. That was enough while
+the projects spoke for themselves through their READMEs. It stopped being enough once the interesting part of the work
+moved from the code to the practice around it: how I run several coding agents in parallel without losing track of
+what they wrote, how a merge gate decides what lands, how a daily news pipeline stays trustworthy when a model writes
+half of it. Those are engineering notes, not README material, and they need a place with a date on it.
+
+So this is that place. Expect articles about [Pupitre](https://github.com/AlexisBalayre/pupitre),
+[agentspine](https://github.com/AlexisBalayre/agentspine), my
+[Claude Code config](https://github.com/AlexisBalayre/claude-code-config) and
+[AI Daily Summary](https://github.com/AlexisBalayre/ai-daily-summary), and about the practices they encode: task specs
+with acceptance criteria, scope hooks, debt ledgers, evaluation harnesses. Short, concrete, with the commands and the
+numbers.
+
+## How a post gets published
+
+There is no CMS and no database. A post is one MDX file under `content/blog/`, with a YAML frontmatter block that the
+build validates:
+
+```mdx
+---
+title: "Why this site has a blog now, and how a Pupitre session built it"
+description: "One sentence for the listing, the social card and the feed."
+date: "2026-09-24"
+tags: ["blog", "pupitre"]
+projects: ["pupitre", "claude-code-config"]
+---
+
+Body in Markdown, with a handful of allowed components.
+```
+
+`next build` renders every file to static HTML, generates a 1200 by 630 social image per post with `next/og`, emits
+a BlogPosting JSON-LD block and rebuilds the RSS feed at `/blog/rss.xml`. Merging the pull request is the publish
+button. The `projects` field is the interesting one: it lists project ids from the same JSON that renders the cards
+on the home page, so every post links to its projects and every project card lists the posts written about it. One
+source, two directions.
+
+I chose `next-mdx-remote` over `@next/mdx` because it treats a post as data read from disk, exactly like the JSON
+files behind the rest of the site: one loader compiles the file, validates the frontmatter and feeds the page, the
+listing, the feed and the sitemap. No bundler configuration, no content framework, one dependency.
+
+## How the feature was built
+
+I did not write this feature by hand. I wrote a task specification and a
+[Pupitre](https://github.com/AlexisBalayre/pupitre) session wrote the code, in a git worktree of its own, on a branch
+of its own, with a merge that stayed mine.
+
+Pupitre is my control plane for parallel Claude Code sessions. A task starts as a spec: a goal, a scope-in list of
+paths the session may edit, a scope-out list it must not touch, and acceptance criteria written as things a reviewer
+can check. For this feature the scope allowed `app/`, `components/`, `lib/`, `content/`, the docs and the SEO files,
+and forbade the generated sitemap, `robots.txt`, the CI workflows and Pupitre's own state. The acceptance criteria
+named every artefact you are looking at: the static pages, the header link that works from both the home page and
+the blog, the per-page metadata, the feed, the two-way project links, the documentation and this post.
+
+```bash
+pup new "Add a blog to the portfolio" --scope "app/**" --scope "content/**" ...
+pup status
+pup review
+pup merge t-mufsqgvq --pr
+```
+
+From there the session ran on its own. Pupitre had compiled a profile for it: the project's `CLAUDE.md`, the
+path-scoped convention rules from my [Claude Code config](https://github.com/AlexisBalayre/claude-code-config), a
+code graph of the worktree it could query instead of grepping, and a `PreToolUse` hook that refuses any edit outside
+the scope before it lands. A `Stop` hook ran Prettier, ESLint and `tsc` on every touched file each time the session
+paused. When the session judged every criterion met, it committed and declared itself done.
+
+The merge is the part I keep. `pup merge` runs the build, the lint, a scope audit of the diff against the spec, then
+a technical-debt delta against the baseline recorded when the project was onboarded: duplication, dead code,
+complexity, diff size. Regressions are refused, not warned about. What passes gets a decision record, so in three
+months I can still read why the blog is built this way and not another.
+
+Three things made this work better than a chat window would have:
+
+- **The spec did the steering.** Scope and acceptance criteria are cheaper to write than corrections, and they are
+  checked by a hook and a gate, not by my attention.
+- **The conventions were already written down.** `docs/conventions/` says how components, content and SEO are done
+  here. The session read them and matched them, which is why the blog looks native instead of bolted on.
+- **The session documented its own decision.** The ADR under `docs/adr/`, the writing guide and the content
+  conventions came out of the same run as the code, because the spec asked for them.
+
+## What comes next
+
+The next posts are already on the backlog: the merge gate and the debt ratchet in Pupitre, why agentspine writes one
+`.agents/` directory for five tools instead of syncing five, and how AI Daily Summary keeps a Gemini-written
+newsletter honest. If you want them as they land, the feed is at
+[/blog/rss.xml](/blog/rss.xml).

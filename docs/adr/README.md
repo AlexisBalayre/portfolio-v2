@@ -6,4 +6,4 @@ skills append here when a design decision crystallises.
 
 | ADR | Status | Title |
 | :-- | :----- | :---- |
-| (none yet) | | |
+| [0001](0001-blog-posts-as-mdx-files-compiled-with-next-mdx-remote.md) | accepted | Blog posts are MDX files in the repo, compiled at build time with next-mdx-remote |

@@ -6,7 +6,8 @@ Documentation for the portfolio site. Organised loosely after [Diátaxis](https:
 | :------------------ | :---------------------- | :---------------------------------------------------- |
 | `conventions/`      | *How must I code this?* | You are editing files in an area (auto-loaded by `.claude/rules/`). |
 | `reference/`        | *What is the shape?*    | You need to know how the page, content, SEO, or build fit together. |
-| `adr/`              | *What did we decide?*   | You need the record of a past decision (empty until the first ADR lands). |
+| `adr/`              | *What did we decide?*   | You need the record of a past decision.               |
+| `guides/`           | *How do I do X?*        | You are adding a blog post.                            |
 | `glossary.md`       | *What does this word mean?* | You name something, or a term in a task is fuzzy.  |
 | `workflow.md`       | *How do I work here?*   | You are starting a task: worktrees, hooks, PR flow.    |
 
@@ -22,5 +23,6 @@ explains or records.
 - [Content conventions](conventions/content.md): JSON shapes, HTML-in-strings, images, writing style, sync checklist
 - [Glossary](glossary.md): the domain nouns (Section, Content JSON, Timeline item, Tier, ...)
 - [Site architecture](reference/architecture.md): how layout, page, components, content, styling, SEO, and build connect
+- [Writing a blog post](guides/writing-a-post.md): the file, the frontmatter, the preview, the sync list
 - [Workflow](workflow.md): the worktree-first loop and what enforces it
 - [ADRs](adr/README.md)
