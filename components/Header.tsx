@@ -100,13 +100,13 @@ export const HeaderMenuLinks = () => {
   }, []);
 
   useEffect(() => {
-    // Vérifie à l'init puis sur scroll
+    // Vérifie à l'init, à chaque changement de route (retour du blog) puis sur scroll
     checkVisibility();
     window.addEventListener("scroll", checkVisibility, { passive: true });
     return () => {
       window.removeEventListener("scroll", checkVisibility);
     };
-  }, [checkVisibility]);
+  }, [checkVisibility, pathname]);
 
   return (
     <>

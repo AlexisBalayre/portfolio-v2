@@ -11,3 +11,4 @@ export const blogTitle = "Blog";
 export const blogDescription =
   "Technical articles by Alexis Balayre on his open-source projects (Pupitre, agentspine, Claude Code config, AI Daily Summary) and on engineering practices for building with AI agents.";
 export const feedUrl = `${blogUrl}/rss.xml`;
+export const feedTitle = `${blogTitle} | ${authorName}`;

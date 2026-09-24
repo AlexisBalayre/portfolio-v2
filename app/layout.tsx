@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "~~/styles/globals.css";
 import { Header } from "~~/components/Header";
 import { Footer } from "~~/components/Footer";
-import { authorName, blogTitle, feedUrl, siteName, siteUrl, twitterHandle } from "~~/lib/site";
+import { authorName, feedTitle, feedUrl, siteName, siteUrl, twitterHandle } from "~~/lib/site";
 import { buildStructuredData, serialiseStructuredData } from "~~/lib/structuredData";
 import experiences from "~~/public/assets/data/experiences.json";
 import formation from "~~/public/assets/data/formation.json";
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
       "x-default": `${siteUrl}/`,
     },
     types: {
-      "application/rss+xml": [{ url: feedUrl, title: `${blogTitle} | ${authorName}` }],
+      "application/rss+xml": [{ url: feedUrl, title: feedTitle }],
     },
   },
   openGraph: {

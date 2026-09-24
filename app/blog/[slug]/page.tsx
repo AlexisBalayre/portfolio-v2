@@ -9,6 +9,7 @@ import {
   blogDescription,
   blogTitle,
   blogUrl,
+  feedTitle,
   feedUrl,
   siteName,
   siteUrl,
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
     alternates: {
       canonical: post.url,
       types: {
-        "application/rss+xml": [{ url: feedUrl, title: `${blogTitle} | ${authorName}` }],
+        "application/rss+xml": [{ url: feedUrl, title: feedTitle }],
       },
     },
     openGraph: {

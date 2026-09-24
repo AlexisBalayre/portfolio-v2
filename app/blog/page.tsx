@@ -9,6 +9,7 @@ import {
   blogDescription,
   blogTitle,
   blogUrl,
+  feedTitle,
   feedUrl,
   siteName,
   siteUrl,
@@ -16,28 +17,26 @@ import {
 } from "~~/lib/site";
 import { buildBlog, serialiseStructuredData } from "~~/lib/structuredData";
 
-const socialTitle = `${blogTitle} | ${authorName}`;
-
 export const metadata: Metadata = {
   title: blogTitle,
   description: blogDescription,
   alternates: {
     canonical: blogUrl,
     types: {
-      "application/rss+xml": [{ url: feedUrl, title: socialTitle }],
+      "application/rss+xml": [{ url: feedUrl, title: feedTitle }],
     },
   },
   openGraph: {
     type: "website",
     url: blogUrl,
     siteName,
-    title: socialTitle,
+    title: feedTitle,
     description: blogDescription,
     locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: socialTitle,
+    title: feedTitle,
     description: blogDescription,
     creator: twitterHandle,
     site: twitterHandle,

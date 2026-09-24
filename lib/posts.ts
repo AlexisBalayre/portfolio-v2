@@ -37,7 +37,13 @@ const validateFrontmatter = (slug: string, frontmatter: Record<string, unknown>)
   if (typeof description !== "string" || description.trim() === "") {
     throw new Error(`${file}: "description" must be a non-empty string`);
   }
-  if (typeof date !== "string" || !ISO_DATE.test(date) || Number.isNaN(Date.parse(date))) {
+  // Date.parse rolls 2026-02-30 over to March; the round trip catches that.
+  if (
+    typeof date !== "string" ||
+    !ISO_DATE.test(date) ||
+    Number.isNaN(Date.parse(date)) ||
+    new Date(date).toISOString().slice(0, 10) !== date
+  ) {
     throw new Error(`${file}: "date" must be a YYYY-MM-DD string`);
   }
   if (!isStringList(tags) || tags.length === 0) throw new Error(`${file}: "tags" must be a non-empty list of strings`);

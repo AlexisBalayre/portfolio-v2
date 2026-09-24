@@ -236,8 +236,8 @@ export const buildBlogPosting = (profile: BlogProfile, post: BlogPostEntry) => (
   inLanguage: "en-GB",
   keywords: post.tags.join(", "),
   image: `${post.url}/opengraph-image`,
-  author: { "@id": `${profile.siteUrl}/#person` },
-  publisher: { "@id": `${profile.siteUrl}/#person` },
+  author: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
+  publisher: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
   isPartOf: blogNode(profile),
 });
 

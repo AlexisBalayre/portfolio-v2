@@ -8,6 +8,8 @@ export const alt = "Blog post by Alexis Balayre, AI Engineer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map(({ slug }) => ({ slug }));

@@ -1,6 +1,6 @@
 // app/blog/rss.xml/route.ts
 import { getAllPosts } from "~~/lib/posts";
-import { authorName, blogDescription, blogTitle, blogUrl, feedUrl } from "~~/lib/site";
+import { blogDescription, blogUrl, feedTitle, feedUrl } from "~~/lib/site";
 
 // Rendered once at build time from content/blog/, like the pages.
 export const dynamic = "force-static";
@@ -31,7 +31,7 @@ ${post.tags.map(tag => `      <category>${escapeXml(tag)}</category>`).join("\n"
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${escapeXml(`${blogTitle} | ${authorName}`)}</title>
+    <title>${escapeXml(feedTitle)}</title>
     <link>${blogUrl}</link>
     <description>${escapeXml(blogDescription)}</description>
     <language>en-gb</language>

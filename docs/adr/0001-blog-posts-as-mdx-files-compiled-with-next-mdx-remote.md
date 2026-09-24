@@ -1,6 +1,10 @@
+---
+status: accepted
+---
+
 # Blog posts are MDX files in the repo, compiled at build time with next-mdx-remote
 
-Status: accepted (2026-09-24)
+Decided on 2026-09-24.
 
 The site needed a blog for technical articles about the open-source projects, published by merging a pull request
 and rendered statically like the rest of the portfolio. We keep each post as `content/blog/<slug>.mdx` with YAML

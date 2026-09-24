@@ -48,10 +48,12 @@ fenced code blocks with a language tag, and links. Internal links are root-relat
 Images go through `next/image`: put the file under `public/assets/img/blog/` and write
 
 ```mdx
-<Image src="/assets/img/blog/merge-gate.png" alt="The gate report for one session" width={1200} height={675} />
+<Image src="/assets/img/blog/merge-gate.png" alt="The gate report for one session" width="1200" height="675" />
 ```
 
-Markdown image syntax (`![]()`), raw HTML, tables and footnotes are not supported; see the allowed MDX list in
+Write every attribute as a quoted string. JSX expressions in braces (`width={1200}`, `{variable}`) are stripped by
+the compiler, so `next/image` would get no size and the page would fail. Markdown image syntax (`![]()`), raw HTML,
+tables and footnotes are not supported; see the allowed MDX list in
 [../conventions/content.md](../conventions/content.md#allowed-mdx).
 
 Style: British English, first person, no em-dash, no emoji. Concrete over generic: name the tool, the command, the

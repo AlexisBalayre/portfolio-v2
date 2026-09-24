@@ -8,16 +8,24 @@ import type { MDXComponents } from "mdx/types";
 
 const linkClass = "font-bold text-primary hover:text-primary-content";
 
+const isInternalHref = (href: string) => (href.startsWith("/") && !href.startsWith("//")) || href.startsWith("#");
+
+// target and rel come last so a post cannot override them and drop noopener on an external link.
 const MdxLink = ({ href = "", children, ...props }: React.ComponentPropsWithoutRef<"a">) =>
-  href.startsWith("/") || href.startsWith("#") ? (
+  isInternalHref(href) ? (
     <Link href={href} className={linkClass} {...props}>
       {children}
     </Link>
   ) : (
-    <a href={href} className={linkClass} target="_blank" rel="noopener noreferrer" {...props}>
+    <a href={href} className={linkClass} {...props} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
   );
+
+// next-mdx-remote strips JSX expressions (blockJS), so posts pass width and height as strings.
+const MdxImage = ({ width, height, alt = "", ...props }: React.ComponentProps<typeof Image>) => (
+  <Image width={Number(width)} height={Number(height)} alt={alt} {...props} />
+);
 
 export const mdxComponents: MDXComponents = {
   h2: props => <h2 className="text-3xl font-bold mt-12 mb-4" {...props} />,
@@ -40,5 +48,5 @@ export const mdxComponents: MDXComponents = {
   code: props => <code className="bg-base-100 rounded px-1.5 py-0.5 text-[0.9em] text-primary" {...props} />,
   hr: () => <div className="divider divider-neutral my-8" />,
   strong: props => <strong className="font-bold text-base-content" {...props} />,
-  Image,
+  Image: MdxImage,
 };

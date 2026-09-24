@@ -108,10 +108,10 @@ uses daisyUI tokens). Allowed:
 - Ordered and unordered lists, block quotes.
 - Fenced code blocks, with a language tag for the reader's benefit (there is no syntax highlighter).
 - Links: root-relative for the site (`/blog/<slug>`, `/#project-<id>`, `/blog/rss.xml`), absolute for the rest. External links get `target="_blank" rel="noopener noreferrer"` from the component.
-- `<Image src="/assets/img/blog/<file>" alt="…" width={…} height={…} />` (`next/image`); files live in `public/assets/img/blog/`.
+- `<Image src="/assets/img/blog/<file>" alt="…" width="1200" height="675" />` (`next/image`); files live in `public/assets/img/blog/`. Attributes are quoted strings: the compiler strips JSX expressions in braces (`width={1200}`), so a braced size leaves `next/image` without dimensions.
 
-Not allowed: Markdown image syntax (`![]()` compiles to `<img>`), raw HTML, tables, task lists, footnotes and
-`import`/`export` statements. GitHub-flavoured extras need a remark plugin; add one deliberately (ADR) rather than
+Not allowed: Markdown image syntax (`![]()` compiles to `<img>`), raw HTML, tables, task lists, footnotes,
+`import`/`export` statements and JavaScript expressions in braces (`{...}`). GitHub-flavoured extras need a remark plugin; add one deliberately (ADR) rather than
 writing the syntax and hoping.
 
 ### Writing style
