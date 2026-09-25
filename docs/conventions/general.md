@@ -10,19 +10,20 @@ Enforced by `.claude/hooks/validate-file-naming.sh` on every new file.
 
 | Location | Pattern | Example | Why |
 | :--- | :--- | :--- | :--- |
-| `app/` | Next.js reserved names only (`page`, `layout`, `loading`, `error`, `not-found`, `route`, `sitemap`, `robots`, `manifest`, `opengraph-image`, …) | `app/page.tsx` | The App Router gives these files meaning; anything else under `app/` is either a route segment folder or misplaced UI. |
+| `app/` | Next.js reserved names only (`page`, `layout`, `loading`, `error`, `not-found`, `route`, `sitemap`, `robots`, `manifest`, `opengraph-image`, …), all under `app/[locale]/` | `app/[locale]/page.tsx` | The App Router gives these files meaning; anything else under `app/` is either a route segment folder or misplaced UI. Every route sits under the locale segment so it is built once per language. |
 | `components/` | PascalCase, one component per file | `Header.tsx`, `ProjectCard.tsx` | Matches the exported component name. |
 | `public/assets/logos/` | PascalCase `*Logo.tsx` | `GithubLogo.tsx` | Inline SVG React components. |
 | `hooks/` | `use` + PascalCase, re-exported from `hooks/index.ts` | `useOutsideClick.ts` | React hook naming rule; the barrel keeps `import { useX } from "~~/hooks"` stable. |
 | `lib/` | camelCase | `posts.ts`, `site.ts` | Plain utilities and loaders. |
-| `content/blog/` | lowercase, hyphenated `<slug>.mdx` | `introducing-the-blog.mdx` | The file name is the URL. |
+| `content/blog/` | lowercase, hyphenated `<slug>.mdx`, French version `<slug>.fr.mdx` | `introducing-the-blog.mdx` | The file name is the URL; the locale suffix picks the language. |
+| `public/assets/data/` | `<locale>/<file>.json`, same file names in `en/` and `fr/` | `en/projects.json`, `fr/projects.json` | One folder per locale, mirrored entry for entry. |
 
 ## Imports
 
-- **Always the `~~/` alias** (`tsconfig.json` maps `~~/*` to the repo root): `~~/components/Header`, `~~/public/assets/data/projects.json`. Never `../../` chains.
+- **Always the `~~/` alias** (`tsconfig.json` maps `~~/*` to the repo root): `~~/components/Header`, `~~/lib/portfolio`. Never `../../` chains.
 - **Order**: `react`, `next/*`, third-party, `@heroicons/*`, `~~/*`. No import-sorting plugin is installed; keep the order by hand and match the neighbouring file.
 - **Icons**: `@heroicons/react/24/outline` by default, `/solid` for filled variants. Import by name; never the whole package.
-- **JSON content** is imported directly (`import projects from "~~/public/assets/data/projects.json"`); `resolveJsonModule` is on. **MDX content** is never imported: `lib/posts.ts` reads `content/blog/` from disk at build time.
+- **JSON content** is imported in exactly two places: `lib/portfolio.ts` (the six content files of each locale, behind `getPortfolio(locale)`) and `lib/i18n.ts` (the two dictionaries, behind `getDictionary(locale)`); `resolveJsonModule` is on. Pages and components go through those loaders, never through a JSON import of their own. **MDX content** is never imported: `lib/posts.ts` reads `content/blog/` from disk at build time.
 
 ## Exports
 
@@ -31,26 +32,32 @@ Enforced by `.claude/hooks/validate-file-naming.sh` on every new file.
 
 ## Client vs server components
 
-- Add `"use client"` only when the file uses hooks, browser APIs (`window`, `IntersectionObserver`), or event handlers. `app/layout.tsx` is a server component and must stay one: it owns `metadata`, which cannot live in a client file.
-- `app/page.tsx` is a server component; the About-Me `IntersectionObserver` lives in `components/AboutMe.tsx`, the only client block of the home page. Keep it that way: the page passes the blog posts (read from disk) to `Projects`.
+- Add `"use client"` only when the file uses hooks, browser APIs (`window`, `IntersectionObserver`), or event handlers. `app/[locale]/layout.tsx` is a server component and must stay one: it owns `generateMetadata`, which cannot live in a client file.
+- `app/[locale]/page.tsx` is a server component; the About-Me `IntersectionObserver` lives in `components/AboutMe.tsx`, the only client block of the home page. Keep it that way: the page passes the blog posts (read from disk) and the About Me JSON to the components.
 
 ## Type safety
 
 - Props are typed with an `interface` declared at the top of the component file (`ProjectsProps`, `SkillsProps`). This repo is too small for a `types/` folder; do not create one for a single interface.
-- **Content data is typed from its JSON shape.** `Projects.tsx` and `Skills.tsx` declare the item interface; `Timeline.tsx` still uses `any[]`, which is legacy. When touching it, type it (`TimelineItem { logo; title; period; description }`), do not copy the `any`.
+- **Content data is typed from its JSON shape.** `lib/portfolio.ts` derives `TimelineItem`, `Project`, `SkillCategory` and `About` from the English files and `lib/i18n.ts` derives `Dictionary` from `en/ui.json`, so a French file that drifts fails typecheck (keys) or the build (entries). Components declare the item interface they render (`Projects.tsx`, `Skills.tsx`, `Timeline.tsx`) and take a `locale: Locale` prop; the shapes are structurally compatible with the loader's.
 - `@typescript-eslint/no-explicit-any` is off in `.eslintrc.json`; that is a permission, not an invitation.
 - Boolean names start with `is` / `has` / `should` (`isActive`, `isOpen`).
 
 ## Content stays in JSON
 
-The whole point of the architecture: **portfolio copy does not live in components.** Experiences, hackathons, education, projects, and skills come from `public/assets/data/*.json`; blog posts come from `content/blog/*.mdx`; both are rendered by generic components. When you are about to type a company name, a date, or a project description into a `.tsx` file, stop and put it in the JSON (see [content.md](content.md)).
+The whole point of the architecture: **no copy lives in components, in either language.** Experiences, hackathons,
+education, projects, skills and the About Me block come from `public/assets/data/<locale>/*.json`; every UI string
+(menu labels, section titles, button and aria labels, SEO titles and descriptions, the blog title, the social-card
+text, the footer line) comes from `public/assets/data/<locale>/ui.json`; blog posts come from `content/blog/*.mdx`
+and `*.fr.mdx`; all of it is rendered by generic components that take a `locale`. When you are about to type a
+company name, a date, a project description or any sentence into a `.tsx` file, stop and put it in the JSON of both
+locales (see [content.md](content.md)). The build refuses a French data file with a missing entry and typecheck
+refuses a missing dictionary key.
 
-Two deliberate exceptions:
+What stays in code: proper nouns that are not copy (`Alexis Balayre`, the site URL, e-mail, social profile URLs,
+the resume and Calendly URLs) and structural tokens (section ids, project ids, tier keys, the locale list).
 
-- The **About Me** block in `components/AboutMe.tsx` and the intro under the `<h1>` in `app/page.tsx` (name, nationality, location, degrees, bio paragraph).
-- The **SEO constants and JSON-LD** in `lib/site.ts` (`siteUrl`, `siteName`, author, blog title and description, feed URL) and `app/layout.tsx` (descriptions, keywords, the `profile` constants).
-
-No hardcoded site URL anywhere else; `siteUrl` in `lib/site.ts` and `siteUrl` in `next-sitemap.config.js` are the two sources.
+No hardcoded site URL anywhere else; `siteUrl` in `lib/site.ts` and `siteUrl` in `next-sitemap.config.js` are the two
+sources, and the two files also share the locale prefix rule (`/fr`, English unprefixed).
 
 ## Comments
 
@@ -62,4 +69,4 @@ No hardcoded site URL anywhere else; `siteUrl` in `lib/site.ts` and `siteUrl` in
 ## Clean code
 
 - **Delete old code when you replace it.** No shims, no `// removed` markers, no compat re-exports.
-- **YAGNI.** No abstractions for a second page, a CMS, or i18n until they exist.
+- **YAGNI.** No abstractions for a CMS, a third locale or plural rules until they exist; the locale layer is a list, a URL rule and a typed JSON dictionary, and stays that small.

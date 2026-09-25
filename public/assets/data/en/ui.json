@@ -1,0 +1,129 @@
+{
+  "site": {
+    "title": "Alexis Balayre | AI Engineer, Real-Time Speech AI",
+    "titleTemplate": "%s | Alexis Balayre",
+    "description": "AI Engineer in Paris building Lia Live AI, Acolad's real-time AI interpreting platform. Real-time speech AI, LLM systems, agentic AI and production ML.",
+    "socialDescription": "Portfolio of Alexis Balayre, AI Engineer specialising in real-time speech AI, LLM systems and production ML: experience, projects, skills and education.",
+    "keywords": [
+      "Alexis Balayre",
+      "AI Engineer",
+      "Real-Time Speech AI",
+      "Speech Translation",
+      "AI Interpreting",
+      "Lia Live AI",
+      "Acolad",
+      "Data Scientist",
+      "Generative AI",
+      "Agentic AI",
+      "LLM",
+      "RAG",
+      "NLP",
+      "Machine Learning",
+      "Software Engineering",
+      "Paris",
+      "ISEP",
+      "Cranfield University"
+    ]
+  },
+  "profile": {
+    "jobTitle": "AI Engineer",
+    "description": "AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a background in Software Engineering and Data Science. Builds Lia Live AI, Acolad's real-time AI interpreting platform.",
+    "knowsAbout": [
+      "Real-Time Speech AI",
+      "Speech Translation",
+      "Automatic Speech Recognition",
+      "Text-to-Speech",
+      "LLM Systems",
+      "Generative AI",
+      "Agentic AI",
+      "Retrieval-Augmented Generation",
+      "Production ML",
+      "Machine Learning",
+      "NLP",
+      "Software Engineering",
+      "AI Security"
+    ],
+    "projectsListName": "Projects by {name}"
+  },
+  "og": {
+    "homeAlt": "Alexis Balayre, AI Engineer specialising in real-time speech AI",
+    "tagline": "Real-time speech AI, LLM systems and production ML",
+    "subtitle": "Building Lia Live AI at Acolad",
+    "blogAlt": "The blog of Alexis Balayre, AI Engineer",
+    "postAlt": "Blog post by Alexis Balayre, AI Engineer"
+  },
+  "header": {
+    "openMenu": "Open menu",
+    "primaryNav": "Primary",
+    "emailAria": "Email of Alexis Balayre",
+    "calendlyAria": "Calendly of Alexis Balayre",
+    "switchLocale": "FR",
+    "switchLocaleAria": "Lire cette page en français"
+  },
+  "nav": {
+    "aboutMe": "About Me",
+    "experiences": "Experiences",
+    "projects": "Projects",
+    "skills": "Skills",
+    "hackathons": "Hackathons",
+    "education": "Education",
+    "blog": "Blog"
+  },
+  "home": {
+    "meet": "Meet",
+    "aboutHeading": "Who am I?",
+    "portraitAlt": "Portrait of Alexis Balayre, AI Engineer",
+    "linkedinAria": "LinkedIn of Alexis Balayre",
+    "githubAria": "GitHub of Alexis Balayre",
+    "downloadResume": "Download Resume",
+    "downloadResumeAria": "Download Resume of Alexis Balayre"
+  },
+  "timeline": {
+    "logoAlt": "{organisation} logo",
+    "organisationSeparators": [" at "]
+  },
+  "projects": {
+    "previewAlt": "{name} project preview",
+    "technologies": "Technologies",
+    "readMore": "Read more on the blog",
+    "postsAbout": "Posts about {name}",
+    "view": "View Project",
+    "viewAria": "View {name} on GitHub"
+  },
+  "skills": {
+    "core": {
+      "label": "Core",
+      "description": "Daily, production-grade"
+    },
+    "working": {
+      "label": "Working",
+      "description": "Solid, used in real projects"
+    },
+    "familiar": {
+      "label": "Familiar",
+      "description": "Some hands-on experience"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Technical articles by Alexis Balayre on his open-source projects (Pupitre, agentspine, Claude Code config, AI Daily Summary) and on engineering practices for building with AI agents.",
+    "feedAria": "RSS feed of the blog",
+    "subscribe": "Subscribe with RSS",
+    "tags": "Tags",
+    "allPosts": "All posts",
+    "relatedProjects": "Related projects",
+    "notTranslated": "This post is not yet translated.",
+    "readInEnglish": "Read it in English"
+  },
+  "footer": {
+    "socialNav": "Social links",
+    "linkedinAria": "Linkedin of Alexis Balayre",
+    "githubAria": "Github of Alexis Balayre",
+    "copyright": "Copyright © {year} Alexis Balayre. All Rights Reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "There is nothing at this address. The page may have moved, or the link may be wrong.",
+    "backHome": "Back to the home page"
+  }
+}

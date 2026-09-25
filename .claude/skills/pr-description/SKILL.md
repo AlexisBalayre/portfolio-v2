@@ -19,7 +19,7 @@ Use this template for writing the PR body:
 
 ## Content
 
-- <entries added / updated / removed in public/assets/data/*.json>
+- <entries added / updated / removed in public/assets/data/<locale>/*.json>
 - llms.txt and layout.tsx metadata: <synced | not affected>
 
 ## Merge Danger
@@ -52,10 +52,10 @@ on(section link click)
 - Show UI structure as a component tree, including state and module boundaries that matter:
 
 ```tsx
-<RootLayout> (app/layout.tsx)
+<RootLayout> (app/[locale]/layout.tsx)
   <Header> (components/Header.tsx)
     useOutsideClick()
-  <Home> (app/page.tsx)
+  <Home> (app/[locale]/page.tsx)
     <Timeline items={experiences} />
     <Projects />
 ```
@@ -73,8 +73,8 @@ public/assets/data/  # all content
 
 ```mermaid
 flowchart LR
-    JSON[public/assets/data/*.json] --> Page[app/page.tsx]
-    JSON --> SD[lib/structuredData.ts] --> Layout[app/layout.tsx JSON-LD]
+    JSON[public/assets/data/<locale>/*.json] --> Page[app/[locale]/page.tsx]
+    JSON --> SD[lib/structuredData.ts] --> Layout[app/[locale]/layout.tsx JSON-LD]
 ```
 
 - Use `diff` when the point is what changes and the surrounding shape already exists. Match the diff shape to the topic.
@@ -115,7 +115,7 @@ Execution-based evidence is A-tier: `yarn build` output, the rendered JSON-LD or
 
 ### Content
 
-Include only when `public/assets/data/*.json`, `public/llms.txt`, or `public/assets/img/` changed. List the entries added, updated, or removed and confirm `llms.txt` and the `layout.tsx` / `lib/structuredData.ts` metadata were kept in sync (`docs/conventions/content.md` §Keep in sync).
+Include only when `public/assets/data/<locale>/*.json`, `public/llms.txt`, or `public/assets/img/` changed. List the entries added, updated, or removed and confirm `llms.txt` and the `layout.tsx` / `lib/structuredData.ts` metadata were kept in sync (`docs/conventions/content.md` §Keep in sync).
 
 ### Merge Danger
 
@@ -168,7 +168,7 @@ Communicate *what changed and why* at a glance, specific enough that a reviewer 
   | :--------- | :------------------------------------------ |
   | `feat`     | New section, component, or capability       |
   | `fix`      | Bug fix (layout, links, metadata, build)    |
-  | `content`  | Portfolio content only (`public/assets/data/*.json`, `llms.txt`, images) |
+  | `content`  | Portfolio content only (`public/assets/data/<locale>/*.json`, `llms.txt`, images) |
   | `refactor` | Code restructuring with no behaviour change |
   | `docs`     | Documentation only (`docs/`, `CLAUDE.md`, READMEs) |
   | `chore`    | Build config, dependencies, tooling, Claude Code config |
@@ -200,7 +200,7 @@ Communicate *what changed and why* at a glance, specific enough that a reviewer 
 ## Body rules
 
 - **No em-dash** (`—` / `–`). Hyphen or colon.
-- **No hardcoded site URL** beyond what the diff itself changes; `siteUrl` lives in `app/layout.tsx` and `next-sitemap.config.js`.
+- **No hardcoded site URL** beyond what the diff itself changes; `siteUrl` lives in `lib/site.ts` and `next-sitemap.config.js`.
 - **Issue auto-close.** End the body with `Closes #NN.` when the PR resolves an issue (the magic word must be in the description, not a comment). Omit when the PR has no issue.
 - **No attribution footer.** Never add `🤖 Generated with Claude Code` (or any agent attribution) to the PR body. The `Co-Authored-By` trailer on commits is the only attribution.
 

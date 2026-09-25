@@ -9,7 +9,7 @@ description: Resolve an in-progress git merge or rebase conflict. Use when a mer
 
 3. **Resolve each hunk.** Preserve both intents where possible. Where incompatible, pick the one matching the merge's stated goal and note the trade-off. Do **not** invent new behaviour. Always resolve; never `--abort`.
 
-   - **Content JSON** (`public/assets/data/*.json`): both sides usually add entries. Keep both, preserve the ordering rule (timelines newest first), and re-validate the file with `jq empty`. Then reconcile `public/llms.txt` by hand so it reflects the merged content.
+   - **Content JSON** (`public/assets/data/<locale>/*.json`): both sides usually add entries. Keep both, preserve the ordering rule (timelines newest first), and re-validate the file with `jq empty`. Then reconcile `public/llms.txt` by hand so it reflects the merged content.
 
 4. **Regenerate, don't hand-merge.** Conflict markers in generated files are never resolved by hand:
    - `yarn.lock`: merge `package.json` first, take either side of the lockfile wholesale, then re-run `yarn install` to regenerate it.

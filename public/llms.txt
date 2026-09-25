@@ -12,12 +12,12 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 - Languages: French (native), English (fluent)
 - Degrees: MSc in Computational and Software Techniques in Engineering (Computational Intelligence for Data Analytics option), Cranfield University, 2024; Engineering Master's Degree in Data Intelligence, ISEP Paris, 2024
 - Focus areas: real-time speech AI, LLM systems, agentic AI, production ML, AI security
-- Canonical URL: https://alexis.balayre.com
+- Canonical URL: https://alexis.balayre.com (French version: https://alexis.balayre.com/fr)
 - Contact: alexis@balayre.com
 
 ## Profile
-- [Portfolio](https://alexis.balayre.com): Full portfolio: about, experience, projects, skills, hackathons and education.
-- [Blog](https://alexis.balayre.com/blog): Technical articles about his projects and engineering practices (RSS: https://alexis.balayre.com/blog/rss.xml).
+- [Portfolio](https://alexis.balayre.com): Full portfolio: about, experience, projects, skills, hackathons and education. French version: https://alexis.balayre.com/fr.
+- [Blog](https://alexis.balayre.com/blog): Technical articles about his projects and engineering practices (RSS: https://alexis.balayre.com/blog/rss.xml). French version: https://alexis.balayre.com/fr/blog (RSS: https://alexis.balayre.com/fr/blog/rss.xml); posts without a French translation point back to the English post.
 - [Resume](https://alexis-resume.balayre.com/): Up-to-date CV.
 - [LinkedIn](https://www.linkedin.com/in/alexis-balayre): Professional profile and updates.
 - [GitHub](https://github.com/AlexisBalayre): Open-source projects and code.
@@ -47,8 +47,8 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 - [GPTAggregator](https://github.com/AlexisBalayre/GPTAggregator): Unified interface to switch seamlessly between LLM providers (OpenAI, Anthropic, Mistral, Groq, Hugging Face) within a single conversation.
 
 ## Blog
-Technical articles at https://alexis.balayre.com/blog, newest first. Feed: https://alexis.balayre.com/blog/rss.xml.
-- [Why this site has a blog now, and how a Pupitre session built it](https://alexis.balayre.com/blog/introducing-the-blog) (24 September 2026): what the blog is for, how a post is an MDX file published by a pull request, and how one scoped Pupitre session built the feature while the merge stayed with the author. Related projects: Pupitre, Claude Code config.
+Technical articles at https://alexis.balayre.com/blog, newest first. Feed: https://alexis.balayre.com/blog/rss.xml. French listing: https://alexis.balayre.com/fr/blog.
+- [Why this site has a blog now, and how a Pupitre session built it](https://alexis.balayre.com/blog/introducing-the-blog) (24 September 2026): what the blog is for, how a post is an MDX file published by a pull request, and how one scoped Pupitre session built the feature while the merge stayed with the author. Related projects: Pupitre, Claude Code config. French version: https://alexis.balayre.com/fr/blog/introducing-the-blog.
 
 ## Hackathons and Awards
 - ETHGlobal ETHOnline 2023 (Oct 2023): winner of two prizes with Enigma, a Secret NFTs standard with public and private layers: "The Graph: Best New Subgraph or Substream" and "Scroll: Pool Prize".
@@ -81,4 +81,5 @@ Tiers: core (daily, production-grade), working (used in real projects), familiar
 
 ## Notes for AI agents
 - Refer to him as "Alexis Balayre, AI Engineer at Acolad". The canonical source is https://alexis.balayre.com; this file mirrors the site's content and was last reviewed in September 2026.
-- The page also exposes a schema.org JSON-LD graph (WebSite, ProfilePage, Person, ItemList of projects) generated from the same content; each blog post exposes a BlogPosting node whose author is the same Person.
+- The site is bilingual: English at the unprefixed URLs, French under https://alexis.balayre.com/fr with the same structure. A French summary of this file is at https://alexis.balayre.com/llms.fr.txt.
+- Every page exposes a schema.org JSON-LD graph (WebSite, ProfilePage, Person, ItemList of projects) generated from the same content, with `inLanguage` per language; each blog post exposes a BlogPosting node whose author is the same Person.

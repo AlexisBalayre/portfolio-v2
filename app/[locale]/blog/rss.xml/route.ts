@@ -1,9 +1,15 @@
-// app/blog/rss.xml/route.ts
+// app/[locale]/blog/rss.xml/route.ts
+import { getDictionary, languageTags, locales, toLocale } from "~~/lib/i18n";
 import { getAllPosts } from "~~/lib/posts";
-import { blogDescription, blogUrl, feedTitle, feedUrl } from "~~/lib/site";
+import { blogUrl, feedTitle, feedUrl } from "~~/lib/site";
 
-// Rendered once at build time from content/blog/, like the pages.
+// Rendered once per locale at build time from content/blog/, like the pages.
 export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return locales.map(locale => ({ locale }));
+}
 
 const XML_ENTITIES: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" };
 
@@ -11,16 +17,19 @@ const escapeXml = (text: string): string => text.replace(/[&<>"']/g, character =
 
 const rfc822 = (date: string): string => new Date(date).toUTCString();
 
-export async function GET() {
-  const posts = await getAllPosts();
+export async function GET(_request: Request, { params }: { params: Promise<{ locale: string }> }) {
+  const locale = toLocale((await params).locale);
+  const t = getDictionary(locale);
+  // An untranslated post is listed, but under its English URL: the French route is only a fallback.
+  const posts = await getAllPosts(locale);
   const lastBuildDate = rfc822(posts[0]?.date ?? new Date().toISOString());
 
   const items = posts
     .map(
       post => `    <item>
       <title>${escapeXml(post.title)}</title>
-      <link>${post.url}</link>
-      <guid isPermaLink="true">${post.url}</guid>
+      <link>${post.canonicalUrl}</link>
+      <guid isPermaLink="true">${post.canonicalUrl}</guid>
       <pubDate>${rfc822(post.date)}</pubDate>
       <description>${escapeXml(post.description)}</description>
 ${post.tags.map(tag => `      <category>${escapeXml(tag)}</category>`).join("\n")}
@@ -31,12 +40,12 @@ ${post.tags.map(tag => `      <category>${escapeXml(tag)}</category>`).join("\n"
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${escapeXml(feedTitle)}</title>
-    <link>${blogUrl}</link>
-    <description>${escapeXml(blogDescription)}</description>
-    <language>en-gb</language>
+    <title>${escapeXml(feedTitle(locale))}</title>
+    <link>${blogUrl(locale)}</link>
+    <description>${escapeXml(t.blog.description)}</description>
+    <language>${languageTags[locale].toLowerCase()}</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>
-    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />
+    <atom:link href="${feedUrl(locale)}" rel="self" type="application/rss+xml" />
 ${items}
   </channel>
 </rss>

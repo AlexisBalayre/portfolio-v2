@@ -1,4 +1,4 @@
-// app/page.tsx
+// app/[locale]/page.tsx
 import React from "react";
 import {
   AcademicCapIcon,
@@ -12,33 +12,34 @@ import { AboutMe } from "~~/components/AboutMe";
 import Projects from "~~/components/Projects";
 import Skills from "~~/components/Skills";
 import Timeline from "~~/components/Timeline";
+import { getDictionary, toLocale } from "~~/lib/i18n";
+import { getPortfolio } from "~~/lib/portfolio";
 import { getAllPosts } from "~~/lib/posts";
-import experiences from "~~/public/assets/data/experiences.json";
-import hackathons from "~~/public/assets/data/hackathons.json";
-import education from "~~/public/assets/data/formation.json";
-import projects from "~~/public/assets/data/projects.json";
-import tech from "~~/public/assets/data/tech.json";
 
-export default async function Page() {
-  const posts = await getAllPosts();
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const locale = toLocale((await params).locale);
+  const t = getDictionary(locale);
+  const { about, experiences, formation, hackathons, projects, tech } = getPortfolio(locale);
+  const posts = await getAllPosts(locale);
 
   return (
     <>
       <div className="pt-10 mx-auto w-full overflow-y-auto overflow-x-hidden mt-20">
         <div className="px-5">
           <h1 className="text-center mb-8 text-4xl font-bold text-primary">
-            <span className="block text-2xl mb-2 text-neutral-content font-light">Meet</span>
+            <span className="block text-2xl mb-2 text-neutral-content font-light">{t.home.meet}</span>
             Alexis Balayre
           </h1>
           <div className="max-w-2xl mx-auto">
-            <p className="text-center text-lg text-neutral-content">
-              AI Engineer specialising in real-time speech AI, LLM systems and production ML. Building Lia Live AI,
-              Acolad&apos;s real-time AI interpreting platform, in Paris.
-            </p>
+            <p className="text-center text-lg text-neutral-content">{about.intro}</p>
           </div>
 
           {/* About me */}
-          <AboutMe />
+          <AboutMe locale={locale} about={about} />
 
           {/* Experiences */}
           <section
@@ -50,10 +51,10 @@ export default async function Page() {
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <BriefcaseIcon className="h-8 w-8 mr-2 flex place-self-center" />
               <h2 id="experiences-heading" className="text-4xl font-bold text-center md:text-left">
-                Experiences
+                {t.nav.experiences}
               </h2>
             </span>
-            <Timeline items={experiences} />
+            <Timeline items={experiences} locale={locale} />
           </section>
 
           {/* Projects */}
@@ -62,10 +63,10 @@ export default async function Page() {
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <TrophyIcon className="h-8 w-8 mr-2 flex" />
               <h2 id="projects-heading" className="text-4xl font-bold text-center md:text-left place-self-center">
-                Projects
+                {t.nav.projects}
               </h2>
             </span>
-            <Projects items={projects} posts={posts} />
+            <Projects items={projects} posts={posts} locale={locale} />
           </section>
 
           {/* Skills */}
@@ -74,10 +75,10 @@ export default async function Page() {
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <CodeBracketIcon className="h-8 w-8 mr-2 flex place-self-center" />
               <h2 id="skills-heading" className="text-4xl font-bold text-center md:text-left">
-                Skills
+                {t.nav.skills}
               </h2>
             </span>
-            <Skills items={tech} />
+            <Skills items={tech} locale={locale} />
           </section>
 
           {/* Hackathons */}
@@ -90,10 +91,10 @@ export default async function Page() {
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <RocketLaunchIcon className="h-8 w-8 mr-2 flex place-self-center" />
               <h2 id="hackathons-heading" className="text-4xl font-bold text-center md:text-left">
-                Hackathons
+                {t.nav.hackathons}
               </h2>
             </span>
-            <Timeline items={hackathons} />
+            <Timeline items={hackathons} locale={locale} />
           </section>
 
           {/* Education */}
@@ -106,10 +107,10 @@ export default async function Page() {
             <span className="flex flex-row items-center justify-center md:justify-start mb-10 md:mb-20">
               <AcademicCapIcon className="h-8 w-8 mr-2 flex place-self-center" />
               <h2 id="education-heading" className="text-4xl font-bold text-center md:text-left">
-                Education
+                {t.nav.education}
               </h2>
             </span>
-            <Timeline items={education} />
+            <Timeline items={formation} locale={locale} />
           </section>
         </div>
       </div>

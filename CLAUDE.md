@@ -1,6 +1,6 @@
 # Alexis Balayre portfolio
 
-Personal portfolio at https://alexis.balayre.com: a Next.js 15 (App Router) site, React 19, TypeScript strict, Tailwind CSS v4 + daisyUI v5, with one home page and a blog under `/blog`. Portfolio copy lives in JSON and blog posts in MDX, never in components. No backend, no tests.
+Personal portfolio at https://alexis.balayre.com: a Next.js 15 (App Router) site, React 19, TypeScript strict, Tailwind CSS v4 + daisyUI v5, with one home page and a blog under `/blog`, in English (unprefixed) and French (`/fr`, see ADR 0002). Portfolio copy lives in per-locale JSON and blog posts in MDX, never in components. No backend, no tests.
 
 ## Role
 
@@ -12,20 +12,24 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 
 | Path                           | What it is                                                                                        |
 | :----------------------------- | :------------------------------------------------------------------------------------------------ |
-| `app/layout.tsx`               | Server component: Header/Footer shell, site-wide SEO (`metadata`, `viewport`, JSON-LD graph, RSS `alternates`) |
-| `app/opengraph-image.tsx`      | Build-time 1200×630 social card (`next/og`); `app/blog/**/opengraph-image.tsx` reuse its style     |
-| `app/page.tsx`                 | Home page (server component): six sections (`id` must match `menuLinks` in `Header.tsx`); hands posts to `Projects` |
-| `app/blog/`                    | `/blog` listing, `[slug]/page.tsx` post page (per-post metadata + BlogPosting JSON-LD), `rss.xml/route.ts` feed |
-| `lib/posts.ts`                 | The one post loader: reads `content/blog/*.mdx`, validates frontmatter (a bad field fails the build), compiles MDX |
+| `app/layout.tsx`               | Pass-through root layout (returns children) so `[locale]/layout.tsx` and `not-found.tsx` own the document |
+| `app/[locale]/layout.tsx`      | Root layout per locale (`en`, `fr`): `<html lang>`, Header/Footer shell, site-wide SEO (`metadata`, hreflang `alternates`, JSON-LD graph) |
+| `app/[locale]/opengraph-image/route.tsx` | Build-time 1200×630 social card (`next/og`) per locale; the blog images beside it reuse its style |
+| `app/[locale]/page.tsx`        | Home page (server component): six sections (`id` must match `menuLinks` in `Header.tsx`); hands posts to `Projects` |
+| `app/[locale]/blog/`           | `/blog` listing, `[slug]/page.tsx` post page (per-post metadata + BlogPosting JSON-LD), `rss.xml/route.ts` feed per locale |
+| `next.config.js`               | `rewrites` serve English unprefixed from the `/en` tree; `redirects` send `/en/**` to the unprefixed URL |
+| `lib/i18n.ts`                  | Locales, URL prefix rule (`localePath`, `stripLocale`), typed UI dictionary from `ui.json`          |
+| `lib/portfolio.ts`             | Per-locale content loader; fails the build when a French file lacks an entry the English one has    |
+| `lib/posts.ts`                 | The one post loader: reads `content/blog/<slug>.mdx` and optional `<slug>.fr.mdx`, validates frontmatter, compiles MDX |
 | `lib/site.ts`                  | Site-wide constants (`siteUrl`, names, blog and feed URLs) shared by the layout, blog routes and feed |
 | `lib/structuredData.ts`        | Builds the schema.org `@graph` (WebSite, ProfilePage, Person, projects ItemList) and `BlogPosting`  |
 | `mdx-components.tsx`           | The only styling layer for post bodies (daisyUI tokens); defines the allowed MDX elements           |
 | `components/`                  | `Header`, `Footer`, `AboutMe`, and the generic renderers `Timeline`, `Projects`, `Skills`          |
 | `hooks/`                       | `useOutsideClick`, re-exported from `index.ts`                                                     |
-| `content/blog/*.mdx`           | **Blog posts**: one file per post with `title/description/date/tags/projects` frontmatter; merging publishes |
-| `public/assets/data/*.json`    | **All portfolio content**: experiences, hackathons, formation, projects (stable `id`), tech         |
+| `content/blog/*.mdx`           | **Blog posts**: `<slug>.mdx` (English, required) and `<slug>.fr.mdx` (optional; the French route falls back to English) |
+| `public/assets/data/<locale>/` | **All portfolio content** per locale: experiences, hackathons, formation, projects (stable `id`), tech, about, `ui.json` (UI strings) |
 | `public/assets/img/`, `logos/` | Timeline logos + photo; inline SVG logo components                                                 |
-| `public/llms.txt`              | Hand-maintained AI-agent summary; update alongside any content change                             |
+| `public/llms.txt`, `llms.fr.txt` | Hand-maintained AI-agent summaries (English, French); update alongside any content change        |
 | `styles/globals.css`           | Tailwind v4 + daisyUI config (`night` theme) and the hand-written timeline CSS                     |
 | `docs/`                        | Conventions (source of truth for `.claude/rules/`), reference architecture, guides (`writing-a-post.md`), ADRs, glossary |
 

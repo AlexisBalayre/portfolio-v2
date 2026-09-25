@@ -27,6 +27,27 @@ const nextConfig = {
     ],
   },
 
+  // English is the default locale and lives unprefixed: every English path is served by the /en route
+  // tree without a redirect, a cookie or a middleware. French keeps its /fr prefix.
+  // See docs/adr/0002-bilingual-routes-under-a-locale-segment-with-rewrites.md.
+  // The /en/** twins are the rewrite targets only: a direct hit goes back to the unprefixed URL.
+  // Redirects run before rewrites and are not re-applied to a rewrite destination.
+  async redirects() {
+    return [
+      { source: "/en", destination: "/", permanent: true },
+      { source: "/en/:path*", destination: "/:path*", permanent: true },
+    ];
+  },
+
+  async rewrites() {
+    return [
+      { source: "/", destination: "/en" },
+      { source: "/opengraph-image", destination: "/en/opengraph-image" },
+      { source: "/blog", destination: "/en/blog" },
+      { source: "/blog/:path*", destination: "/en/blog/:path*" },
+    ];
+  },
+
   poweredByHeader: false,
   compress: true,
 };

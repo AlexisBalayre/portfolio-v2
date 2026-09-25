@@ -1,0 +1,129 @@
+{
+  "site": {
+    "title": "Alexis Balayre | Ingénieur IA, IA vocale temps réel",
+    "titleTemplate": "%s | Alexis Balayre",
+    "description": "Alexis Balayre, ingénieur IA à Paris, construit Lia Live AI, la plateforme d'interprétation IA en temps réel d'Acolad. IA vocale temps réel, systèmes LLM, IA agentique et ML en production.",
+    "socialDescription": "Portfolio d'Alexis Balayre, ingénieur IA spécialisé en IA vocale temps réel, systèmes LLM et ML en production : expérience, projets, compétences et formation.",
+    "keywords": [
+      "Alexis Balayre",
+      "Ingénieur IA",
+      "IA vocale temps réel",
+      "Traduction vocale",
+      "Interprétation IA",
+      "Lia Live AI",
+      "Acolad",
+      "Data Scientist",
+      "IA générative",
+      "IA agentique",
+      "LLM",
+      "RAG",
+      "NLP",
+      "Machine Learning",
+      "Génie logiciel",
+      "Paris",
+      "ISEP",
+      "Cranfield University"
+    ]
+  },
+  "profile": {
+    "jobTitle": "Ingénieur IA",
+    "description": "Ingénieur IA spécialisé en IA vocale temps réel, systèmes LLM et ML en production, avec une formation en génie logiciel et en science des données. Construit Lia Live AI, la plateforme d'interprétation IA en temps réel d'Acolad.",
+    "knowsAbout": [
+      "IA vocale temps réel",
+      "Traduction vocale",
+      "Reconnaissance automatique de la parole",
+      "Synthèse vocale",
+      "Systèmes LLM",
+      "IA générative",
+      "IA agentique",
+      "Génération augmentée par récupération",
+      "ML en production",
+      "Machine Learning",
+      "NLP",
+      "Génie logiciel",
+      "Sécurité de l'IA"
+    ],
+    "projectsListName": "Projets de {name}"
+  },
+  "og": {
+    "homeAlt": "Alexis Balayre, ingénieur IA spécialisé en IA vocale temps réel",
+    "tagline": "IA vocale temps réel, systèmes LLM et ML en production",
+    "subtitle": "Je construis Lia Live AI chez Acolad",
+    "blogAlt": "Le blog d'Alexis Balayre, ingénieur IA",
+    "postAlt": "Article de blog d'Alexis Balayre, ingénieur IA"
+  },
+  "header": {
+    "openMenu": "Ouvrir le menu",
+    "primaryNav": "Navigation principale",
+    "emailAria": "E-mail d'Alexis Balayre",
+    "calendlyAria": "Calendly d'Alexis Balayre",
+    "switchLocale": "EN",
+    "switchLocaleAria": "Read this page in English"
+  },
+  "nav": {
+    "aboutMe": "À propos",
+    "experiences": "Expériences",
+    "projects": "Projets",
+    "skills": "Compétences",
+    "hackathons": "Hackathons",
+    "education": "Formation",
+    "blog": "Blog"
+  },
+  "home": {
+    "meet": "Je suis",
+    "aboutHeading": "Qui suis-je ?",
+    "portraitAlt": "Portrait d'Alexis Balayre, ingénieur IA",
+    "linkedinAria": "LinkedIn d'Alexis Balayre",
+    "githubAria": "GitHub d'Alexis Balayre",
+    "downloadResume": "Télécharger mon CV",
+    "downloadResumeAria": "Télécharger le CV d'Alexis Balayre"
+  },
+  "timeline": {
+    "logoAlt": "Logo {organisation}",
+    "organisationSeparators": [" chez ", " à ", " de "]
+  },
+  "projects": {
+    "previewAlt": "Aperçu du projet {name}",
+    "technologies": "Technologies",
+    "readMore": "À lire sur le blog",
+    "postsAbout": "Articles sur {name}",
+    "view": "Voir le projet",
+    "viewAria": "Voir {name} sur GitHub"
+  },
+  "skills": {
+    "core": {
+      "label": "Expert",
+      "description": "Au quotidien, niveau production"
+    },
+    "working": {
+      "label": "Maîtrisé",
+      "description": "Solide, utilisé sur de vrais projets"
+    },
+    "familiar": {
+      "label": "Notions",
+      "description": "Une première expérience pratique"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Articles techniques d'Alexis Balayre sur ses projets open source (Pupitre, agentspine, Claude Code config, AI Daily Summary) et sur les pratiques d'ingénierie pour construire avec des agents IA.",
+    "feedAria": "Flux RSS du blog",
+    "subscribe": "S'abonner par RSS",
+    "tags": "Étiquettes",
+    "allPosts": "Tous les articles",
+    "relatedProjects": "Projets liés",
+    "notTranslated": "Cet article n'est pas encore traduit.",
+    "readInEnglish": "Le lire en anglais"
+  },
+  "footer": {
+    "socialNav": "Réseaux sociaux",
+    "linkedinAria": "LinkedIn d'Alexis Balayre",
+    "githubAria": "GitHub d'Alexis Balayre",
+    "copyright": "Copyright © {year} Alexis Balayre. Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Il n'y a rien à cette adresse. La page a peut-être été déplacée, ou le lien est erroné.",
+    "backHome": "Retour à l'accueil"
+  }
+}

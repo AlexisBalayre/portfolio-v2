@@ -15,7 +15,7 @@ Map each file path to its convention doc:
 
 - `**/*.ts`, `**/*.tsx` → `docs/conventions/general.md` (naming, exports, imports, types, comments)
 - `app/`, `components/`, `hooks/`, `styles/` → `docs/conventions/frontend.md` (Next.js App Router, Tailwind + daisyUI, next/image, links, sections, SEO)
-- `public/assets/data/*.json`, `public/llms.txt`, `public/assets/img/` → `docs/conventions/content.md` (JSON shapes, HTML-in-strings, logos, sync rules)
+- `public/assets/data/<locale>/*.json`, `public/llms.txt`, `public/assets/img/` → `docs/conventions/content.md` (JSON shapes, HTML-in-strings, logos, sync rules)
 
 ## 2. Load the spec
 

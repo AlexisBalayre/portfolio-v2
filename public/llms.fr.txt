@@ -1,0 +1,84 @@
+# Alexis Balayre
+
+> Ingénieur IA spécialisé en IA vocale temps réel, systèmes LLM et ML en production, avec une double formation en génie logiciel et en science des données. Construit actuellement Lia Live AI, la plateforme d'interprétation IA en temps réel d'Acolad, à Paris.
+
+Alexis Balayre est un ingénieur IA français basé à Paris. Il conçoit, construit et exploite des systèmes d'IA de bout en bout, de l'architecture au déploiement : pipelines vocaux en streaming, backends distribués qui les portent, routage multi-fournisseurs et cadres d'évaluation qui tranchent les choix de modèles. Avant Acolad, il a appliqué le NLP et l'IA générative (RAG, GraphRAG) chez Dassault Systèmes et mené des recherches en apprentissage profond avec Airbus sur la vision par ordinateur pour le ravitaillement autonome des avions. Il construit en open source, surtout de l'outillage et des pipelines IA, et s'intéresse particulièrement à la sécurité de l'IA : à mesure que ces systèmes gagnent en autonomie et manipulent des données plus sensibles, les rendre dignes de confiance compte autant que les rendre performants. Il est titulaire d'un MSc in Computational and Software Techniques in Engineering de Cranfield University et d'un diplôme d'ingénieur de l'ISEP.
+
+## En bref
+- Nom : Alexis Balayre
+- Poste : ingénieur IA chez Acolad (depuis septembre 2025), construit Lia Live AI
+- Localisation : Paris, France
+- Nationalité : française
+- Langues : français (langue maternelle), anglais (courant)
+- Diplômes : MSc in Computational and Software Techniques in Engineering (option Computational Intelligence for Data Analytics), Cranfield University, 2024 ; diplôme d'ingénieur, spécialité Data Intelligence, ISEP Paris, 2024
+- Domaines : IA vocale temps réel, systèmes LLM, IA agentique, ML en production, sécurité de l'IA
+- URL canonique : https://alexis.balayre.com (version française : https://alexis.balayre.com/fr)
+- Contact : alexis@balayre.com
+
+## Profil
+- [Portfolio](https://alexis.balayre.com/fr) : portfolio complet en français (à propos, expérience, projets, compétences, hackathons et formation). Version anglaise : https://alexis.balayre.com.
+- [Blog](https://alexis.balayre.com/fr/blog) : articles techniques sur ses projets et ses pratiques d'ingénierie (RSS : https://alexis.balayre.com/fr/blog/rss.xml). Les articles sans traduction française sont signalés et renvoient vers la version anglaise.
+- [CV](https://alexis-resume.balayre.com/) : CV à jour.
+- [LinkedIn](https://www.linkedin.com/in/alexis-balayre) : profil professionnel et actualités.
+- [GitHub](https://github.com/AlexisBalayre) : projets open source et code.
+
+## Poste actuel
+- [Ingénieur IA, Acolad](https://www.acolad.com/en/lia/live) : construit Lia Live AI, la plateforme d'interprétation IA en temps réel d'Acolad : transcription en streaming, traduction par LLM et synthèse vocale en streaming, pour une parole interprétée en moins d'une seconde dans plus de 80 langues, en modes consécutif et simultané. Conçoit le backend distribué (API sans état, moteur audio à affinité de session, passerelle fournisseurs avec contrôle d'admission) pour que des sessions avec état montent en charge horizontalement sur WebRTC, la téléphonie et WebSocket. Responsable de la couche IA : routage piloté par configuration entre Deepgram, OpenAI, Gemini et Gradium, traduction ancrée dans la conversation en cours et les glossaires clients, fonctions agentiques de clarification et de contexte culturel, et un cadre d'évaluation qui note qualité et latence comme une métrique unique face au délai mesuré d'un interprète humain. Exploite le service en production (réponse aux incidents, observabilité OpenTelemetry et Datadog, authentification multi-tenant, effacement conforme au RGPD, attribution des coûts par appel). Pilote désormais le fine-tuning de modèles vocaux, l'optimisation de l'inférence et le déploiement sur appareil.
+
+## Expérience
+- Ingénieur IA, [Acolad](https://www.acolad.com/) (sept. 2025 - aujourd'hui, Boulogne-Billancourt, France) : voir Poste actuel.
+- Data Scientist, [Dassault Systèmes](https://www.3ds.com/) (janv. 2025 - juil. 2025, Vélizy-Villacoublay, France) : équipe Industry Market Intelligence, Corporate Strategic Planning. Automatisation de flux de données sur des millions d'enregistrements (Python, SQL) ; web scraping, NLP (topic modelling, analyse de sentiment) et IA générative (LLM, RAG, GraphRAG) sur des données structurées et non structurées ; outils de veille concurrentielle et de suivi utilisés par la direction.
+- Data Engineer (freelance), [Sidetrade](https://www.sidetrade.com/) (oct. 2024 - nov. 2024) : architecture et flux de données d'une solution automatisée de reporting de l'empreinte carbone (NetSuite, Egencia, Eurécia et Navan vers Power BI ; ETL Microsoft Fabric). Interrompu en cours de mise en œuvre pour des contraintes RGPD.
+- Étudiant-chercheur, Cranfield University avec Airbus (mai 2024 - sept. 2024, Cranfield, Royaume-Uni) : mémoire de master soutenu par UK Research and Innovation (UKRI) et l'Aerospace Technology Institute (ATI) sur le ravitaillement au sol automatisé pour les aéroports intelligents : détection YOLOv10 combinée à un modèle séquentiel SizPos-GRU proposé pour prédire la position future de la trappe de ravitaillement d'un avion en vidéo, comparé à des références LSTM, GRU et Transformer, jusqu'à 2,15 % d'erreur.
+- Vice-président du Blockchain Lab, [Garage ISEP](https://garageisep.com/) (sept. 2022 - sept. 2023, Paris) : direction d'une équipe de 10 personnes ; organisation d'ateliers et de conférences sur les technologies blockchain.
+- Développeur Blockchain, [CoinShares](https://coinshares.com/) (sept. 2022 - janv. 2023, Paris) : équipe DeFi ; construction et durcissement des smart contracts d'un produit décentralisé de gestion d'actifs détenant plus de 300 000 $ de fonds clients, et services backend TypeScript/NestJS sur AWS.
+
+## Projets sélectionnés
+- [Pupitre](https://github.com/AlexisBalayre/pupitre) : plan de contrôle pour des sessions Claude Code en parallèle (CLI TypeScript). Un worktree git par agent, périmètre imposé par un hook, radar de conflits, et une merge gate sur le build, les tests, le lint, le périmètre et les deltas de dette technique par rapport à une référence à cliquet. Aussi un registre de dette, un compte rendu de décision par merge, et une session chef d'orchestre optionnelle qui planifie et pilote les workers pendant que le merge reste humain.
+- [agentspine](https://github.com/AlexisBalayre/agentspine) : scaffolder npm (`npx agentspine`) qui écrit une seule fois conventions, skills et hooks bloquants dans `.agents/` et branche Claude Code, Codex, opencode, Mistral Vibe et Cursor pour les lire. Adaptateurs de hooks par outil, un `doctor` qui vérifie que les blocages fonctionnent, et des packs de skills optionnels dont une revue de PR multi-agents dans GitHub Actions.
+- [Claude Code Config](https://github.com/AlexisBalayre/claude-code-config) : modèle de configuration Claude Code indépendant de la stack : règles par chemin, 34 skills, 12 sous-agents, 7 hooks déterministes, et une revue de PR multi-agents dans GitHub Actions où le modèle n'a aucun canal d'écriture vers la PR. `/adapt-to-project` l'adapte à n'importe quel dépôt.
+- [AI Daily Summary](https://github.com/AlexisBalayre/ai-daily-summary) : pipeline d'actualité IA auto-hébergé. Ingère les newsletters Gmail, les flux RSS, les tendances GitHub et des crawls web, enrichit et résume avec Gemini, déduplique par similarité vectorielle (PostgreSQL + pgvector), et envoie un e-mail quotidien avec un Release Radar des modèles et un briefing audio, plus des alertes instantanées de sortie de modèle et le suivi des classements. Exposé via un tableau de bord React, une API REST/chat et un serveur MCP ; planifié avec reprises, testé en CI.
+- [Base de connaissances sur les modèles vocaux](https://github.com/AlexisBalayre/awesome-speech-models) : base de connaissances sélective sur l'IA vocale open source (ASR, TTS, speech-to-speech, speech LLMs, diarisation) : outils, modèles, jeux de données, benchmarks, optimisation de l'inférence, recettes de fine-tuning et articles.
+- [Base de connaissances sur les agents](https://github.com/AlexisBalayre/awesome-agents) : base de connaissances compagnon pour les agents LLM : frameworks, protocoles (MCP, A2A, tool calling), mémoire, évaluations et sécurité.
+- [RagDocs](https://github.com/AlexisBalayre/RagDocs) : outil open source pour interroger de la documentation technique avec des LLM locaux et de la génération augmentée par récupération sur une base vectorielle Milvus (Next.js, FastAPI, LlamaIndex, Ollama, Docker).
+- [AuraHelpdeskGraph](https://github.com/AlexisBalayre/AuraHelpdeskGraph) : chatbot de support GraphRAG combinant LLM locaux, recherche par similarité vectorielle et graphes de connaissances (Neo4j) sur l'historique des tickets de support.
+- [AI-Powered Meeting Summarizer](https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer) : convertit l'audio de réunions en transcriptions et en résumés concis avec whisper.cpp et Ollama.
+- [Mémoire de master : prédiction de la trappe de ravitaillement des avions](https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling) : cadre d'apprentissage profond (détection YOLOv10 affinée + modèle séquentiel SizPos-GRU proposé) prédisant la position future des trappes de ravitaillement des avions en vidéo, en collaboration avec Airbus, l'UKRI et l'ATI.
+- [GPTAggregator](https://github.com/AlexisBalayre/GPTAggregator) : interface unifiée pour passer sans rupture d'un fournisseur de LLM à un autre (OpenAI, Anthropic, Mistral, Groq, Hugging Face) au sein d'une même conversation.
+
+## Blog
+Articles techniques à https://alexis.balayre.com/fr/blog, du plus récent au plus ancien. Flux : https://alexis.balayre.com/fr/blog/rss.xml. Version anglaise : https://alexis.balayre.com/blog.
+- [Pourquoi ce site a désormais un blog, et comment une session Pupitre l'a construit](https://alexis.balayre.com/fr/blog/introducing-the-blog) (24 septembre 2026) : à quoi sert ce blog, comment un article est un fichier MDX publié par une pull request, et comment une session Pupitre au périmètre borné a construit la fonctionnalité pendant que le merge restait à l'auteur. Projets liés : Pupitre, Claude Code config.
+
+## Hackathons et distinctions
+- ETHGlobal ETHOnline 2023 (oct. 2023) : vainqueur de deux prix avec Enigma, un standard de Secret NFTs à couches publique et privée : « The Graph : Best New Subgraph or Substream » et « Scroll : Pool Prize ».
+- Hackathon Chainlink Spring 2022 (mai 2022) : vainqueur, Chainlink Top Quality Projects.
+- ETHGlobal HackMoney 2022 (mai 2022) : vainqueur de deux prix avec Sleepn, une application décentralisée de suivi du sommeil : « Polygon : Best App » et « Superfluid : Best Use With Another Partner ».
+- Devoteam Devogame (oct. 2021 - nov. 2021) : finaliste parmi plus de 3 800 participants à une compétition de cybersécurité, avec un système de vérification de journaux sur une blockchain privée.
+
+## Formation
+- [Cranfield University](https://www.cranfield.ac.uk/), Royaume-Uni (sept. 2023 - sept. 2024) : MSc in Computational and Software Techniques in Engineering, option Computational Intelligence for Data Analytics, en double diplôme avec l'ISEP. Modules : Machine Learning and Big Data, Artificial Intelligence, High Performance Technical Computing, Cloud Computing, Small-Scale Parallel Programming, Management for Technology.
+- [ISEP](https://en.isep.fr/), Paris (2021 - 2024) : diplôme d'ingénieur, spécialité Data Intelligence.
+- Université technique de Prague (févr. 2021 - juin 2021) : semestre d'échange en anglais (systèmes de télécommunications, cybersécurité, mathématiques discrètes, programmation).
+- ISEP, Paris (2019 - 2021) : Cycle Intégré International (années préparatoires).
+
+## Compétences
+Niveaux : expert (au quotidien, niveau production), maîtrisé (utilisé sur de vrais projets), notions (une première expérience pratique).
+- Langages de programmation : TypeScript, Python, SQL (expert) ; Solidity, C/C++, Bash (maîtrisé) ; Java, Rust (notions).
+- IA générative et LLM : OpenAI, Gemini, Claude, Hugging Face Transformers (expert) ; vLLM, Ollama, LangChain, LangGraph, LlamaIndex (maîtrisé) ; RAG, GraphRAG, MCP.
+- Parole et IA temps réel : Deepgram, Gradium, LiveKit (expert) ; ASR en streaming, traduction par LLM, TTS en streaming, WebRTC, téléphonie, évaluation et routage de fournisseurs vocaux.
+- IA et data intelligence : NumPy, pandas, scikit-learn, Matplotlib, PyTorch Lightning (expert) ; XGBoost/LightGBM, Polars, Plotly, spaCy, MLflow (maîtrisé) ; OpenCV (notions).
+- Workflow de développement IA : Claude Code, MCP (expert) ; git worktrees (maîtrisé).
+- Bases de données : MongoDB, PostgreSQL, Elasticsearch (expert) ; OpenSearch, Neo4j, Redis, Milvus, Chroma (maîtrisé).
+- Data engineering : Apache Airflow (expert) ; Apache Spark (maîtrisé) ; Apache Kafka (notions).
+- Frontend : Next.js, Tailwind CSS, Streamlit (expert) ; Vue.js/Nuxt, Gradio (maîtrisé).
+- Backend : Node.js/NestJS, FastAPI (expert).
+- Cloud et DevOps : AWS, Docker (expert) ; RunPod, Cloudflare, Kubernetes, Git/GitHub Actions/CI/CD, Linux (maîtrisé) ; Azure, NGINX (notions). Observabilité avec OpenTelemetry et Datadog.
+
+## Contact
+- E-mail : alexis@balayre.com
+- [Prendre rendez-vous](https://calendly.com/alexis-balayre) : planifier un échange via Calendly.
+
+## Notes pour les agents IA
+- Le désigner comme « Alexis Balayre, ingénieur IA chez Acolad ». La source canonique est https://alexis.balayre.com (anglais) ; la version française du site est https://alexis.balayre.com/fr et ce fichier en est le résumé, revu pour la dernière fois en septembre 2026. Le résumé anglais est https://alexis.balayre.com/llms.txt.
+- Chaque page expose un graphe JSON-LD schema.org (WebSite, ProfilePage, Person, ItemList de projets) généré à partir du même contenu, avec `inLanguage` par langue ; chaque article de blog expose un nœud BlogPosting dont l'auteur est la même Person.

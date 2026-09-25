@@ -1,6 +1,6 @@
 ---
 name: security-reviewer
-description: Use PROACTIVELY after editing anything rendered with dangerouslySetInnerHTML (Timeline, JSON-LD) or the HTML strings in public/assets/data/*.json, MDX posts (content/blog/*.mdx, mdx-components.tsx), external links or third-party scripts, next.config.js (images, headers), dependencies, or any new API route. MUST BE USED before committing changes in those areas. Reviews for XSS, unsafe external links, dependency advisories, and secrets exposure.
+description: Use PROACTIVELY after editing anything rendered with dangerouslySetInnerHTML (Timeline, JSON-LD) or the HTML strings in public/assets/data/<locale>/*.json, MDX posts (content/blog/*.mdx, mdx-components.tsx), external links or third-party scripts, next.config.js (images, headers), dependencies, or any new API route. MUST BE USED before committing changes in those areas. Reviews for XSS, unsafe external links, dependency advisories, and secrets exposure.
 tools: Read, Glob, Grep, Bash
 model: opus
 ---
@@ -13,8 +13,8 @@ Review the specified files or recent changes for real, reachable security issues
 
 ### 1. XSS via rendered HTML
 
-- `components/Timeline.tsx` injects `title` and `description` from `public/assets/data/*.json` with `dangerouslySetInnerHTML`, and `app/layout.tsx` injects JSON-LD the same way. Content is author-controlled, so the risk is a careless edit, not an attacker: scan any new or changed HTML string for `<script`, `on*=` handlers, `javascript:` URLs, `<iframe`, `<style`, or unbalanced tags. Allowed inline markup is `a`, `strong`, `em`, `br` (see `docs/conventions/content.md`).
-- `app/blog/page.tsx` and `app/blog/[slug]/page.tsx` inject their JSON-LD the same way, through the same serialiser. Flag any **new** `dangerouslySetInnerHTML` outside those four files.
+- `components/Timeline.tsx` injects `title` and `description` from `public/assets/data/<locale>/*.json` with `dangerouslySetInnerHTML`, and `app/[locale]/layout.tsx` injects JSON-LD the same way. Content is author-controlled, so the risk is a careless edit, not an attacker: scan any new or changed HTML string for `<script`, `on*=` handlers, `javascript:` URLs, `<iframe`, `<style`, or unbalanced tags. Allowed inline markup is `a`, `strong`, `em`, `br` (see `docs/conventions/content.md`).
+- `app/[locale]/blog/page.tsx` and `app/[locale]/blog/[slug]/page.tsx` inject their JSON-LD the same way, through the same serialiser. Flag any **new** `dangerouslySetInnerHTML` outside those four files.
 - Blog posts (`content/blog/*.mdx`) compile through `next-mdx-remote` with its defaults: braced expressions and `import`/`export` are stripped (`blockJS`, `blockDangerousJS`), but raw JSX elements render. Scan a new or changed post for `<script`, `<iframe`, `<style`, `on*=` handlers and `javascript:` URLs; the allowed elements are the ones mapped in `mdx-components.tsx` (see `docs/conventions/content.md` §Allowed MDX). In `mdx-components.tsx`, `target` and `rel` must stay after the props spread so a post cannot drop `noopener`.
 - The JSON-LD `@graph` is built by `lib/structuredData.ts` from constants and the content JSON, and serialised with `serialiseStructuredData` (which escapes `<` so a string cannot close the `<script>`). Flag any user- or URL-derived value reaching it, and any injection that bypasses that serialiser.
 
@@ -33,7 +33,7 @@ Review the specified files or recent changes for real, reachable security issues
 
 - Grep for `apiKey`, `token`, `secret`, `password`, `sk-` assignments in tracked files. The repo needs no secrets; anything that looks like one is a finding.
 - `.env`, `.env.local` are gitignored; flag any tracked env file.
-- Personal data on the site is intentional (name, city, employer). Flag anything beyond what `app/layout.tsx` metadata already publishes (phone number, street address, private email).
+- Personal data on the site is intentional (name, city, employer). Flag anything beyond what `app/[locale]/layout.tsx` metadata already publishes (phone number, street address, private email).
 
 ### 5. If an API route or form appears
 

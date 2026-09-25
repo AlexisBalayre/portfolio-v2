@@ -1,0 +1,101 @@
+---
+title: "Pourquoi ce site a désormais un blog, et comment une session Pupitre l'a construit"
+description: "Le premier article : à quoi sert ce blog, comment un article est un fichier MDX publié par une pull request, et comment une session Pupitre au périmètre borné a construit toute la fonctionnalité pendant que je gardais le merge."
+date: "2026-09-24"
+tags: ["blog", "pupitre", "claude-code", "nextjs"]
+projects: ["pupitre", "claude-code-config"]
+---
+
+Pendant deux ans, ce site tenait en une page : qui je suis, où j'ai travaillé, ce que j'ai construit. C'était
+suffisant tant que les projets parlaient d'eux-mêmes à travers leurs README. Ça ne l'est plus depuis que la partie
+intéressante du travail s'est déplacée du code vers la pratique qui l'entoure : comment je fais tourner plusieurs
+agents de codage en parallèle sans perdre la trace de ce qu'ils écrivent, comment une merge gate décide de ce qui
+atterrit, comment un pipeline d'actualité quotidien reste digne de confiance quand un modèle en écrit la moitié. Ce
+sont des notes d'ingénierie, pas de la matière à README, et il leur faut un endroit avec une date dessus.
+
+Cet endroit, c'est ici. Attendez-vous à des articles sur [Pupitre](https://github.com/AlexisBalayre/pupitre),
+[agentspine](https://github.com/AlexisBalayre/agentspine), ma
+[configuration Claude Code](https://github.com/AlexisBalayre/claude-code-config) et
+[AI Daily Summary](https://github.com/AlexisBalayre/ai-daily-summary), et sur les pratiques qu'ils encodent : des
+spécifications de tâche avec critères d'acceptation, des hooks de périmètre, des registres de dette, des harnais
+d'évaluation. Court, concret, avec les commandes et les chiffres.
+
+## Comment un article est publié
+
+Il n'y a ni CMS ni base de données. Un article est un fichier MDX sous `content/blog/`, avec un bloc de frontmatter
+YAML que le build valide :
+
+```mdx
+---
+title: "Pourquoi ce site a désormais un blog, et comment une session Pupitre l'a construit"
+description: "Une phrase pour la liste, la carte de partage et le flux."
+date: "2026-09-24"
+tags: ["blog", "pupitre"]
+projects: ["pupitre", "claude-code-config"]
+---
+
+Le corps en Markdown, avec une poignée de composants autorisés.
+```
+
+`next build` transforme chaque fichier en HTML statique, génère une image de partage de 1200 par 630 par article
+avec `next/og`, émet un bloc JSON-LD BlogPosting et reconstruit le flux RSS à `/blog/rss.xml`. Fusionner la pull
+request, c'est appuyer sur le bouton « publier ». Le champ `projects` est le plus intéressant : il liste des
+identifiants de projets tirés du même JSON qui alimente les cartes de la page d'accueil, si bien que chaque article
+renvoie vers ses projets et que chaque carte de projet liste les articles écrits à son sujet. Une source, deux
+directions.
+
+J'ai choisi `next-mdx-remote` plutôt que `@next/mdx` parce qu'il traite un article comme une donnée lue sur le
+disque, exactement comme les fichiers JSON derrière le reste du site : un seul chargeur compile le fichier, valide
+le frontmatter et alimente la page, la liste, le flux et le sitemap. Pas de configuration du bundler, pas de
+framework de contenu, une seule dépendance.
+
+## Comment la fonctionnalité a été construite
+
+Je n'ai pas écrit cette fonctionnalité à la main. J'ai écrit une spécification de tâche, et une session
+[Pupitre](https://github.com/AlexisBalayre/pupitre) a écrit le code, dans un worktree git à elle, sur une branche à
+elle, avec un merge qui est resté le mien.
+
+Pupitre est mon plan de contrôle pour des sessions Claude Code en parallèle. Une tâche commence par une
+spécification : un objectif, une liste de chemins que la session peut modifier, une liste de chemins qu'elle ne doit
+pas toucher, et des critères d'acceptation rédigés comme des choses qu'un relecteur peut vérifier. Pour cette
+fonctionnalité, le périmètre autorisait `app/`, `components/`, `lib/`, `content/`, la documentation et les fichiers
+SEO, et interdisait le sitemap généré, `robots.txt`, les workflows de CI et l'état interne de Pupitre. Les critères
+d'acceptation nommaient chaque artefact que vous avez sous les yeux : les pages statiques, le lien d'en-tête qui
+fonctionne depuis la page d'accueil comme depuis le blog, les métadonnées par page, le flux, les liens croisés avec
+les projets, la documentation et cet article.
+
+```bash
+pup new "Add a blog to the portfolio" --scope "app/**" --scope "content/**" ...
+pup status
+pup review
+pup merge t-mufsqgvq --pr
+```
+
+À partir de là, la session a tourné seule. Pupitre lui avait compilé un profil : le `CLAUDE.md` du projet, les
+règles de conventions par chemin issues de ma [configuration Claude Code](https://github.com/AlexisBalayre/claude-code-config),
+un graphe de code du worktree qu'elle pouvait interroger au lieu de faire du grep, et un hook `PreToolUse` qui refuse
+toute modification hors périmètre avant qu'elle n'atterrisse. Un hook `Stop` lançait Prettier, ESLint et `tsc` sur
+chaque fichier touché à chaque pause de la session. Quand la session a jugé chaque critère rempli, elle a commité et
+s'est déclarée terminée.
+
+Le merge, c'est la partie que je garde. `pup merge` lance le build, le lint, un audit de périmètre du diff par
+rapport à la spécification, puis un delta de dette technique par rapport à la référence enregistrée lors de
+l'intégration du projet : duplication, code mort, complexité, taille du diff. Les régressions sont refusées, pas
+signalées. Ce qui passe reçoit un compte rendu de décision, pour que dans trois mois je puisse encore lire pourquoi le
+blog est construit ainsi et pas autrement.
+
+Trois choses ont rendu ce fonctionnement meilleur qu'une fenêtre de chat :
+
+- **La spécification a fait le pilotage.** Un périmètre et des critères d'acceptation coûtent moins cher à écrire
+  que des corrections, et ils sont vérifiés par un hook et une gate, pas par mon attention.
+- **Les conventions étaient déjà écrites.** `docs/conventions/` dit comment on fait les composants, le contenu et le
+  SEO ici. La session les a lues et respectées, et c'est pour ça que le blog a l'air natif plutôt que rapporté.
+- **La session a documenté sa propre décision.** L'ADR sous `docs/adr/`, le guide de rédaction et les conventions
+  de contenu sont sortis de la même exécution que le code, parce que la spécification le demandait.
+
+## La suite
+
+Les prochains articles sont déjà dans le backlog : la merge gate et le cliquet de dette de Pupitre, pourquoi
+agentspine écrit un seul répertoire `.agents/` pour cinq outils au lieu d'en synchroniser cinq, et comment
+AI Daily Summary garde honnête une newsletter écrite par Gemini. Si vous les voulez au fur et à mesure, le flux est à
+[/fr/blog/rss.xml](/fr/blog/rss.xml).
