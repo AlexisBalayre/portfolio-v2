@@ -1,23 +1,29 @@
-// app/blog/[slug]/opengraph-image.tsx
+// app/[locale]/blog/[slug]/opengraph-image.tsx
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { defaultLocale, getDictionary, locales, toLocale } from "~~/lib/i18n";
 import { formatPostDate, getAllPosts, getPost } from "~~/lib/posts";
 
-export const alt = "Blog post by Alexis Balayre, AI Engineer";
+// The alt is one static export per file, so it reads in the default locale.
+export const alt = getDictionary(defaultLocale).og.postAlt;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export const dynamicParams = false;
 
+// Every English slug exists in every locale: a missing translation renders the English body with a notice.
+// The parent layout's params are not handed down here, so the locale is enumerated too.
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
-  return posts.map(({ slug }) => ({ slug }));
+  const posts = await getAllPosts(defaultLocale);
+  return locales.flatMap(locale => posts.map(({ slug }) => ({ locale, slug })));
 }
 
-export default async function OpenGraphImage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const { post } = await getPost(slug);
+export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale: localeParam, slug } = await params;
+  const locale = toLocale(localeParam);
+  const t = getDictionary(locale);
+  const { post } = await getPost(slug, locale);
   const photo = await readFile(join(process.cwd(), "public/assets/img/alexis.jpg"));
   const photoSrc = `data:image/jpeg;base64,${photo.toString("base64")}`;
 
@@ -36,7 +42,9 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ slu
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ fontSize: 28, letterSpacing: 4, textTransform: "uppercase", color: "#38bdf8" }}>Blog</div>
+        <div style={{ fontSize: 28, letterSpacing: 4, textTransform: "uppercase", color: "#38bdf8" }}>
+          {t.blog.title}
+        </div>
         <div
           style={{
             fontSize: post.title.length > 60 ? 52 : 64,
@@ -57,13 +65,13 @@ export default async function OpenGraphImage({ params }: { params: Promise<{ slu
           {/* Satori needs a single text node per element */}
           <div
             style={{ fontSize: 24, color: "#94a3b8" }}
-          >{`${formatPostDate(post.date)} · ${post.tags.join(", ")}`}</div>
+          >{`${formatPostDate(post.date, locale)} · ${post.tags.join(", ")}`}</div>
           <div style={{ fontSize: 26, color: "#38bdf8", marginTop: 12 }}>alexis.balayre.com/blog</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", marginRight: 24 }}>
             <div style={{ fontSize: 30, fontWeight: 700 }}>Alexis Balayre</div>
-            <div style={{ fontSize: 22, color: "#94a3b8" }}>AI Engineer</div>
+            <div style={{ fontSize: 22, color: "#94a3b8" }}>{t.profile.jobTitle}</div>
           </div>
           <img
             src={photoSrc}

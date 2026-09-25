@@ -1,23 +1,43 @@
 # Content Conventions
 
-Rules for the portfolio content: `public/assets/data/*.json`, `public/assets/img/`, `content/blog/*.mdx`
-and `public/llms.txt`. Auto-loaded by `.claude/rules/content-conventions.md`. Structural checks
+Rules for the portfolio content: `public/assets/data/<locale>/*.json`, `public/assets/img/`, `content/blog/*.mdx`
+and `public/llms*.txt`. Auto-loaded by `.claude/rules/content-conventions.md`. Structural checks
 (valid JSON, required fields, logo files exist, image hosts allowed, tech tiers) run in the
 `convention-spot-check` Stop hook; this doc is the spec behind them.
 
 ## Where content lives
 
-| File | Rendered by | Section |
-| :--- | :--- | :--- |
-| `experiences.json` | `Timeline` | Experiences |
-| `hackathons.json` | `Timeline` | Hackathons |
-| `formation.json` | `Timeline` | Education |
-| `projects.json` | `Projects` | Projects |
-| `tech.json` | `Skills` | Skills |
+The site is bilingual: English (`en`, the default, unprefixed URLs) and French (`fr`, under `/fr`). Every piece of
+copy exists once per locale, in a folder named after it ([ADR 0002](../adr/0002-bilingual-routes-under-a-locale-segment-with-rewrites.md)):
 
-All five are imported directly by `app/page.tsx`. Blog posts live in `content/blog/<slug>.mdx` and are
-read by `lib/posts.ts` (see [Blog posts](#blog-posts)). The About-Me block and the SEO constants are
-the only copy that lives in code (see [general.md](general.md)).
+| File (`public/assets/data/<locale>/`) | Rendered by | What |
+| :--- | :--- | :--- |
+| `experiences.json` | `Timeline` | Experiences section |
+| `hackathons.json` | `Timeline` | Hackathons section |
+| `formation.json` | `Timeline` | Education section |
+| `projects.json` | `Projects` | Projects section, project cards |
+| `tech.json` | `Skills` | Skills section |
+| `about.json` | `AboutMe`, `page.tsx` | The intro line under the `<h1>`, the About Me facts and bio |
+| `ui.json` | everything | The **dictionary**: menu labels, section titles, button and aria labels, SEO titles and descriptions, blog and social-card strings |
+
+`lib/portfolio.ts` loads the six content files per locale (`getPortfolio(locale)`) and `lib/i18n.ts` the dictionary
+(`getDictionary(locale)`). Blog posts live in `content/blog/<slug>.mdx`, with an optional `<slug>.fr.mdx` beside
+them, and are read by `lib/posts.ts` (see [Blog posts](#blog-posts)). No copy lives in code: a component that needs
+a sentence reads it from the dictionary (see [general.md](general.md)).
+
+### Both languages, entry for entry
+
+The English folder is the source; the French folder mirrors it:
+
+- **Same entries, same order.** `lib/portfolio.ts` compares the two folders at import time on a locale-independent key
+  (`logo` for timeline files, `id` for projects, the skill names for `tech.json`, the number of facts for `about.json`)
+  and throws when the French file lacks an entry, has one too many, or has them in another order, so `yarn build`
+  fails with the file and index. Add an entry to both files in the same change.
+- **Same keys in `ui.json`.** The dictionary type is `typeof en`; a key missing from `fr/ui.json` fails `yarn typecheck`.
+- **Locale-independent fields stay identical**: `logo`, `id`, `url`, `image`, `technologies`, skill names and tiers.
+  Translate `title`, `description`, `name`, `period`, category names and every dictionary string.
+- Strings with a `{placeholder}` (`"Posts about {name}"`) keep the same placeholder names in both files; `fill()` in
+  `lib/i18n.ts` substitutes them.
 
 ## Shapes
 
@@ -34,8 +54,12 @@ the only copy that lives in code (see [general.md](general.md)).
 
 - `logo`: file name only, resolved to `public/assets/img/<logo>`. The file must exist.
 - `title` / `description`: **HTML strings**, rendered with `dangerouslySetInnerHTML`. Allowed tags: `a`, `strong`, `em`, `br`. Nothing else (no `script`, `img`, `iframe`, `style`, inline event handlers). Links use the house classes `font-bold text-primary hover:text-primary-content`, `target="_blank"`, and `rel="noopener noreferrer"`.
-- `period`: free text, `Mon YYYY - Mon YYYY` or `Mon YYYY - Present`.
+- `period`: free text, `Mon YYYY - Mon YYYY` or `Mon YYYY - Present` (`Sept. 2025 - Aujourd'hui` in French).
 - **Order: newest first.** The array order is the render order.
+- The English title of an experience reads `<role> at <organisation>` and of a degree `<school> - <degree>`:
+  `lib/structuredData.ts` parses the **English** file for the JSON-LD employers, degrees and awards, whatever the
+  locale rendered. The French title uses the natural preposition (`chez`, `à`, `de`); `Timeline.tsx` derives the logo
+  alt from the separators listed under `timeline.organisationSeparators` in the dictionary.
 
 ### `projects.json`
 
@@ -50,7 +74,7 @@ the only copy that lives in code (see [general.md](general.md)).
 }
 ```
 
-- `id`: a stable, lowercase, hyphenated handle, unique across the file. Blog posts reference projects by it (`projects` frontmatter) and the card gets `id="project-<id>"` so `/#project-<id>` scrolls to it. Never rename an id once a post uses it.
+- `id`: a stable, lowercase, hyphenated handle, unique across the file and identical in both locales. Blog posts reference projects by it (`projects` frontmatter) and the card gets `id="project-<id>"` so `/#project-<id>` (and `/fr#project-<id>`) scrolls to it. Never rename an id once a post uses it.
 - `description` is plain text (no HTML): `Projects.tsx` renders it as a text node.
 - `image`: a local path under `/assets/img/` or a remote URL whose host is in `images.remotePatterns` (`next.config.js`). Rendered at 400×200; prefer 2:1 assets.
 - `technologies`: short display names, capitalised as the project brands them.
@@ -62,7 +86,28 @@ the only copy that lives in code (see [general.md](general.md)).
 { "name": "Programming Languages", "skills": [ { "name": "TypeScript", "tier": "Core" } ] }
 ```
 
-- `tier` is exactly `Core`, `Working`, or `Familiar` (`Skills.tsx` maps them to badge styles and legend text). Category order and skill order within a category are the render order; list `Core` skills first.
+- `tier` is exactly `Core`, `Working`, or `Familiar` in both locales: they are keys, and `Skills.tsx` maps them to badge styles and to the `skills.<tier>` label and description of the dictionary. Category order and skill order within a category are the render order; list `Core` skills first. Only the category `name` is translated.
+
+### `about.json`
+
+```json
+{
+  "intro": "One or two sentences under the <h1> on the home page.",
+  "facts": [{ "label": "Name:", "value": "Alexis Balayre" }],
+  "bio": "The About Me paragraph, first person, plain text."
+}
+```
+
+- `facts` render as `<strong>label</strong> value`, in order; the punctuation belongs to the label (`"Name:"`,
+  `"Nom :"`) so each locale keeps its typography.
+- Plain text, no HTML.
+
+### `ui.json` (the dictionary)
+
+Nested objects of strings (and a few string arrays), grouped by where they are used: `site` (title, descriptions,
+keywords), `profile` (JSON-LD Person copy), `og` (social cards), `header`, `nav`, `home`, `timeline`, `projects`,
+`skills`, `blog`, `footer`. The English file defines the shape. Add a key to `en/ui.json` first, then to `fr/ui.json`,
+then read it with `getDictionary(locale).<group>.<key>`; never build a sentence in a component from fragments.
 
 ## Blog posts
 
@@ -73,7 +118,17 @@ One file per post, `content/blog/<slug>.mdx`, compiled at build time by `lib/pos
 ### Slug
 
 The file name without `.mdx` is the URL segment: lowercase letters, digits and single hyphens
-(`introducing-the-blog`). It is permanent: it is the canonical URL, the RSS `guid` and the JSON-LD `@id`.
+(`introducing-the-blog`). It is permanent: it is the canonical URL, the RSS `guid` and the JSON-LD `@id`, and it is
+the same in every locale (`/blog/<slug>`, `/fr/blog/<slug>`).
+
+### French version (optional)
+
+`content/blog/<slug>.fr.mdx` next to the English file is the French version: the same five frontmatter fields, nothing
+more. `title` and `description` are translated; `date`, `tags` and `projects` must equal the English values (the
+build fails otherwise, as it does for a `.fr.mdx` with no `.mdx`). Without a French file the French route still
+exists: `/fr/blog/<slug>` renders the English body with a "not yet translated, read it in English" notice, keeps the
+English canonical URL, omits the `fr` hreflang and is left out of the sitemap. The French listing and feed show the
+same notice, so a post is never hidden from French readers.
 
 ### Frontmatter
 
@@ -117,7 +172,8 @@ writing the syntax and hoping.
 ### Writing style
 
 Same as the rest of the site (below): British English, no em-dash, no emoji, concrete over generic. Posts are first
-person. Keep the opening paragraph self-contained: it is what the listing card and the feed reader see.
+person. Keep the opening paragraph self-contained: it is what the listing card and the feed reader see. The French
+version follows the [French writing style](#writing-style-1) below.
 
 ## Images and logos
 
@@ -132,12 +188,20 @@ person. Keep the opening paragraph self-contained: it is what the listing card a
 - No em-dash. No emoji in content.
 - Concrete over generic: name the product, the model, the metric.
 
+**French** (`fr/` files, `.fr.mdx`, `llms.fr.txt`): a translation of the English text, not a rewrite, in the same
+voice (first person where the English is, third person in `llms.fr.txt` and the JSON-LD). Neutral register, French
+typography (« guillemets », accents on capitals: `Étudiant`, `À propos`; a space before `:` `;` `!` `?` is
+allowed, not required), the same links as the English text. Product names, technology names, degree titles in
+their official language, file paths and quoted commands stay untranslated (`Claude Code`, `merge gate` when it is the
+product's term, `npx agentspine`).
+
 ## Keep in sync
 
 A content change rarely stops at one file. When you edit the JSON:
 
-1. **`public/llms.txt`**: the hand-maintained summary for AI agents (profile, current role, selected projects, blog posts, skills, education, links). Mirror any new role, project, degree or post. The spot-check hook reminds you when data changed and `llms.txt` did not.
-2. **`app/layout.tsx`**: `metadata.description`, `keywords`, and the `profile` constants (`jobTitle`, `description`, `knowsAbout`) when the role or specialisations change. Employers, degrees, awards, Core skills and projects in the JSON-LD are derived from the JSON by `lib/structuredData.ts`, so keep titles in the parseable shapes: `<role> at <organisation>` for experiences, `<school> - <degree>` for formation.
-3. **About Me** in `app/page.tsx`: the `Role`, `Specialisations`, and bio paragraph when they drift from the newest experience entry.
-4. **Resume**: the site links to `https://alexis-resume.balayre.com/`; update it separately if the change belongs on the CV.
-5. **Blog posts**: a new post needs an `llms.txt` line and, if it is about a project without a card, the card first. The sitemap, feed, social image, JSON-LD and the "Read more on the blog" list on the cards are generated.
+1. **The other locale**: every change to `en/<file>.json` has its twin in `fr/<file>.json` (the build enforces the entries, not the translation).
+2. **`public/llms.txt` and `public/llms.fr.txt`**: the hand-maintained summaries for AI agents (profile, current role, selected projects, blog posts, skills, education, links). Mirror any new role, project, degree or post in both. The spot-check hook reminds you when data changed and `llms.txt` did not.
+3. **`site` and `profile` in `ui.json`**: the SEO description, `keywords`, `jobTitle`, `description` and `knowsAbout` when the role or specialisations change, in both locales. Employers, degrees, awards, Core skills and projects in the JSON-LD are derived from the **English** JSON by `lib/structuredData.ts`, so keep the English titles in the parseable shapes: `<role> at <organisation>` for experiences, `<school> - <degree>` for formation.
+4. **`about.json`**: the `Role`, `Specialisations`, intro and bio when they drift from the newest experience entry, in both locales.
+5. **Resume**: the site links to `https://alexis-resume.balayre.com/`; update it separately if the change belongs on the CV.
+6. **Blog posts**: a new post needs an `llms.txt` line (and an `llms.fr.txt` one) and, if it is about a project without a card, the card first. The sitemap, feeds, social images, JSON-LD, hreflang alternates and the "Read more on the blog" list on the cards are generated.

@@ -1,7 +1,8 @@
 # Writing a blog post
 
-How to add an article to https://alexis.balayre.com/blog, end to end. A post is one MDX file; merging the pull
-request publishes it. The rules behind each step are in [../conventions/content.md](../conventions/content.md#blog-posts).
+How to add an article to https://alexis.balayre.com/blog, end to end. A post is one MDX file, plus an optional
+French version next to it; merging the pull request publishes it. The rules behind each step are in
+[../conventions/content.md](../conventions/content.md#blog-posts).
 
 ## 1. Start a worktree
 
@@ -13,9 +14,10 @@ cd .worktrees/post-<slug>
 
 ## 2. Create the file
 
-Create `content/blog/<slug>.mdx`. The slug is the URL (`/blog/<slug>`): lowercase words joined by hyphens, no
-dates, no stop words that add nothing (`merge-gate-debt-ratchet`, not `2026-10-a-post-about-the-merge-gate`).
-Once published, a slug never changes.
+Create `content/blog/<slug>.mdx`, the English source. The slug is the URL (`/blog/<slug>`, and `/fr/blog/<slug>` for
+the French version): lowercase words joined by hyphens, no dates, no stop words that add nothing
+(`merge-gate-debt-ratchet`, not `2026-10-a-post-about-the-merge-gate`). Once published, a slug never changes, and it
+is the same in both languages.
 
 Paste this skeleton and fill it in:
 
@@ -59,29 +61,45 @@ tables and footnotes are not supported; see the allowed MDX list in
 Style: British English, first person, no em-dash, no emoji. Concrete over generic: name the tool, the command, the
 number.
 
-## 4. Preview
+## 4. Add the French version (optional)
+
+Create `content/blog/<slug>.fr.mdx` beside the English file: same slug, same five frontmatter fields, nothing else.
+Translate `title` and `description`; keep `date`, `tags` and `projects` identical to the English file (the build
+fails when they differ, and a `.fr.mdx` without its `.mdx` fails too). Translate the body as the author, first
+person, neutral register, with French typography (« guillemets », accents on capitals, a space before `:` `;` `!` `?`
+is optional). Keep product names, technology names, file paths and quoted commands untranslated, and keep the same
+links; a link to a site route may point at the French twin (`/fr/blog/rss.xml`).
+
+Without a French file the post still exists at `/fr/blog/<slug>`: the French listing and route show the English
+body with a "not yet translated, read it in English" notice, the page keeps the English canonical URL, omits the `fr`
+hreflang and stays out of the sitemap. Adding the file later needs nothing else: the notice, the alternates, the
+French feed item and the sitemap entry follow the file.
+
+## 5. Preview
 
 ```sh
 yarn dev
 ```
 
-Open http://localhost:3000/blog for the listing and http://localhost:3000/blog/<slug> for the post. The social card is
-at http://localhost:3000/blog/<slug>/opengraph-image and the feed at http://localhost:3000/blog/rss.xml. A frontmatter
-mistake shows as a build error naming the file and the field.
+Open http://localhost:3000/blog for the listing and http://localhost:3000/blog/<slug> for the post; the French twins
+are under http://localhost:3000/fr/blog. The social card is at http://localhost:3000/blog/<slug>/opengraph-image and
+the feed at http://localhost:3000/blog/rss.xml (`/fr/blog/rss.xml` in French). A frontmatter mistake shows as a build
+error naming the file and the field.
 
-## 5. Keep the rest in sync
+## 6. Keep the rest in sync
 
-- `public/llms.txt`: add the post to the **Blog** section (title, URL, one-line description).
+- `public/llms.txt`: add the post to the **Blog** section (title, URL, one-line description, the French URL when a
+  translation exists); mirror the line in `public/llms.fr.txt`.
 - `public/assets/data/projects.json`: if the post is about a project that has no card yet, add the card first
   (shape in [../conventions/content.md](../conventions/content.md#projectsjson)); the post links to it by `id`.
 - Nothing else: the sitemap, the feed, the social image, the JSON-LD and the "Read more on the blog" list on the
   project cards are generated from the file at build time.
 
-## 6. Ship
+## 7. Ship
 
 ```sh
 yarn lint && yarn typecheck && yarn build
-git add content/blog/<slug>.mdx public/llms.txt
+git add content/blog/<slug>.mdx content/blog/<slug>.fr.mdx public/llms.txt public/llms.fr.txt
 git commit -m "content(blog): <title>"
 ```
 

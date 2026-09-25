@@ -1,0 +1,310 @@
+[
+  {
+    "name": "Langages de programmation",
+    "skills": [
+      {
+        "name": "TypeScript",
+        "tier": "Core"
+      },
+      {
+        "name": "Python",
+        "tier": "Core"
+      },
+      {
+        "name": "SQL",
+        "tier": "Core"
+      },
+      {
+        "name": "Solidity",
+        "tier": "Working"
+      },
+      {
+        "name": "C/C++",
+        "tier": "Working"
+      },
+      {
+        "name": "Shell / Bash",
+        "tier": "Working"
+      },
+      {
+        "name": "Java",
+        "tier": "Familiar"
+      },
+      {
+        "name": "Rust",
+        "tier": "Familiar"
+      }
+    ]
+  },
+  {
+    "name": "IA générative & LLM",
+    "skills": [
+      {
+        "name": "OpenAI",
+        "tier": "Core"
+      },
+      {
+        "name": "Gemini",
+        "tier": "Core"
+      },
+      {
+        "name": "Claude",
+        "tier": "Core"
+      },
+      {
+        "name": "Hugging Face Transformers",
+        "tier": "Core"
+      },
+      {
+        "name": "vLLM",
+        "tier": "Working"
+      },
+      {
+        "name": "Ollama",
+        "tier": "Working"
+      },
+      {
+        "name": "LangChain",
+        "tier": "Working"
+      },
+      {
+        "name": "LangGraph",
+        "tier": "Working"
+      },
+      {
+        "name": "LlamaIndex",
+        "tier": "Working"
+      }
+    ]
+  },
+  {
+    "name": "Parole & IA temps réel",
+    "skills": [
+      {
+        "name": "Deepgram",
+        "tier": "Core"
+      },
+      {
+        "name": "Gradium",
+        "tier": "Core"
+      },
+      {
+        "name": "LiveKit",
+        "tier": "Core"
+      }
+    ]
+  },
+  {
+    "name": "IA & data intelligence",
+    "skills": [
+      {
+        "name": "NumPy",
+        "tier": "Core"
+      },
+      {
+        "name": "pandas",
+        "tier": "Core"
+      },
+      {
+        "name": "Scikit-learn",
+        "tier": "Core"
+      },
+      {
+        "name": "Matplotlib",
+        "tier": "Core"
+      },
+      {
+        "name": "PyTorch Lightning",
+        "tier": "Core"
+      },
+      {
+        "name": "XGBoost / LightGBM",
+        "tier": "Working"
+      },
+      {
+        "name": "Polars",
+        "tier": "Working"
+      },
+      {
+        "name": "Plotly",
+        "tier": "Working"
+      },
+      {
+        "name": "spaCy",
+        "tier": "Working"
+      },
+      {
+        "name": "MLflow",
+        "tier": "Working"
+      },
+      {
+        "name": "OpenCV",
+        "tier": "Familiar"
+      }
+    ]
+  },
+  {
+    "name": "Workflow de développement IA",
+    "skills": [
+      {
+        "name": "Claude Code",
+        "tier": "Core"
+      },
+      {
+        "name": "MCP",
+        "tier": "Core"
+      },
+      {
+        "name": "Git Worktrees",
+        "tier": "Working"
+      }
+    ]
+  },
+  {
+    "name": "Bases de données",
+    "skills": [
+      {
+        "name": "MongoDB",
+        "tier": "Core"
+      },
+      {
+        "name": "PostgreSQL",
+        "tier": "Core"
+      },
+      {
+        "name": "Elasticsearch",
+        "tier": "Core"
+      },
+      {
+        "name": "OpenSearch",
+        "tier": "Working"
+      },
+      {
+        "name": "Neo4j",
+        "tier": "Working"
+      },
+      {
+        "name": "Redis",
+        "tier": "Working"
+      },
+      {
+        "name": "Milvus",
+        "tier": "Working"
+      },
+      {
+        "name": "Chroma",
+        "tier": "Working"
+      }
+    ]
+  },
+  {
+    "name": "Outils de data engineering",
+    "skills": [
+      {
+        "name": "Apache Airflow",
+        "tier": "Core"
+      },
+      {
+        "name": "Apache Spark",
+        "tier": "Working"
+      },
+      {
+        "name": "Apache Kafka",
+        "tier": "Familiar"
+      }
+    ]
+  },
+  {
+    "name": "Frontend",
+    "skills": [
+      {
+        "name": "Next.js",
+        "tier": "Core"
+      },
+      {
+        "name": "TailwindCSS",
+        "tier": "Core"
+      },
+      {
+        "name": "Streamlit",
+        "tier": "Core"
+      },
+      {
+        "name": "Vue.js / Nuxt",
+        "tier": "Working"
+      },
+      {
+        "name": "Gradio",
+        "tier": "Working"
+      }
+    ]
+  },
+  {
+    "name": "Backend",
+    "skills": [
+      {
+        "name": "Node.js / NestJS",
+        "tier": "Core"
+      },
+      {
+        "name": "FastAPI",
+        "tier": "Core"
+      }
+    ]
+  },
+  {
+    "name": "Hébergement & services cloud",
+    "skills": [
+      {
+        "name": "AWS",
+        "tier": "Core"
+      },
+      {
+        "name": "RunPod",
+        "tier": "Working"
+      },
+      {
+        "name": "Cloudflare",
+        "tier": "Working"
+      },
+      {
+        "name": "Azure",
+        "tier": "Familiar"
+      }
+    ]
+  },
+  {
+    "name": "Administration serveur & DevOps",
+    "skills": [
+      {
+        "name": "Docker",
+        "tier": "Core"
+      },
+      {
+        "name": "Git / GitHub Actions / CI/CD",
+        "tier": "Working"
+      },
+      {
+        "name": "Linux (Ubuntu, CentOS)",
+        "tier": "Working"
+      },
+      {
+        "name": "Kubernetes",
+        "tier": "Working"
+      },
+      {
+        "name": "NGINX",
+        "tier": "Familiar"
+      }
+    ]
+  },
+  {
+    "name": "Autres outils",
+    "skills": [
+      {
+        "name": "LaTeX",
+        "tier": "Core"
+      }
+    ]
+  }
+]

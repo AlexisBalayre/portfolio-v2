@@ -1,0 +1,30 @@
+{
+  "intro": "Ingénieur IA spécialisé en IA vocale temps réel, systèmes LLM et ML en production. Je construis Lia Live AI, la plateforme d'interprétation IA en temps réel d'Acolad, à Paris.",
+  "facts": [
+    {
+      "label": "Nom :",
+      "value": "Alexis Balayre"
+    },
+    {
+      "label": "Nationalité :",
+      "value": "Française"
+    },
+    {
+      "label": "Localisation :",
+      "value": "Paris, France"
+    },
+    {
+      "label": "Diplômes :",
+      "value": "Diplôme d'ingénieur de l'ISEP | MSc in Computational and Software Techniques in Engineering, Cranfield University"
+    },
+    {
+      "label": "Spécialisations :",
+      "value": "IA vocale temps réel | Systèmes LLM | Systèmes agentiques | ML en production | Génie logiciel"
+    },
+    {
+      "label": "Poste :",
+      "value": "Ingénieur IA chez Acolad, où je construis Lia Live AI"
+    }
+  ],
+  "bio": "Ingénieur IA spécialisé en IA vocale temps réel, systèmes LLM et ML en production, avec une double formation en génie logiciel et en science des données. Je conçois, construis et exploite des systèmes d'IA de bout en bout, de l'architecture au déploiement. Chez Acolad, je construis Lia Live AI, notre plateforme d'interprétation IA en temps réel : de la parole en entrée, de la parole interprétée en sortie en moins d'une seconde, dans plus de 80 langues. Cela couvre les pipelines d'ASR en streaming, de traduction par LLM et de TTS, le backend distribué derrière les sessions en direct, le routage multi-fournisseurs et le cadre d'évaluation qui tranche chaque choix de modèle sur la qualité et la latence. Prochaines étapes : fine-tuning, optimisation de l'inférence et déploiement sur appareil. Auparavant, j'ai appliqué le NLP et l'IA générative (RAG, GraphRAG) chez Dassault Systèmes et mené des recherches en apprentissage profond avec Airbus sur la vision par ordinateur pour le ravitaillement autonome des avions. Je construis aussi en open source, surtout de l'outillage et des pipelines IA. Et la sécurité de l'IA me tient à cœur : à mesure que ces systèmes gagnent en autonomie et manipulent des données plus sensibles, les rendre dignes de confiance compte autant que les rendre performants."
+}

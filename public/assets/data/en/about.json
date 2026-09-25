@@ -1,0 +1,30 @@
+{
+  "intro": "AI Engineer specialising in real-time speech AI, LLM systems and production ML. Building Lia Live AI, Acolad's real-time AI interpreting platform, in Paris.",
+  "facts": [
+    {
+      "label": "Name:",
+      "value": "Alexis Balayre"
+    },
+    {
+      "label": "Nationality:",
+      "value": "French"
+    },
+    {
+      "label": "Location:",
+      "value": "Paris, France"
+    },
+    {
+      "label": "Degrees:",
+      "value": "ISEP Engineering Master's Degree | MSc in Computational and Software Techniques in Engineering, Cranfield University"
+    },
+    {
+      "label": "Specialisations:",
+      "value": "Real-Time Speech AI | LLM Systems | Agentic Systems | Production ML | Software Engineering"
+    },
+    {
+      "label": "Role:",
+      "value": "AI Engineer at Acolad, building Lia Live AI"
+    }
+  ],
+  "bio": "AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a dual background in Software Engineering and Data Science. I design, build and operate AI systems end to end, from architecture through deployment. At Acolad I build Lia Live AI, our real-time AI interpreting platform: speech in, interpreted speech out in under a second, across 80+ languages. That covers the streaming ASR, LLM translation and TTS pipelines, the distributed backend behind live sessions, multi-provider routing, and the evaluation framework that settles every model choice on quality and latency. Next: fine-tuning, inference optimisation and on-device deployment. Before that, I applied NLP and generative AI (RAG, GraphRAG) at Dassault Systèmes and did deep learning research with Airbus on computer vision for autonomous aircraft refuelling. I also build in the open, mostly AI tooling and pipelines. And I care about AI security: as these systems take on more autonomy and more sensitive data, making them trustworthy matters as much as making them capable."
+}

@@ -1,4 +1,6 @@
 // lib/structuredData.ts
+import { languageTags, locales, type Locale } from "~~/lib/i18n";
+
 interface TimelineEntry {
   logo: string;
   title: string;
@@ -22,6 +24,8 @@ interface SkillCategory {
 
 export interface Profile {
   siteUrl: string;
+  // The home page of the locale being rendered: siteUrl for English, siteUrl/fr for French.
+  pageUrl: string;
   siteName: string;
   name: string;
   givenName: string;
@@ -36,6 +40,7 @@ export interface Profile {
   sameAs: string[];
   knowsLanguage: string[];
   knowsAbout: string[];
+  projectsListName: string;
 }
 
 export interface PortfolioData {
@@ -92,11 +97,13 @@ const university = (name: string, url?: string) => ({
   ...(url && { url }),
 });
 
-export const buildStructuredData = (profile: Profile, data: PortfolioData) => {
+// WebSite and Person are one entity each, shared by every locale through their @id; the ProfilePage
+// and the projects ItemList are per locale because their text and URL differ.
+export const buildStructuredData = (profile: Profile, data: PortfolioData, locale: Locale) => {
   const websiteId = `${profile.siteUrl}/#website`;
-  const pageId = `${profile.siteUrl}/#profilepage`;
+  const pageId = `${profile.pageUrl}/#profilepage`;
   const personId = `${profile.siteUrl}/#person`;
-  const projectsId = `${profile.siteUrl}/#projects`;
+  const projectsId = `${profile.pageUrl}/#projects`;
 
   const positions = data.experiences.map(parsePosition).filter(position => position.organisation);
   const currentEmployers = positions.filter(position => position.isCurrent);
@@ -154,16 +161,16 @@ export const buildStructuredData = (profile: Profile, data: PortfolioData) => {
     "@id": websiteId,
     name: profile.siteName,
     url: profile.siteUrl,
-    inLanguage: "en-GB",
+    inLanguage: locales.map(entry => languageTags[entry]),
     publisher: { "@id": personId },
   };
 
   const profilePage = {
     "@type": "ProfilePage",
     "@id": pageId,
-    url: profile.siteUrl,
+    url: profile.pageUrl,
     name: profile.siteName,
-    inLanguage: "en-GB",
+    inLanguage: languageTags[locale],
     isPartOf: { "@id": websiteId },
     about: { "@id": personId },
     mainEntity: { "@id": personId },
@@ -173,7 +180,7 @@ export const buildStructuredData = (profile: Profile, data: PortfolioData) => {
   const projects = {
     "@type": "ItemList",
     "@id": projectsId,
-    name: `Projects by ${profile.name}`,
+    name: profile.projectsListName,
     numberOfItems: data.projects.length,
     itemListElement: data.projects.map((project, index) => ({
       "@type": "ListItem",
@@ -196,7 +203,9 @@ export const buildStructuredData = (profile: Profile, data: PortfolioData) => {
 
 export interface BlogPostEntry {
   slug: string;
-  url: string;
+  // The URL and language of the body itself: a French route that fell back to English points at the English post.
+  canonicalUrl: string;
+  contentLocale: Locale;
   title: string;
   description: string;
   date: string;
@@ -206,6 +215,7 @@ export interface BlogPostEntry {
 export interface BlogProfile {
   siteUrl: string;
   name: string;
+  locale: Locale;
   blogUrl: string;
   blogTitle: string;
   blogDescription: string;
@@ -218,7 +228,7 @@ const blogNode = (profile: BlogProfile) => ({
   name: `${profile.blogTitle} | ${profile.name}`,
   url: profile.blogUrl,
   description: profile.blogDescription,
-  inLanguage: "en-GB",
+  inLanguage: languageTags[profile.locale],
   isPartOf: { "@id": `${profile.siteUrl}/#website` },
   publisher: { "@id": `${profile.siteUrl}/#person` },
 });
@@ -226,16 +236,16 @@ const blogNode = (profile: BlogProfile) => ({
 export const buildBlogPosting = (profile: BlogProfile, post: BlogPostEntry) => ({
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "@id": `${post.url}/#blogposting`,
+  "@id": `${post.canonicalUrl}/#blogposting`,
   headline: post.title,
   description: post.description,
-  url: post.url,
-  mainEntityOfPage: { "@type": "WebPage", "@id": post.url },
+  url: post.canonicalUrl,
+  mainEntityOfPage: { "@type": "WebPage", "@id": post.canonicalUrl },
   datePublished: post.date,
   dateModified: post.date,
-  inLanguage: "en-GB",
+  inLanguage: languageTags[post.contentLocale],
   keywords: post.tags.join(", "),
-  image: `${post.url}/opengraph-image`,
+  image: `${post.canonicalUrl}/opengraph-image`,
   author: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
   publisher: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
   isPartOf: blogNode(profile),
@@ -246,9 +256,9 @@ export const buildBlog = (profile: BlogProfile, posts: BlogPostEntry[]) => ({
   ...blogNode(profile),
   blogPost: posts.map(post => ({
     "@type": "BlogPosting",
-    "@id": `${post.url}/#blogposting`,
+    "@id": `${post.canonicalUrl}/#blogposting`,
     headline: post.title,
-    url: post.url,
+    url: post.canonicalUrl,
     datePublished: post.date,
   })),
 });

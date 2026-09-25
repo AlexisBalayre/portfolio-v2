@@ -1,0 +1,38 @@
+[
+  {
+    "logo": "acolad.png",
+    "title": "Ingénieur IA chez <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.acolad.com/\" target=\"_blank\" rel=\"noopener noreferrer\">Acolad</a>",
+    "description": "Acolad est un leader mondial des solutions linguistiques et de contenu, présent dans 25 pays. En tant qu'ingénieur IA, je construis <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.acolad.com/en/lia/live\" target=\"_blank\" rel=\"noopener noreferrer\">Lia Live AI</a>, la plateforme d'interprétation IA en temps réel d'Acolad, dont je suis responsable de bout en bout, de la recherche appliquée sur la parole jusqu'à l'infrastructure de production.<br/><br/>- Je construis les pipelines vocaux temps réel : transcription en streaming, traduction par LLM et synthèse vocale en streaming, pour livrer une parole interprétée en moins d'une seconde dans plus de 80 langues, en modes consécutif et simultané.<br/>- Je conçois le backend distribué derrière les sessions multilingues en direct : une API sans état, un moteur à affinité de session qui exécute les pipelines audio et une passerelle qui arbitre chaque appel aux fournisseurs, avec un contrôle d'admission pour que des sessions temps réel avec état montent en charge horizontalement sur WebRTC, la téléphonie et WebSocket.<br/>- Je suis responsable de la couche IA : routage piloté par configuration entre Deepgram, OpenAI, Gemini et Gradium, traduction ancrée dans la conversation en cours et les glossaires clients, plus des fonctions agentiques qui font remonter clarifications et contexte culturel.<br/>- Je construis le cadre d'évaluation qui tranche chaque choix de modèle et de fournisseur, en notant qualité et latence comme une métrique unique face au délai mesuré d'un interprète humain.<br/>- Je fais tourner le service en production : réponse aux incidents, observabilité OpenTelemetry et Datadog, authentification multi-tenant, effacement conforme au RGPD et facturation avec attribution des coûts par appel, plus la plateforme d'ingénierie qui va avec (conception pilotée par ADR, revue de code par LLM en CI).<br/>- Je pilote la prochaine génération de la plateforme : fine-tuning de modèles vocaux, optimisation de l'inférence et déploiement sur appareil.",
+    "period": "Sept. 2025 - Aujourd'hui"
+  },
+  {
+    "logo": "3DS.png",
+    "title": "Data Scientist chez <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.3ds.com/\" target=\"_blank\">Dassault Systèmes</a>",
+    "description": "Dassault Systèmes, « The 3DEXPERIENCE Company », donne aux entreprises et aux particuliers des univers virtuels pour imaginer des innovations durables. En tant que Data Scientist, j'ai travaillé au sein de l'équipe Industry Market Intelligence - Corporate Strategic Planning pour automatiser et optimiser les processus de données, afin de produire des analyses stratégiques et d'éclairer la prise de décision.<br/><br/>- Accélération du reporting stratégique et de la veille de marché en automatisant les flux de données et en analysant des jeux de données à grande échelle (des millions d'enregistrements) avec Python et SQL.<br/>- Conception et mise en œuvre de solutions fondées sur les données, combinant web scraping, traitement automatique du langage (topic modelling, analyse de sentiment) et IA générative (LLM, RAG, GraphRAG) pour extraire des informations de données structurées et non structurées.<br/>- Construction et maintenance d'outils de veille concurrentielle et de suivi pour appuyer les décisions de la direction et renforcer le positionnement de Dassault Systèmes dans ses secteurs d'activité.",
+    "period": "Janv. 2025 - Juil. 2025"
+  },
+  {
+    "logo": "sidetrade-logov2.png",
+    "title": "Data Engineer freelance chez <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.sidetrade.com/\" target=\"_blank\">Sidetrade</a>",
+    "description": "Sidetrade est une plateforme SaaS de référence, dopée à l'IA, qui aide les entreprises à améliorer leur besoin en fonds de roulement et leur trésorerie en optimisant la gestion de la relation client et en automatisant les processus financiers.<br/><br/>- Définition de l'architecture et des flux de données d'une solution automatisée de reporting de l'empreinte carbone, pour réduire le travail manuel et accélérer la production des rapports.<br/>- Conception de l'intégration des données de NetSuite, Egencia, Eurécia et Navan dans Power BI, pour des tableaux de bord dynamiques en temps réel avec des analyses exportables.<br/>- Proposition d'une solution ETL sur Microsoft Fabric pour fluidifier le traitement des données structurées et non structurées.<br/>- Projet interrompu en cours de mise en œuvre pour des contraintes de confidentialité des données liées au RGPD.",
+    "period": "Oct. 2024 - Nov. 2024"
+  },
+  {
+    "logo": "cranfield_logo2.png",
+    "title": "Étudiant-chercheur à Cranfield University",
+    "description": "Mémoire de master en collaboration avec <b>Airbus</b>, soutenu par <b>UK Research and Innovation (UKRI)</b> et l'<b>Aerospace Technology Institute (ATI)</b>, consacré à l'amélioration de l'efficacité et de la précision des systèmes automatisés de ravitaillement au sol pour les aéroports intelligents. Développement d'un cadre d'apprentissage automatique combinant le modèle de détection d'objets YOLOv10 et un modèle séquentiel d'apprentissage profond proposé pour l'occasion (SizPos-GRU), afin de prédire avec précision la position future de la trappe de ravitaillement d'un avion commercial dans un flux vidéo.",
+    "period": "Mai 2024 - Sept. 2024"
+  },
+  {
+    "logo": "garage.png",
+    "title": "Vice-président du Blockchain Lab de <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://garageisep.com/\" target=\"_blank\">Garage ISEP</a>",
+    "description": "Garage ISEP est l'association étudiante de l'ISEP dédiée aux technologies (Blockchain, Intelligence Artificielle, ...). Organisation d'ateliers et de conférences pour apprendre et maîtriser les technologies Blockchain.",
+    "period": "Sept. 2022 - Sept. 2023"
+  },
+  {
+    "logo": "cs.png",
+    "title": "Développeur Blockchain chez <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://coinshares.com/\" target=\"_blank\">CoinShares</a>",
+    "description": "CoinShares est la plus grande et la plus ancienne société d'investissement en crypto-actifs d'Europe, avec plusieurs milliards de dollars d'actifs sous gestion. Au sein de l'équipe DeFi, j'ai contribué à construire un outil décentralisé de gestion d'actifs, une expérience concrète de la finance décentralisée.",
+    "period": "Sept. 2022 - Janv. 2023"
+  }
+]

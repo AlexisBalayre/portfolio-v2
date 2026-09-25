@@ -3,13 +3,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { UserIcon } from "@heroicons/react/24/outline";
+import { getDictionary, type Locale } from "~~/lib/i18n";
+import type { About } from "~~/lib/portfolio";
 import { GithubLogo } from "~~/public/assets/logos/GithubLogo";
 import { LinkedinLogo } from "~~/public/assets/logos/LinkedinLogo";
+
+interface AboutMeProps {
+  locale: Locale;
+  about: About;
+}
 
 /**
  * About Me section: the one block of the home page that needs the browser (IntersectionObserver fade-in).
  */
-export const AboutMe = () => {
+export const AboutMe = ({ locale, about }: AboutMeProps) => {
+  const t = getDictionary(locale);
   const [isActive, setIsActive] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -49,30 +57,20 @@ export const AboutMe = () => {
               isActive ? "" : "text-gray-600"
             }`}
           >
-            Who am I?
+            {t.home.aboutHeading}
           </h2>
         </span>
 
-        <p className={`transition-colors duration-500 mb-4 mt-10 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Name:</strong> Alexis Balayre
-        </p>
-        <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Nationality:</strong> French
-        </p>
-        <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Location:</strong> Paris, France
-        </p>
-        <p className={`transition-colors duration-500 mb-4 md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Degrees:</strong> ISEP Engineering Master&#39;s Degree | MSc in Computational and Software Techniques
-          in Engineering, Cranfield University
-        </p>
-        <p className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Specialisations:</strong> Real-Time Speech AI | LLM Systems | Agentic Systems | Production ML |
-          Software Engineering
-        </p>
-        <p className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          <strong>Role:</strong> AI Engineer at Acolad, building Lia Live AI
-        </p>
+        {about.facts.map((fact, index) => (
+          <p
+            key={fact.label}
+            className={`transition-colors duration-500 mb-4 text-justify md:ml-10 ${index === 0 ? "mt-10" : ""} ${
+              isActive ? "" : "text-gray-600"
+            }`}
+          >
+            <strong>{fact.label}</strong> {fact.value}
+          </p>
+        ))}
         <span className="flex flex-row md:ml-10 gap-10 justify-center mt-5">
           <div className="flex">
             <a
@@ -80,7 +78,7 @@ export const AboutMe = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="transition text-neutral-content hover:text-primary-content"
-              aria-label="LinkedIn of Alexis Balayre"
+              aria-label={t.home.linkedinAria}
             >
               <LinkedinLogo className="w-6 h-6" />
             </a>
@@ -91,7 +89,7 @@ export const AboutMe = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="transition flex text-neutral-content hover:text-primary-content"
-              aria-label="GitHub of Alexis Balayre"
+              aria-label={t.home.githubAria}
             >
               <GithubLogo className="w-6 h-6" />
             </a>
@@ -99,16 +97,7 @@ export const AboutMe = () => {
         </span>
         <div className="divider divider-neutral "></div>
         <p className={`transition-colors duration-500 text-justify md:ml-10 ${isActive ? "" : "text-gray-600"}`}>
-          AI Engineer specialising in real-time speech AI, LLM systems and production ML, with a dual background in
-          Software Engineering and Data Science. I design, build and operate AI systems end to end, from architecture
-          through deployment. At Acolad I build Lia Live AI, our real-time AI interpreting platform: speech in,
-          interpreted speech out in under a second, across 80+ languages. That covers the streaming ASR, LLM translation
-          and TTS pipelines, the distributed backend behind live sessions, multi-provider routing, and the evaluation
-          framework that settles every model choice on quality and latency. Next: fine-tuning, inference optimisation
-          and on-device deployment. Before that, I applied NLP and generative AI (RAG, GraphRAG) at Dassault Systèmes
-          and did deep learning research with Airbus on computer vision for autonomous aircraft refuelling. I also build
-          in the open, mostly AI tooling and pipelines. And I care about AI security: as these systems take on more
-          autonomy and more sensitive data, making them trustworthy matters as much as making them capable.
+          {about.bio}
         </p>
       </div>
 
@@ -116,7 +105,7 @@ export const AboutMe = () => {
         <div className="relative">
           <Image
             src="/assets/img/alexis.jpg"
-            alt="Portrait of Alexis Balayre, AI Engineer"
+            alt={t.home.portraitAlt}
             className="rounded-full"
             width={180}
             height={180}
@@ -127,9 +116,9 @@ export const AboutMe = () => {
             href="https://alexis-resume.balayre.com/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Download Resume of Alexis Balayre"
+            aria-label={t.home.downloadResumeAria}
           >
-            Download Resume
+            {t.home.downloadResume}
           </a>
         </div>
       </div>
