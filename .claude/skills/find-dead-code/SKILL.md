@@ -29,7 +29,7 @@ Named exports nothing imports (e.g. a second export next to a component's defaul
 
 ### C. Orphan images
 
-Files in `public/assets/img/` not referenced by any `logo` / `image` field in `public/assets/data/*.json`, any `src=` in TSX, or `app/layout.tsx` metadata or `app/opengraph-image.tsx` (favicons, `alexis.jpg`).
+Files in `public/assets/img/` not referenced by any `logo` / `image` field in `public/assets/data/<locale>/*.json`, any `src=` in TSX, or `app/[locale]/layout.tsx` metadata or `app/[locale]/opengraph-image/route.tsx` (favicons, `alexis.jpg`).
 
 ```sh
 for f in public/assets/img/*; do b=$(basename "$f"); grep -rq "$b" app components public/assets/data public/site.webmanifest || echo "$f"; done
@@ -41,7 +41,7 @@ Classes defined in `styles/globals.css` (the hand-written timeline block: `.time
 
 ### E. Unused JSON fields and dependencies
 
-- Fields present in `public/assets/data/*.json` items that no component reads (compare against the prop interfaces in `Timeline.tsx`, `Projects.tsx`, `Skills.tsx`).
+- Fields present in `public/assets/data/<locale>/*.json` items that no component reads (compare against the prop interfaces in `Timeline.tsx`, `Projects.tsx`, `Skills.tsx`).
 - `package.json` dependencies with no import anywhere (check `@vercel/analytics` and `@heroicons/react` icon usage).
 
 ## Mandatory verification recipe (per candidate, before flagging)
