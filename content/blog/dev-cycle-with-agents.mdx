@@ -1,0 +1,140 @@
+---
+title: "From spec to PR: my development cycle with agents"
+description: "Frame, break down, dispatch, execute, check, review: how I work with one session orchestrating and several agents running in parallel."
+date: "2026-10-09"
+tags: [agentic-coding, claude-code, software-engineering, workflow]
+projects: [pupitre, claude-code-config]
+---
+
+Agents now write most of my code. You might think that freed up my time. In reality, my time moved.
+
+The step where I spend the most of it isn't writing or reviewing. It's framing: deciding precisely what to build, before a single agent touches the code.
+
+That's no accident. An agent executes a clear task very well, and a vague one very badly. The more agents I run in parallel, the more an imprecision at the start multiplies at the end.
+
+In [the previous article](/blog/claude-code-fast-and-reliable), I described my Claude Code setup. This one shows how I use it, from the first conversation about an idea to merging the PR.
+
+## The cycle in six steps
+
+<figure>
+<svg viewBox="0 0 500 376" width="100%" role="img" aria-label="Six-step cycle: frame, break down, dispatch, execute, check, review. Steps 1, 2 and 6 are mine, steps 3 to 5 belong to agents and rules. On drift, go back to the ticket." fill="currentColor">
+<text x="44" y="14" fontSize="11" letterSpacing="0.06em" opacity="0.55">STEP</text>
+<text x="300" y="14" fontSize="11" letterSpacing="0.06em" opacity="0.55">WHO'S IN CHARGE</text>
+<line x1="0" y1="24" x2="500" y2="24" stroke="currentColor" opacity="0.15"/>
+<line x1="16" y1="54" x2="16" y2="334" stroke="currentColor" opacity="0.2" strokeWidth="2"/>
+<rect x="34" y="146" width="466" height="164" rx="8" opacity="0.05"/>
+<text x="490" y="302" textAnchor="end" fontSize="10.5" letterSpacing="0.06em" opacity="0.5">AGENTS + RULES</text>
+<circle cx="16" cy="54" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="58" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">1</text>
+<text x="46" y="53" fontSize="15" fontWeight="600">Frame</text>
+<text x="46" y="70" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">grill-me, to-spec</text>
+<text x="300" y="59" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Me</text>
+<circle cx="16" cy="110" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="114" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">2</text>
+<text x="46" y="109" fontSize="15" fontWeight="600">Break down</text>
+<text x="46" y="126" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">to-tickets</text>
+<text x="300" y="115" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Me + the agent</text>
+<circle cx="16" cy="166" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="170" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">3</text>
+<text x="46" y="165" fontSize="15" fontWeight="600">Dispatch</text>
+<text x="46" y="182" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">Fable session, Pupitre</text>
+<text x="300" y="171" fontSize="14" fontWeight="500" opacity="0.8">The orchestrator</text>
+<circle cx="16" cy="222" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="226" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">4</text>
+<text x="46" y="221" fontSize="15" fontWeight="600">Execute</text>
+<text x="46" y="238" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">one worktree per ticket</text>
+<text x="300" y="227" fontSize="14" fontWeight="500" opacity="0.8">Opus workers</text>
+<circle cx="16" cy="278" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="282" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">5</text>
+<text x="46" y="277" fontSize="15" fontWeight="600">Check</text>
+<text x="46" y="294" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">hooks, quality gate</text>
+<text x="300" y="283" fontSize="14" fontWeight="500" opacity="0.8">Automatic</text>
+<circle cx="16" cy="334" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="338" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">6</text>
+<text x="46" y="333" fontSize="15" fontWeight="600">Review</text>
+<text x="46" y="350" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">CI review, wait-what, tests</text>
+<text x="300" y="339" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Me</text>
+</svg>
+<figcaption>I frame at the start and review at the end. In between, agents execute and the rules enforce themselves. When an agent drifts, go back to the ticket.</figcaption>
+</figure>
+
+Two steps are truly mine: the first and the last. In between, my job is mostly to organize the work and make sure the rules are enforced.
+
+## 1. Frame: get questioned before coding
+
+Everything starts in the main session, the one running Fable. I don't ask it for code. I run `grill-me`.
+
+The idea is simple: instead of answering my request, the agent asks me questions. Which edge cases? What happens on error? What's out of scope? It keeps going as long as my request leaves blind spots.
+
+That's often when I realize I hadn't really decided what I wanted. Better to find out then than while reviewing an 800-line PR.
+
+When the questions run out, `to-spec` turns the discussion into a spec: the goal, the scope, the expected behaviors, the acceptance criteria. I reread it and fix it by hand. It's the only document in the cycle I consider entirely mine.
+
+This is the step that takes me the most time. It's also the one that saves the most.
+
+## 2. Break down: tickets an agent can take on alone
+
+`to-tickets` then breaks the spec into tickets. For an agent, a good ticket meets three conditions:
+
+- **It's self-contained.** The agent can finish it without asking questions, because everything it needs is in the ticket or the spec.
+- **It's independent.** It doesn't touch the same files as another ticket running in parallel. Otherwise, two agents solve the same problem in two different ways.
+- **It's verifiable.** It ends with an objective criterion: a test that passes, a command that returns the right output.
+
+The breakdown also sets the order. Whatever depends on something else waits. Whatever is independent can run in parallel.
+
+## 3. Dispatch: one orchestrator, several workers
+
+The Fable session keeps the big picture: the spec, the ticket list, what's in progress and what's done. It doesn't code. It dispatches.
+
+Each ticket goes to a separate worker session running Opus. I prefer separate sessions over a single session spawning subagents: each worker can delegate to its own subagents, and each task keeps its own history. When I want to know what happened on a ticket, there's only one conversation to reread.
+
+The number of workers depends on the breakdown. There's no right number: as many as there are truly independent tickets, and not one more.
+
+I have two ways to launch those sessions:
+
+- **By hand**, for one or two tasks. I open the sessions myself, and `handoff` passes the worker the context it needs.
+- **With [Pupitre](https://github.com/AlexisBalayre/pupitre)**, as soon as there are many independent tickets. Pupitre creates one worktree per ticket, launches the sessions, detects conflicts between them and hands me a verified summary when a branch is ready.
+
+## 4. Execute: one worktree per ticket
+
+Each worker works in its own Git worktree, on its own branch. Never on main. Two agents can't overwrite each other's work, and a failed attempt is deleted with one command.
+
+During execution, I rarely step in. That's where the setup from the previous article does its job:
+
+- rules inject an area's conventions as soon as the worker touches one of its files;
+- `git-safety` blocks dangerous commands;
+- `quality-checks` reruns formatter, linter and typecheck at the end of every turn, and sends errors back to the worker until there are none left.
+
+When a worker gets stuck or heads in the wrong direction, I don't fix its code. I go back to the ticket or the spec, and relaunch. Drift almost always comes from insufficient framing.
+
+## 5. Check: nothing reaches review without passing the gate
+
+Before a branch reaches me, it has to pass a quality gate. When I go through Pupitre, it runs five checks:
+
+| Check          | What it verifies                                                                                   |
+| -------------- | -------------------------------------------------------------------------------------------------- |
+| Build          | The project compiles                                                                               |
+| Tests          | The whole suite passes                                                                             |
+| Lint           | Style and static rules are respected                                                               |
+| Scope audit    | The worker only touched the files its ticket planned for                                           |
+| Tech debt      | Duplication, dead code, complexity, coverage and diff size don't regress against the baseline      |
+
+The baseline works like a ratchet: it can only improve. A worker that wants to take a shortcut has to declare it explicitly with `--accept-debt <reason>`, and the shortcut goes into a ledger with a review-by date. The debt still exists, but it's no longer invisible.
+
+Finally, every merge writes a decision record: what changed, and why. Six months later, that's what answers "why is this code written this way?".
+
+## 6. Review: understand before merging
+
+This is the other step that's truly mine. When a PR comes in, I always follow the same order:
+
+1. **I read the CI review first.** Reviewer agents have already analyzed the PR and left comments. I start there to know where to look.
+2. **I ask the agent to explain what it did,** with `wait-what`. Before reading the code, I want to understand the intent and the choices.
+3. **I read the whole diff.** Line by line. The gate has already checked that the code compiles, passes the tests and follows the conventions. I check that it solves the right problem, the right way.
+4. **I test locally.** I run the app or the tests myself. A green test doesn't prove a feature does what the user expects.
+
+If I don't understand a PR, I don't merge it. That's the rule that protects me from saturation: better a PR waiting than a PR approved without being understood.
+
+## What I take away
+
+Agents have pushed the work to both ends of the cycle. Upstream, you have to decide precisely what to build. Downstream, you have to understand what was built. In between, agents execute, and hooks and the quality gate enforce the rules.
+
+- **Time saved on writing gets reinvested in framing.** An hour of `grill-me` saves hours of reviewing a PR that solves the wrong problem.
+- **Parallelism is decided at breakdown.** As many workers as truly independent tickets, no more.
+- **When an agent drifts, fix the ticket, not the code.**
+- **Only merge what you understand.**
+
+In the next article, I'll walk through the CI review: how six reviewer agents, a validator and a script with no write access analyze every PR before it reaches me.
