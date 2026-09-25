@@ -31,7 +31,7 @@ export const NotFound = () => {
           <p className="text-lg text-neutral-content mt-4">{t.notFound.description}</p>
           <Link
             href={localePath(locale)}
-            className="inline-flex items-center gap-2 mt-8 text-sm font-bold text-primary hover:text-primary-content"
+            className="inline-flex items-center gap-2 mt-8 text-sm font-bold text-primary hover:text-secondary"
           >
             <ArrowLeftIcon className="h-4 w-4" />
             {t.notFound.backHome}

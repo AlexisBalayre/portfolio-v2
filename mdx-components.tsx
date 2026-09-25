@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { MDXComponents } from "mdx/types";
 
-const linkClass = "font-bold text-primary hover:text-primary-content";
+const linkClass = "font-bold text-primary hover:text-secondary";
 
 const isInternalHref = (href: string) => (href.startsWith("/") && !href.startsWith("//")) || href.startsWith("#");
 

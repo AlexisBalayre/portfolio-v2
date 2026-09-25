@@ -92,7 +92,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
           <p className="text-lg text-neutral-content text-center md:text-left">{t.blog.description}</p>
           <a
             href={localePath(locale, "/blog/rss.xml")}
-            className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-content"
+            className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary"
             title={t.blog.feedAria}
           >
             <RssIcon className="h-4 w-4" />
@@ -120,7 +120,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
                         <Link
                           href={localePath(post.contentLocale, `/blog/${post.slug}`)}
                           hrefLang={post.contentLocale}
-                          className="font-bold text-primary hover:text-primary-content"
+                          className="font-bold text-primary hover:text-secondary"
                         >
                           {t.blog.readInEnglish}
                         </Link>

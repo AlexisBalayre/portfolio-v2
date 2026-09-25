@@ -107,7 +107,7 @@ export default async function PostPage({ params }: PostPageProps) {
           <header className="mb-10">
             <Link
               href={localePath(locale, "/blog")}
-              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-content"
+              className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary"
             >
               <ArrowLeftIcon className="h-4 w-4" />
               {t.blog.allPosts}
@@ -123,7 +123,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   <Link
                     href={localePath(post.contentLocale, `/blog/${post.slug}`)}
                     hrefLang={post.contentLocale}
-                    className="font-bold text-primary hover:text-primary-content"
+                    className="font-bold text-primary hover:text-secondary"
                   >
                     {t.blog.readInEnglish}
                   </Link>
@@ -155,7 +155,7 @@ export default async function PostPage({ params }: PostPageProps) {
                   <li key={project.id}>
                     <Link
                       href={`${localePath(locale)}#project-${project.id}`}
-                      className="font-bold text-primary hover:text-primary-content"
+                      className="font-bold text-primary hover:text-secondary"
                     >
                       {project.name}
                     </Link>

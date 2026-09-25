@@ -61,7 +61,7 @@ const Projects = ({ items, posts, locale }: ProjectsProps) => {
                       <li key={post.slug}>
                         <Link
                           href={localePath(locale, `/blog/${post.slug}`)}
-                          className="font-bold text-primary hover:text-primary-content"
+                          className="font-bold text-primary hover:text-secondary"
                         >
                           {post.title}
                         </Link>
