@@ -12,6 +12,7 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 
 | Path                           | What it is                                                                                        |
 | :----------------------------- | :------------------------------------------------------------------------------------------------ |
+| `app/layout.tsx`               | Pass-through root layout (returns children) so `[locale]/layout.tsx` and `not-found.tsx` own the document |
 | `app/[locale]/layout.tsx`      | Root layout per locale (`en`, `fr`): `<html lang>`, Header/Footer shell, site-wide SEO (`metadata`, hreflang `alternates`, JSON-LD graph) |
 | `app/[locale]/opengraph-image/route.tsx` | Build-time 1200×630 social card (`next/og`) per locale; the blog images beside it reuse its style |
 | `app/[locale]/page.tsx`        | Home page (server component): six sections (`id` must match `menuLinks` in `Header.tsx`); hands posts to `Projects` |
