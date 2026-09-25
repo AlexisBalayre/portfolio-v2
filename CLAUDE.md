@@ -19,7 +19,8 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 | `app/[locale]/blog/`           | `/blog` listing, `[slug]/page.tsx` post page (per-post metadata + BlogPosting JSON-LD), `rss.xml/route.ts` feed per locale |
 | `next.config.js`               | `rewrites` serve English unprefixed from the `/en` tree; `redirects` send `/en/**` to the unprefixed URL; `headers` add the security set and `X-Robots-Tag: noindex` on images and feeds |
 | `app/sitemap.ts`, `app/robots.ts` | Metadata routes: sitemap with per-locale alternates and content-derived `lastmod` (`portfolioUpdatedOn` in `lib/site.ts`), robots with the AI-crawler rules |
-| `.github/workflows/indexnow.yaml` | On push to main, waits for the deploy and submits the live sitemap URLs to IndexNow (Bing and others); key file in `public/` |
+| `.github/workflows/indexnow.yaml` | On each successful Production deployment, submits the live sitemap URLs to IndexNow (Bing and others); key file in `public/` |
+| `.github/workflows/scheduled-publish.yaml` | Daily 04:00 UTC deploy-hook call so a post dated in the future (hidden from production builds by `lib/posts.ts`) goes live on its day; needs the `VERCEL_DEPLOY_HOOK_URL` secret |
 | `lib/i18n.ts`                  | Locales, URL prefix rule (`localePath`, `stripLocale`), typed UI dictionary from `ui.json`          |
 | `lib/portfolio.ts`             | Per-locale content loader; fails the build when a French file lacks an entry the English one has    |
 | `lib/posts.ts`                 | The one post loader: reads `content/blog/<slug>.mdx` and optional `<slug>.fr.mdx`, validates frontmatter, compiles MDX |
