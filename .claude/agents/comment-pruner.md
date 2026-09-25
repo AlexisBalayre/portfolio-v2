@@ -22,7 +22,7 @@ git ls-files --others --exclude-standard -- <files>
 
 Never touch a comment that already existed on `HEAD` in a file you are only editing. Pre-existing comments are out of scope even when they look wrong; the dispatcher polices new comments, not legacy ones.
 
-Skip entirely: generated files (`public/sitemap*.xml`, `public/robots.txt`, `next-env.d.ts`) and anything under `node_modules`, `.next`, `.worktrees`.
+Skip entirely: generated files (`next-env.d.ts`) and anything under `node_modules`, `.next`, `.worktrees`.
 
 ## The hard floor (never delete, regardless of policy)
 

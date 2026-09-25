@@ -200,7 +200,7 @@ Communicate *what changed and why* at a glance, specific enough that a reviewer 
 ## Body rules
 
 - **No em-dash** (`—` / `–`). Hyphen or colon.
-- **No hardcoded site URL** beyond what the diff itself changes; `siteUrl` lives in `lib/site.ts` and `next-sitemap.config.js`.
+- **No hardcoded site URL** beyond what the diff itself changes; `siteUrl` lives in `lib/site.ts`.
 - **Issue auto-close.** End the body with `Closes #NN.` when the PR resolves an issue (the magic word must be in the description, not a comment). Omit when the PR has no issue.
 - **No attribution footer.** Never add `🤖 Generated with Claude Code` (or any agent attribution) to the PR body. The `Co-Authored-By` trailer on commits is the only attribution.
 
