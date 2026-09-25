@@ -1,7 +1,8 @@
 ---
 title: "A PR review is a pipeline, not a prompt"
 description: "Why Claude Code's built-in review and Greptile weren't enough for me, and how I built a PR review in CI: six specialized reviewers, a validator, a read-only model and metrics to improve it."
-date: "2026-10-16"
+date: "2026-09-25"
+order: 4
 tags: [code-review, claude-code, agentic-coding, github-actions, software-engineering]
 projects: [claude-code-config]
 ---
@@ -103,7 +104,7 @@ The problem wasn't the model. It was the architecture. A reliable review needs t
 <figcaption>Scripts decide when to run and what gets posted. Models analyze, and can never write to the PR.</figcaption>
 </figure>
 
-The split is the same as in the rest of my setup: **what must be reliable is done by a script, what requires judgment is done by a model.** The model analyzes. It decides neither when it runs nor what gets posted to the PR.
+The split is the same as in [the rest of my setup](/blog/claude-code-fast-and-reliable): **what must be reliable is done by a script, what requires judgment is done by a model.** The model analyzes. It decides neither when it runs nor what gets posted to the PR.
 
 ## 1. The preflight: a script decides when to review
 
@@ -206,4 +207,4 @@ Finally, it only improves if I put time into it. The records are useless if nobo
 
 It's all open source in [claude-code-config](https://github.com/AlexisBalayre/claude-code-config): the GitHub Actions workflow, the six reviewers, the validator, the posting script and `review-retro`. Setup takes three steps: install Claude's GitHub app, register a token, create the metrics branch.
 
-This article wraps up the series on how I work with agents. If you set up your own review, tell me what your data teaches you.
+This article wraps up [the series](/blog/how-my-job-evolved) on how I work with agents. If you set up your own review, tell me what your data teaches you.

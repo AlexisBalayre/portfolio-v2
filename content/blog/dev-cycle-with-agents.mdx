@@ -94,7 +94,7 @@ I have two ways to launch those sessions:
 
 Each worker works in its own Git worktree, on its own branch. Never on main. Two agents can't overwrite each other's work, and a failed attempt is deleted with one command.
 
-During execution, I rarely step in. That's where the setup from the previous article does its job:
+During execution, I rarely step in. That's where [the setup from the previous article](/blog/claude-code-fast-and-reliable) does its job:
 
 - rules inject an area's conventions as soon as the worker touches one of its files;
 - `git-safety` blocks dangerous commands;
@@ -138,4 +138,4 @@ Agents have pushed the work to both ends of the cycle. Upstream, you have to dec
 - **When an agent drifts, fix the ticket, not the code.**
 - **Only merge what you understand.**
 
-In the next article, I'll walk through the CI review: how six reviewer agents, a validator and a script with no write access analyze every PR before it reaches me.
+In [the next article](/blog/pr-review-pipeline), I walk through the CI review: how six reviewer agents, a validator and a script with no write access analyze every PR before it reaches me.

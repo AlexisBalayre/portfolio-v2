@@ -94,7 +94,7 @@ Pour lancer ces sessions, j'ai deux modes :
 
 Chaque worker travaille dans son propre worktree Git, sur sa propre branche. Jamais sur main. Deux agents ne peuvent donc pas écraser le travail l'un de l'autre, et un essai raté se supprime en une commande.
 
-Pendant l'exécution, j'interviens peu. C'est là que la configuration décrite dans l'article précédent fait son travail :
+Pendant l'exécution, j'interviens peu. C'est là que [la configuration décrite dans l'article précédent](/fr/blog/claude-code-fast-and-reliable) fait son travail :
 
 - les rules injectent les conventions de la zone dès que le worker touche un fichier ;
 - `git-safety` bloque les commandes dangereuses ;
@@ -138,4 +138,4 @@ Les agents ont déplacé le travail vers les deux extrémités du cycle. En amon
 - **Quand un agent dérive, on corrige le ticket, pas le code.**
 - **On ne merge que ce qu'on comprend.**
 
-Dans le prochain article, je détaille la review CI : comment six agents reviewers, un validateur et un script sans accès en écriture analysent chaque PR avant qu'elle m'arrive.
+Dans [le prochain article](/fr/blog/pr-review-pipeline), je détaille la review CI : comment six agents reviewers, un validateur et un script sans accès en écriture analysent chaque PR avant qu'elle m'arrive.
