@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import { mdxComponents } from "~~/mdx-components";
 import { defaultLocale, isLocale, languageTags, locales, type Locale } from "~~/lib/i18n";
 import { getPortfolio } from "~~/lib/portfolio";
-import { postUrl } from "~~/lib/site";
+import { postUrl, publishTimeZone } from "~~/lib/site";
 
 export interface PostFrontmatter {
   title: string;
@@ -36,6 +36,29 @@ const POST_FILE = /^([a-z0-9]+(?:-[a-z0-9]+)*)(?:\.([a-z]{2}))?\.mdx$/;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const projectIds = new Set(getPortfolio(defaultLocale).projects.map(project => project.id));
+
+// Vercel sets VERCEL_ENV to "production", "preview" or "development"; yarn dev leaves it unset. Only the production
+// build hides the posts dated after today, so a preview deployment and the dev server show a scheduled post at its
+// final URL for proofreading. Documented in docs/conventions/content.md, "Scheduled posts".
+const includesScheduledPosts = process.env.VERCEL_ENV !== "production";
+
+// Today as YYYY-MM-DD in the site's time zone, comparable with the frontmatter date as a string.
+const todayInPublishTimeZone = (): string => {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: publishTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date());
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find(entry => entry.type === type)?.value;
+  return `${part("year")}-${part("month")}-${part("day")}`;
+};
+
+// A post is published from its date. The production build leaves the others out everywhere getAllPosts feeds
+// (listing, feeds, sitemap, static params, project cards), so their URLs are 404s until the deployment of that
+// morning, which .github/workflows/scheduled-publish.yaml triggers daily.
+const today = todayInPublishTimeZone();
+const isPublished = (post: Post): boolean => includesScheduledPosts || post.date <= today;
 
 const postFile = (slug: string, locale: Locale): string =>
   locale === defaultLocale ? `${slug}.mdx` : `${slug}.${locale}.mdx`;
@@ -138,7 +161,7 @@ export const getAllPosts = cache(async (locale: Locale): Promise<Post[]> => {
     return slug && !fileLocale ? [slug] : [];
   });
   const posts = await Promise.all(slugs.map(async slug => (await readPost(slug, locale)).post));
-  return posts.sort((a, b) => b.date.localeCompare(a.date));
+  return posts.filter(isPublished).sort((a, b) => b.date.localeCompare(a.date));
 });
 
 export const formatPostDate = (date: string, locale: Locale): string =>

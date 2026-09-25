@@ -39,7 +39,8 @@ Body text.
 
 Every frontmatter field is required. `projects` lists the `id` of one or more entries in
 `public/assets/data/en/projects.json` (it may be empty: `[]`); an unknown id fails the build. `date` is the publication
-day in `YYYY-MM-DD`; posts are listed newest first.
+day in `YYYY-MM-DD`, read in the Paris time zone; posts are listed newest first, and a date after today schedules the
+post (step 6).
 
 ## 3. Write the body
 
@@ -86,7 +87,16 @@ are under http://localhost:3000/fr/blog. The social card is at http://localhost:
 the feed at http://localhost:3000/blog/rss.xml (`/fr/blog/rss.xml` in French). A frontmatter mistake shows as a build
 error naming the file and the field.
 
-## 6. Keep the rest in sync
+## 6. Schedule the post (optional)
+
+Set `date` to a day in the future and merge as usual: the production build leaves the post out until that day, so it
+is not listed, not in the feeds or the sitemap, not on the project cards, and its URL is a 404. The Vercel preview of
+the pull request and `yarn dev` still show it in full, at its final URL, so proofread it there. On the morning of the
+date (06:00 in Paris, `.github/workflows/scheduled-publish.yaml`) production is rebuilt and the post goes live,
+with the sitemap and the IndexNow submission following. Nothing else to do; the rule is in
+[../conventions/content.md](../conventions/content.md#scheduled-posts).
+
+## 7. Keep the rest in sync
 
 - `public/llms.txt`: add the post to the **Blog** section (title, URL, one-line description, the French URL when a
   translation exists); mirror the line in `public/llms.fr.txt`.
@@ -95,7 +105,7 @@ error naming the file and the field.
 - Nothing else: the sitemap, the feed, the social image, the JSON-LD and the "Read more on the blog" list on the
   project cards are generated from the file at build time.
 
-## 7. Ship
+## 8. Ship
 
 ```sh
 yarn lint && yarn typecheck && yarn build
@@ -103,4 +113,5 @@ git add content/blog/<slug>.mdx content/blog/<slug>.fr.mdx public/llms.txt publi
 git commit -m "content(blog): <title>"
 ```
 
-Open a pull request; CI runs the same three commands. Merging to `main` deploys the post.
+Open a pull request; CI runs the same three commands. Merging to `main` deploys the post, or schedules it when its
+date has not come yet.
