@@ -11,6 +11,10 @@ export const twitterHandle = "@alexisbalayre";
 // is newer. Bump it with the content; a build date would claim a change on every deploy and be ignored.
 export const portfolioUpdatedOn = "2026-09-25";
 
+// The zone a post's frontmatter date is a day of: a post dated D is published from 00:00 on D in Paris, whatever
+// the zone of the machine building the site (Vercel builds in UTC).
+export const publishTimeZone = "Europe/Paris";
+
 // Absolute URL of a page in a locale: the English home is siteUrl itself, without a trailing slash.
 export const localeUrl = (locale: Locale, path = "/"): string => {
   const localised = localePath(locale, path);

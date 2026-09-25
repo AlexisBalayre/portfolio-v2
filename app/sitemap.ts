@@ -14,7 +14,8 @@ const page = (locale: Locale, path: string, lastModified: string, available: rea
 });
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Newest first; YYYY-MM-DD strings compare as dates.
+  // Published posts only (a scheduled post is not in the build, see lib/posts.ts), newest first; YYYY-MM-DD strings
+  // compare as dates, so the home and blog lastmod are the newest published date.
   const posts = await getAllPosts(defaultLocale);
   const newestPost = posts[0]?.date;
   const blogLastModified = newestPost ?? portfolioUpdatedOn;

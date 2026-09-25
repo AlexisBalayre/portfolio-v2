@@ -146,12 +146,26 @@ projects: ["pupitre", "claude-code-config"]
 | :--- | :--- | :--- |
 | `title` | string | Plain sentence, no trailing full stop; becomes the `<h1>`, the `<title>` (with the site suffix), `og:title` and the feed item title. |
 | `description` | string | One sentence; the meta description, `og:description`, the card and the feed item. |
-| `date` | `YYYY-MM-DD` | Publication day; posts list newest first. Doubles as `dateModified` until a post is revised. |
+| `date` | `YYYY-MM-DD` | Publication day, a calendar day in `Europe/Paris`; posts list newest first. A day after today schedules the post ([below](#scheduled-posts)). Doubles as `dateModified` until a post is revised. |
 | `tags` | string[] | One or more lowercase, hyphenated topics (`claude-code`, `merge-gate`). Rendered as badges, `article:tag` and feed `<category>`. |
 | `projects` | string[] | Zero or more `id`s from `projects.json`. The post links to those cards; each card lists the post. |
 
 All five fields are required. `lib/posts.ts` validates them and throws with the file and field name, so a bad post
 fails `yarn build` rather than rendering empty.
+
+### Scheduled posts
+
+A post is published from its `date`: `getAllPosts` in `lib/posts.ts` keeps a post when its date is on or before
+today, where today is the `YYYY-MM-DD` day in `publishTimeZone` (`Europe/Paris`, in `lib/site.ts`) computed with
+`Intl` at build time, whatever zone the build machine runs in. A post dated later is out of the production build
+altogether: not listed, not in the feeds, the sitemap or the project cards, and its URL (in both locales, social
+image included) is a 404 because the post route only prerenders the slugs the loader returns. Production is rebuilt
+every morning by `.github/workflows/scheduled-publish.yaml`, so the post goes live on its date
+([ADR 0004](../adr/0004-scheduled-posts-as-a-build-time-filter-with-a-daily-deploy-hook.md)).
+
+The rule applies only when `VERCEL_ENV` is `production`: a Vercel preview deployment (`preview`) and `yarn dev`
+(unset) include every post so the author can proofread a scheduled one at its final URL. The switch is one constant,
+`includesScheduledPosts`, next to the filter in `lib/posts.ts`.
 
 ### Allowed MDX
 

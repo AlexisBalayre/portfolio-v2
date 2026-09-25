@@ -1,0 +1,38 @@
+name: Scheduled publish
+
+# Publishes the posts whose day has come. The production build leaves out every post dated after today in
+# Europe/Paris (lib/posts.ts), so a post scheduled for a given day only appears once production is rebuilt on
+# that day: this job asks Vercel for that rebuild every morning through the project's Deploy Hook. The resulting
+# Production deployment runs the IndexNow workflow like any other. Creating the hook and the secret:
+# docs/reference/architecture.md, "Scheduled posts".
+on:
+  schedule:
+    # GitHub cron is UTC only: 04:00 UTC is 06:00 in Paris under summer time (CEST) and 05:00 under winter time
+    # (CET). Either way the post is live before the working day starts, so one run is enough.
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      # The hook URL is the whole credential: it is never echoed, and curl only prints the status code.
+      - name: Trigger the production deployment
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::VERCEL_DEPLOY_HOOK_URL is not set, no deployment triggered"
+            exit 0
+          fi
+          status=$(curl -sS --max-time 20 -o /dev/null -w '%{http_code}' -X POST "$HOOK")
+          echo "Vercel answered HTTP $status"
+          case "$status" in
+            2??) ;;
+            *) exit 1 ;;
+          esac
