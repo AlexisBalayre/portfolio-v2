@@ -161,13 +161,16 @@ uses daisyUI tokens). Allowed:
 - Paragraphs, `**strong**`, `_emphasis_`, inline `code`, `---` rules.
 - Headings from `##` down to `####`. Never `#`: the title is the page's only `<h1>`.
 - Ordered and unordered lists, block quotes.
-- Fenced code blocks, with a language tag for the reader's benefit (there is no syntax highlighter or diagram renderer: a `mermaid` block shows its source, so commit the rendered SVG under `public/assets/img/blog/` and use `<Image>`).
+- Fenced code blocks, with a language tag for the reader's benefit (there is no syntax highlighter or diagram renderer: a `mermaid` block shows its source).
+- Diagrams as an inline `<figure>` holding an `<svg viewBox="…" width="100%" role="img" aria-label="…">` and a `<figcaption>`. Use `fill="currentColor"` and `stroke="currentColor"` so the drawing follows the theme, and `fill="var(--color-accent, #2563eb)"` for the accent; write every attribute as a string (`fontSize="12"`, never `style={{…}}`, which the compiler strips). A standalone SVG file would render black on the dark theme through `<Image>`, because `currentColor` does not resolve inside `<img>`.
 - GitHub-flavoured tables (`| a | b |` with a header row), rendered with daisyUI's `table`. `remark-gfm` also accepts `~~strikethrough~~`, task lists and footnotes; use them sparingly, there is no styling beyond the browser default.
 - Links: root-relative for the site (`/blog/<slug>`, `/#project-<id>`, `/blog/rss.xml`), absolute for the rest. External links get `target="_blank" rel="noopener noreferrer"` from the component.
 - `<Image src="/assets/img/blog/<file>" alt="…" width="1200" height="675" />` (`next/image`); files live in `public/assets/img/blog/`. Attributes are quoted strings: the compiler strips JSX expressions in braces (`width={1200}`), so a braced size leaves `next/image` without dimensions.
 
-Not allowed: Markdown image syntax (`![]()` compiles to `<img>`), raw HTML, `import`/`export` statements and
-JavaScript expressions in braces (`{...}`, including `{/* comments */}`: they are stripped silently).
+Not allowed: Markdown image syntax (`![]()` compiles to `<img>`), raw HTML other than the figure above (no
+`<script>`, `<iframe>`, `<style>`, event handlers or `javascript:` URLs, which the security review scans for),
+`import`/`export` statements and JavaScript expressions in braces (`{...}`, including `{/* comments */}`: they are
+stripped silently).
 
 ### Writing style
 

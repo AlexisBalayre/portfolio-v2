@@ -36,6 +36,20 @@ p {
   box-sizing: border-box;
 }
 
+/* Blog post figures: inline SVG diagrams written in the MDX (see docs/conventions/content.md, Allowed MDX).
+   Literal JSX in a post bypasses mdx-components.tsx, so the figure is styled here. */
+article figure {
+  margin-block: 2rem;
+  color: var(--color-base-content);
+}
+
+article figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  text-align: center;
+  color: var(--color-neutral-content);
+}
+
 /* Timeline */
 .timeline {
   position: relative;
