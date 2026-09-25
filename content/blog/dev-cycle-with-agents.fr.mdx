@@ -1,0 +1,140 @@
+---
+title: "De la spec à la PR : mon cycle de développement avec des agents"
+description: "Cadrer, découper, distribuer, exécuter, contrôler, relire : comment je travaille avec une session qui orchestre et plusieurs agents en parallèle."
+date: "2026-10-09"
+tags: [agentic-coding, claude-code, software-engineering, workflow]
+projects: [pupitre, claude-code-config]
+---
+
+Les agents écrivent aujourd'hui l'essentiel de mon code. On pourrait croire que j'ai gagné du temps libre. En réalité, mon temps s'est déplacé.
+
+L'étape où j'en passe le plus n'est ni l'écriture ni la review. C'est le cadrage : décider précisément ce qu'il faut construire, avant qu'un seul agent ne touche au code.
+
+Ce n'est pas un hasard. Un agent exécute très bien une tâche claire, et très mal une tâche floue. Plus j'ai d'agents en parallèle, plus une imprécision au départ se multiplie à l'arrivée.
+
+Dans [l'article précédent](/fr/blog/claude-code-fast-and-reliable), je décrivais ma configuration de Claude Code. Celui-ci montre comment je l'utilise, du premier échange sur une idée jusqu'au merge de la PR.
+
+## Le cycle en six étapes
+
+<figure>
+<svg viewBox="0 0 500 376" width="100%" role="img" aria-label="Cycle en six étapes : cadrer, découper, distribuer, exécuter, contrôler, relire. Les étapes 1, 2 et 6 sont tenues par moi, les étapes 3 à 5 par les agents et les règles. En cas de dérive, retour au ticket." fill="currentColor">
+<text x="44" y="14" fontSize="11" letterSpacing="0.06em" opacity="0.55">ÉTAPE</text>
+<text x="300" y="14" fontSize="11" letterSpacing="0.06em" opacity="0.55">QUI TIENT LA MAIN</text>
+<line x1="0" y1="24" x2="500" y2="24" stroke="currentColor" opacity="0.15"/>
+<line x1="16" y1="54" x2="16" y2="334" stroke="currentColor" opacity="0.2" strokeWidth="2"/>
+<rect x="34" y="146" width="466" height="164" rx="8" opacity="0.05"/>
+<text x="490" y="302" textAnchor="end" fontSize="10.5" letterSpacing="0.06em" opacity="0.5">AGENTS + RÈGLES</text>
+<circle cx="16" cy="54" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="58" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">1</text>
+<text x="46" y="53" fontSize="15" fontWeight="600">Cadrer</text>
+<text x="46" y="70" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">grill-me, to-spec</text>
+<text x="300" y="59" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Moi</text>
+<circle cx="16" cy="110" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="114" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">2</text>
+<text x="46" y="109" fontSize="15" fontWeight="600">Découper</text>
+<text x="46" y="126" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">to-tickets</text>
+<text x="300" y="115" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Moi + l'agent</text>
+<circle cx="16" cy="166" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="170" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">3</text>
+<text x="46" y="165" fontSize="15" fontWeight="600">Distribuer</text>
+<text x="46" y="182" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">session Fable, Pupitre</text>
+<text x="300" y="171" fontSize="14" fontWeight="500" opacity="0.8">L'orchestrateur</text>
+<circle cx="16" cy="222" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="226" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">4</text>
+<text x="46" y="221" fontSize="15" fontWeight="600">Exécuter</text>
+<text x="46" y="238" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">un worktree par ticket</text>
+<text x="300" y="227" fontSize="14" fontWeight="500" opacity="0.8">Les workers Opus</text>
+<circle cx="16" cy="278" r="10" fill="none" stroke="currentColor" opacity="0.45" strokeWidth="1.5"/><text x="16" y="282" textAnchor="middle" fontSize="11" fontWeight="600" opacity="0.7">5</text>
+<text x="46" y="277" fontSize="15" fontWeight="600">Contrôler</text>
+<text x="46" y="294" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">hooks, quality gate</text>
+<text x="300" y="283" fontSize="14" fontWeight="500" opacity="0.8">Automatique</text>
+<circle cx="16" cy="334" r="11" fill="var(--color-primary, #2563eb)"/><text x="16" y="338" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">6</text>
+<text x="46" y="333" fontSize="15" fontWeight="600">Relire</text>
+<text x="46" y="350" fontSize="11.5" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace" opacity="0.6">review CI, wait-what, tests</text>
+<text x="300" y="339" fontSize="14" fontWeight="700" fill="var(--color-primary, #2563eb)">Moi</text>
+</svg>
+<figcaption>Je cadre au début, je relis à la fin. Entre les deux, les agents exécutent et les règles s'appliquent. Si un agent dérive, on revient au ticket.</figcaption>
+</figure>
+
+Deux étapes sont vraiment les miennes : la première et la dernière. Entre les deux, mon rôle consiste surtout à organiser le travail et à faire respecter les règles.
+
+## 1. Cadrer : se faire interroger avant de coder
+
+Tout commence dans la session principale, celle qui tourne sur Fable. Je n'y demande pas de code. Je lance `grill-me`.
+
+Le principe est simple : au lieu de répondre à ma demande, l'agent me pose des questions. Quels cas limites ? Quel comportement en cas d'erreur ? Qu'est-ce qui est hors périmètre ? Il continue tant que ma demande laisse des zones floues.
+
+C'est souvent là que je découvre que je n'avais pas vraiment décidé ce que je voulais. Mieux vaut le découvrir à ce moment qu'en relisant une PR de 800 lignes.
+
+Quand les questions s'épuisent, `to-spec` transforme la discussion en spec : l'objectif, le périmètre, les comportements attendus, les critères d'acceptation. Je la relis et je la corrige à la main. C'est le seul document du cycle que je considère comme entièrement à moi.
+
+C'est l'étape qui me prend le plus de temps. C'est aussi celle qui en fait gagner le plus.
+
+## 2. Découper : des tickets qu'un agent peut prendre seul
+
+`to-tickets` découpe ensuite la spec en tickets. Un bon ticket, pour un agent, respecte trois conditions :
+
+- **Il est autonome.** L'agent peut le terminer sans poser de question, parce que tout ce qu'il faut savoir est dans le ticket ou dans la spec.
+- **Il est indépendant.** Il ne modifie pas les mêmes fichiers qu'un autre ticket traité en parallèle. Sinon, deux agents règlent le même problème de deux façons différentes.
+- **Il est vérifiable.** Il se termine par un critère objectif : un test qui passe, une commande qui renvoie le bon résultat.
+
+Le découpage décide aussi de l'ordre. Ce qui dépend d'autre chose attend. Ce qui est indépendant peut partir en parallèle.
+
+## 3. Distribuer : un orchestrateur, plusieurs workers
+
+La session Fable garde la vue d'ensemble : la spec, la liste des tickets, ce qui est en cours et ce qui est terminé. Elle ne code pas. Elle distribue.
+
+Chaque ticket part dans une session worker séparée, qui tourne sur Opus. Je préfère des sessions séparées à une seule session qui lancerait des sous-agents : chaque worker peut lui-même déléguer à ses propres sous-agents, et chaque tâche garde son historique à part. Quand je veux savoir ce qui s'est passé sur un ticket, je n'ai qu'une conversation à relire.
+
+Le nombre de workers dépend du découpage. Il n'y a pas de bon chiffre : autant que de tickets vraiment indépendants, et pas un de plus.
+
+Pour lancer ces sessions, j'ai deux modes :
+
+- **À la main**, pour une ou deux tâches. J'ouvre les sessions moi-même, et `handoff` transmet au worker le contexte dont il a besoin.
+- **Avec [Pupitre](https://github.com/AlexisBalayre/pupitre)**, dès qu'il y a beaucoup de tickets indépendants. Pupitre crée un worktree par ticket, lance les sessions, détecte les conflits entre elles et me présente un résumé vérifié quand une branche est prête.
+
+## 4. Exécuter : un worktree par ticket
+
+Chaque worker travaille dans son propre worktree Git, sur sa propre branche. Jamais sur main. Deux agents ne peuvent donc pas écraser le travail l'un de l'autre, et un essai raté se supprime en une commande.
+
+Pendant l'exécution, j'interviens peu. C'est là que la configuration décrite dans l'article précédent fait son travail :
+
+- les rules injectent les conventions de la zone dès que le worker touche un fichier ;
+- `git-safety` bloque les commandes dangereuses ;
+- `quality-checks` relance formatter, linter et typecheck à chaque fin de tour, et renvoie les erreurs au worker tant qu'il y en a.
+
+Quand un worker bloque ou part dans une mauvaise direction, je ne corrige pas son code. Je reviens au ticket ou à la spec, et je relance. Une dérive vient presque toujours d'un cadrage insuffisant.
+
+## 5. Contrôler : rien n'arrive en review sans passer la gate
+
+Avant qu'une branche m'arrive, elle doit passer une quality gate. Quand je passe par Pupitre, elle enchaîne cinq contrôles :
+
+| Contrôle             | Ce qu'il vérifie                                                                                           |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Build                | Le projet compile                                                                                          |
+| Tests                | Toute la suite passe                                                                                       |
+| Lint                 | Le style et les règles statiques sont respectés                                                            |
+| Audit du périmètre   | Le worker n'a modifié que les fichiers prévus par son ticket                                               |
+| Dette technique      | Duplication, code mort, complexité, couverture et taille du diff ne se dégradent pas par rapport à la référence |
+
+La référence fonctionne comme un cliquet : elle ne peut que s'améliorer. Un worker qui veut prendre un raccourci doit le déclarer explicitement avec `--accept-debt <raison>`, et ce raccourci entre dans un registre avec une date de réexamen. La dette existe toujours, mais elle n'est plus invisible.
+
+Enfin, chaque merge produit une fiche de décision : ce qui a changé, et pourquoi. Six mois plus tard, c'est elle qui répond à la question « pourquoi ce code est-il écrit comme ça ? ».
+
+## 6. Relire : comprendre avant de merger
+
+C'est la seconde étape qui m'appartient vraiment. Quand une PR arrive, je suis toujours le même ordre :
+
+1. **Je lis d'abord la review CI.** Des agents reviewers ont déjà analysé la PR et laissé leurs commentaires. Je commence par là pour savoir où regarder.
+2. **Je demande à l'agent de m'expliquer ce qu'il a fait,** avec `wait-what`. Avant de lire le code, je veux comprendre l'intention et les choix.
+3. **Je lis le diff en entier.** Ligne par ligne. La gate a déjà vérifié que le code compile, passe les tests et respecte les conventions. Moi, je vérifie qu'il résout le bon problème, de la bonne façon.
+4. **Je teste en local.** Je lance l'application ou les tests moi-même. Un test vert ne prouve pas qu'une fonctionnalité fait ce que l'utilisateur attend.
+
+Si je ne comprends pas une PR, je ne la merge pas. C'est la règle qui me protège de la saturation : mieux vaut une PR en attente qu'une PR validée sans être comprise.
+
+## Ce que j'en retiens
+
+Les agents ont déplacé le travail vers les deux extrémités du cycle. En amont, il faut décider précisément quoi construire. En aval, il faut comprendre ce qui a été construit. Entre les deux, les agents exécutent, et les hooks et la quality gate font respecter les règles.
+
+- **Le temps gagné sur l'écriture se réinvestit dans le cadrage.** Une heure de `grill-me` évite plusieurs heures de review sur une PR qui résout le mauvais problème.
+- **Le parallélisme se décide au découpage.** Autant de workers que de tickets vraiment indépendants, pas plus.
+- **Quand un agent dérive, on corrige le ticket, pas le code.**
+- **On ne merge que ce qu'on comprend.**
+
+Dans le prochain article, je détaille la review CI : comment six agents reviewers, un validateur et un script sans accès en écriture analysent chaque PR avant qu'elle m'arrive.
