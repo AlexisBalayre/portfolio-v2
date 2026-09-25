@@ -3,6 +3,7 @@ import { cache } from "react";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { compileMDX } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
 import { mdxComponents } from "~~/mdx-components";
 import { defaultLocale, isLocale, languageTags, locales, type Locale } from "~~/lib/i18n";
 import { getPortfolio } from "~~/lib/portfolio";
@@ -95,7 +96,8 @@ const compilePost = cache(async (file: string) => {
   const source = await readFile(join(postsDir, file), "utf8");
   const { content, frontmatter } = await compileMDX<Record<string, unknown>>({
     source,
-    options: { parseFrontmatter: true },
+    // remark-gfm adds the GitHub tables the posts use; the other extras it enables are listed in content.md.
+    options: { parseFrontmatter: true, mdxOptions: { remarkPlugins: [remarkGfm] } },
     components: mdxComponents,
   });
   return { content, frontmatter: validateFrontmatter(`content/blog/${file}`, frontmatter) };

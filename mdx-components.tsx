@@ -47,6 +47,13 @@ export const mdxComponents: MDXComponents = {
   ),
   code: props => <code className="bg-base-100 rounded px-1.5 py-0.5 text-[0.9em] text-primary" {...props} />,
   hr: () => <div className="divider divider-neutral my-8" />,
+  table: props => (
+    <div className="overflow-x-auto my-6">
+      <table className="table table-zebra text-base" {...props} />
+    </div>
+  ),
+  th: props => <th className="text-base-content font-bold" {...props} />,
+  td: props => <td className="align-top leading-relaxed" {...props} />,
   strong: props => <strong className="font-bold text-base-content" {...props} />,
   Image: MdxImage,
 };
