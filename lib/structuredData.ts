@@ -7,6 +7,7 @@ interface TimelineEntry {
 }
 
 interface ProjectEntry {
+  id: string;
   name: string;
   description: string;
   url: string;
@@ -192,6 +193,65 @@ export const buildStructuredData = (profile: Profile, data: PortfolioData) => {
 
   return { "@context": "https://schema.org", "@graph": [website, profilePage, person, projects] };
 };
+
+export interface BlogPostEntry {
+  slug: string;
+  url: string;
+  title: string;
+  description: string;
+  date: string;
+  tags: string[];
+}
+
+export interface BlogProfile {
+  siteUrl: string;
+  name: string;
+  blogUrl: string;
+  blogTitle: string;
+  blogDescription: string;
+}
+
+// The blog nodes reference the Person of the profile graph by @id, so every page shares one author entity.
+const blogNode = (profile: BlogProfile) => ({
+  "@type": "Blog",
+  "@id": `${profile.blogUrl}/#blog`,
+  name: `${profile.blogTitle} | ${profile.name}`,
+  url: profile.blogUrl,
+  description: profile.blogDescription,
+  inLanguage: "en-GB",
+  isPartOf: { "@id": `${profile.siteUrl}/#website` },
+  publisher: { "@id": `${profile.siteUrl}/#person` },
+});
+
+export const buildBlogPosting = (profile: BlogProfile, post: BlogPostEntry) => ({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": `${post.url}/#blogposting`,
+  headline: post.title,
+  description: post.description,
+  url: post.url,
+  mainEntityOfPage: { "@type": "WebPage", "@id": post.url },
+  datePublished: post.date,
+  dateModified: post.date,
+  inLanguage: "en-GB",
+  keywords: post.tags.join(", "),
+  image: `${post.url}/opengraph-image`,
+  author: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
+  publisher: { "@type": "Person", "@id": `${profile.siteUrl}/#person`, name: profile.name },
+  isPartOf: blogNode(profile),
+});
+
+export const buildBlog = (profile: BlogProfile, posts: BlogPostEntry[]) => ({
+  "@context": "https://schema.org",
+  ...blogNode(profile),
+  blogPost: posts.map(post => ({
+    "@type": "BlogPosting",
+    "@id": `${post.url}/#blogposting`,
+    headline: post.title,
+    url: post.url,
+    datePublished: post.date,
+  })),
+});
 
 // "<" must never reach the <script> element: a "</script" inside any string would close it early.
 // \u003c is a valid JSON escape, so consumers parse an identical graph.

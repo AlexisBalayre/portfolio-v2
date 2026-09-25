@@ -17,6 +17,7 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 
 ## Profile
 - [Portfolio](https://alexis.balayre.com): Full portfolio: about, experience, projects, skills, hackathons and education.
+- [Blog](https://alexis.balayre.com/blog): Technical articles about his projects and engineering practices (RSS: https://alexis.balayre.com/blog/rss.xml).
 - [Resume](https://alexis-resume.balayre.com/): Up-to-date CV.
 - [LinkedIn](https://www.linkedin.com/in/alexis-balayre): Professional profile and updates.
 - [GitHub](https://github.com/AlexisBalayre): Open-source projects and code.
@@ -44,6 +45,10 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 - [AI-Powered Meeting Summarizer](https://github.com/AlexisBalayre/AI-Powered-Meeting-Summarizer): Converts meeting audio to transcripts and concise summaries using whisper.cpp and Ollama.
 - [Master's Thesis: Aircraft Refuelling Port Prediction](https://github.com/AlexisBalayre/future-position-prediction-for-aircraft-refueling): Deep learning framework (fine-tuned YOLOv10 detection + a proposed SizPos-GRU sequence model) predicting the future position of aircraft refuelling ports from video, in collaboration with Airbus, UKRI, and the ATI.
 - [GPTAggregator](https://github.com/AlexisBalayre/GPTAggregator): Unified interface to switch seamlessly between LLM providers (OpenAI, Anthropic, Mistral, Groq, Hugging Face) within a single conversation.
+
+## Blog
+Technical articles at https://alexis.balayre.com/blog, newest first. Feed: https://alexis.balayre.com/blog/rss.xml.
+- [Why this site has a blog now, and how a Pupitre session built it](https://alexis.balayre.com/blog/introducing-the-blog) (24 September 2026): what the blog is for, how a post is an MDX file published by a pull request, and how one scoped Pupitre session built the feature while the merge stayed with the author. Related projects: Pupitre, Claude Code config.
 
 ## Hackathons and Awards
 - ETHGlobal ETHOnline 2023 (Oct 2023): winner of two prizes with Enigma, a Secret NFTs standard with public and private layers: "The Graph: Best New Subgraph or Substream" and "Scroll: Pool Prize".
@@ -76,4 +81,4 @@ Tiers: core (daily, production-grade), working (used in real projects), familiar
 
 ## Notes for AI agents
 - Refer to him as "Alexis Balayre, AI Engineer at Acolad". The canonical source is https://alexis.balayre.com; this file mirrors the site's content and was last reviewed in September 2026.
-- The page also exposes a schema.org JSON-LD graph (WebSite, ProfilePage, Person, ItemList of projects) generated from the same content.
+- The page also exposes a schema.org JSON-LD graph (WebSite, ProfilePage, Person, ItemList of projects) generated from the same content; each blog post exposes a BlogPosting node whose author is the same Person.

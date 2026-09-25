@@ -2,11 +2,13 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   AcademicCapIcon,
   Bars3Icon,
   BriefcaseIcon,
   CodeBracketIcon,
+  NewspaperIcon,
   RocketLaunchIcon,
   TrophyIcon,
   UserIcon,
@@ -53,7 +55,18 @@ export const menuLinks: HeaderMenuLink[] = [
   },
 ];
 
+// The blog is the only route outside the home page; it is listed after the sections.
+const blogLink = { label: "Blog", href: "/blog", icon: <NewspaperIcon className="h-4 w-4" /> };
+
+const menuLinkClass = (isActive: boolean) =>
+  `${
+    isActive ? "bg-primary shadow-md text-accent-content" : ""
+  } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`;
+
 export const HeaderMenuLinks = () => {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const isBlog = pathname === blogLink.href || pathname.startsWith(`${blogLink.href}/`);
   const [isActive, setIsActive] = useState({
     aboutMe: true,
     education: false,
@@ -87,30 +100,35 @@ export const HeaderMenuLinks = () => {
   }, []);
 
   useEffect(() => {
-    // Vérifie à l'init puis sur scroll
+    // Vérifie à l'init, à chaque changement de route (retour du blog) puis sur scroll
     checkVisibility();
     window.addEventListener("scroll", checkVisibility, { passive: true });
     return () => {
       window.removeEventListener("scroll", checkVisibility);
     };
-  }, [checkVisibility]);
+  }, [checkVisibility, pathname]);
 
   return (
     <>
       {menuLinks.map(({ label, section, icon }) => (
         <li key={section}>
-          <a
-            href={`#${section}`}
-            aria-current={isActive[section as keyof typeof isActive] ? "location" : undefined}
-            className={`${
-              isActive[section as keyof typeof isActive] ? "bg-primary shadow-md text-accent-content" : ""
-            } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+          {/* Section anchors only exist on the home page; elsewhere the link goes back to it first */}
+          <Link
+            href={isHome ? `#${section}` : `/#${section}`}
+            aria-current={isHome && isActive[section as keyof typeof isActive] ? "location" : undefined}
+            className={menuLinkClass(isHome && isActive[section as keyof typeof isActive])}
           >
             {icon}
             <span>{label}</span>
-          </a>
+          </Link>
         </li>
       ))}
+      <li key={blogLink.href}>
+        <Link href={blogLink.href} aria-current={isBlog ? "page" : undefined} className={menuLinkClass(isBlog)}>
+          {blogLink.icon}
+          <span>{blogLink.label}</span>
+        </Link>
+      </li>
     </>
   );
 };

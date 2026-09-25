@@ -1,6 +1,6 @@
 # Alexis Balayre portfolio
 
-Personal portfolio at https://alexis.balayre.com: a single-page Next.js 15 (App Router) site, React 19, TypeScript strict, Tailwind CSS v4 + daisyUI v5. All portfolio copy lives in JSON, not components. No backend, no tests.
+Personal portfolio at https://alexis.balayre.com: a Next.js 15 (App Router) site, React 19, TypeScript strict, Tailwind CSS v4 + daisyUI v5, with one home page and a blog under `/blog`. Portfolio copy lives in JSON and blog posts in MDX, never in components. No backend, no tests.
 
 ## Role
 
@@ -12,17 +12,22 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 
 | Path                           | What it is                                                                                        |
 | :----------------------------- | :------------------------------------------------------------------------------------------------ |
-| `app/layout.tsx`               | Server component: Header/Footer shell, **all SEO** (`metadata`, `viewport`, JSON-LD graph)          |
-| `app/opengraph-image.tsx`      | Build-time 1200×630 social card (`next/og`)                                                        |
-| `lib/structuredData.ts`        | Builds the schema.org `@graph` (WebSite, ProfilePage, Person, projects ItemList) from the JSON     |
-| `app/page.tsx`                 | The one page: six sections (`id` must match `menuLinks` in `Header.tsx`)                           |
-| `components/`                  | `Header`, `Footer`, and the generic renderers `Timeline`, `Projects`, `Skills`                    |
+| `app/layout.tsx`               | Server component: Header/Footer shell, site-wide SEO (`metadata`, `viewport`, JSON-LD graph, RSS `alternates`) |
+| `app/opengraph-image.tsx`      | Build-time 1200×630 social card (`next/og`); `app/blog/**/opengraph-image.tsx` reuse its style     |
+| `app/page.tsx`                 | Home page (server component): six sections (`id` must match `menuLinks` in `Header.tsx`); hands posts to `Projects` |
+| `app/blog/`                    | `/blog` listing, `[slug]/page.tsx` post page (per-post metadata + BlogPosting JSON-LD), `rss.xml/route.ts` feed |
+| `lib/posts.ts`                 | The one post loader: reads `content/blog/*.mdx`, validates frontmatter (a bad field fails the build), compiles MDX |
+| `lib/site.ts`                  | Site-wide constants (`siteUrl`, names, blog and feed URLs) shared by the layout, blog routes and feed |
+| `lib/structuredData.ts`        | Builds the schema.org `@graph` (WebSite, ProfilePage, Person, projects ItemList) and `BlogPosting`  |
+| `mdx-components.tsx`           | The only styling layer for post bodies (daisyUI tokens); defines the allowed MDX elements           |
+| `components/`                  | `Header`, `Footer`, `AboutMe`, and the generic renderers `Timeline`, `Projects`, `Skills`          |
 | `hooks/`                       | `useOutsideClick`, re-exported from `index.ts`                                                     |
-| `public/assets/data/*.json`    | **All content**: experiences, hackathons, formation, projects, tech                                |
+| `content/blog/*.mdx`           | **Blog posts**: one file per post with `title/description/date/tags/projects` frontmatter; merging publishes |
+| `public/assets/data/*.json`    | **All portfolio content**: experiences, hackathons, formation, projects (stable `id`), tech         |
 | `public/assets/img/`, `logos/` | Timeline logos + photo; inline SVG logo components                                                 |
 | `public/llms.txt`              | Hand-maintained AI-agent summary; update alongside any content change                             |
 | `styles/globals.css`           | Tailwind v4 + daisyUI config (`night` theme) and the hand-written timeline CSS                     |
-| `docs/`                        | Conventions (source of truth for `.claude/rules/`), reference architecture, workflow, glossary     |
+| `docs/`                        | Conventions (source of truth for `.claude/rules/`), reference architecture, guides (`writing-a-post.md`), ADRs, glossary |
 
 ## Conventions
 
@@ -54,5 +59,5 @@ Node >= 20 (`.nvmrc`); run `nvm use` first. Yarn 1.
 ## Subagents (invoke proactively via Agent tool)
 
 - `convention-checker`: before commit, or after editing >= 3 files.
-- `security-reviewer`: after touching `dangerouslySetInnerHTML` content or HTML strings in the data JSON, external links/scripts, `next.config.js`, dependencies, or any new API route.
+- `security-reviewer`: after touching `dangerouslySetInnerHTML` content or HTML strings in the data JSON, MDX posts or `mdx-components.tsx`, external links/scripts, `next.config.js`, dependencies, or any new API route.
 - `architecture-explainer`: for why/how questions about sections, content flow, navigation, SEO/JSON-LD, styling, or the build.

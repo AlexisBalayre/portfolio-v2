@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "~~/styles/globals.css";
 import { Header } from "~~/components/Header";
 import { Footer } from "~~/components/Footer";
+import { authorName, feedTitle, feedUrl, siteName, siteUrl, twitterHandle } from "~~/lib/site";
 import { buildStructuredData, serialiseStructuredData } from "~~/lib/structuredData";
 import experiences from "~~/public/assets/data/experiences.json";
 import formation from "~~/public/assets/data/formation.json";
@@ -10,8 +11,6 @@ import hackathons from "~~/public/assets/data/hackathons.json";
 import projects from "~~/public/assets/data/projects.json";
 import tech from "~~/public/assets/data/tech.json";
 
-const siteUrl = "https://alexis.balayre.com";
-const siteName = "Alexis Balayre | AI Engineer";
 const titleDefault = "Alexis Balayre | AI Engineer, Real-Time Speech AI";
 const titleTemplate = "%s | Alexis Balayre";
 const description =
@@ -22,7 +21,7 @@ const socialDescription =
 const profile = {
   siteUrl,
   siteName,
-  name: "Alexis Balayre",
+  name: authorName,
   givenName: "Alexis",
   familyName: "Balayre",
   jobTitle: "AI Engineer",
@@ -60,9 +59,9 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: siteName,
-  authors: [{ name: "Alexis Balayre", url: siteUrl }],
-  creator: "Alexis Balayre",
-  publisher: "Alexis Balayre",
+  authors: [{ name: authorName, url: siteUrl }],
+  creator: authorName,
+  publisher: authorName,
   generator: "Next.js",
   keywords: [
     "Alexis Balayre",
@@ -90,6 +89,9 @@ export const metadata: Metadata = {
       en: `${siteUrl}/`,
       "x-default": `${siteUrl}/`,
     },
+    types: {
+      "application/rss+xml": [{ url: feedUrl, title: feedTitle }],
+    },
   },
   openGraph: {
     type: "profile",
@@ -105,8 +107,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titleDefault,
     description: socialDescription,
-    creator: "@alexisbalayre",
-    site: "@alexisbalayre",
+    creator: twitterHandle,
+    site: twitterHandle,
   },
   robots: {
     index: true,
