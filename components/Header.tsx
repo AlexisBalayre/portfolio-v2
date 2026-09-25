@@ -59,10 +59,12 @@ export const menuLinks: HeaderMenuLink[] = [
 // The blog is the only route outside the home page; it is listed after the sections.
 const blogLink = { label: "blog" as const, path: "/blog", icon: <NewspaperIcon className="h-4 w-4" /> };
 
+// focus-visible, not focus: next/link scrolls to a section without moving focus off the link, so a plain
+// focus style kept the clicked pill in the accent colour over the active one until the next click.
 const menuLinkClass = (isActive: boolean) =>
   `${
     isActive ? "bg-primary shadow-md text-accent-content" : ""
-  } hover:bg-secondary hover:shadow-md cursor-pointer focus:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`;
+  } hover:bg-secondary hover:shadow-md cursor-pointer focus-visible:!bg-accent active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`;
 
 interface HeaderMenuLinksProps {
   locale: Locale;
