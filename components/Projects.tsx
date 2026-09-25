@@ -76,7 +76,7 @@ const Projects = ({ items, posts, locale }: ProjectsProps) => {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={fill(t.projects.viewAria, { name: project.name })}
+              title={fill(t.projects.viewAria, { name: project.name })}
             >
               {t.projects.view}
             </a>
