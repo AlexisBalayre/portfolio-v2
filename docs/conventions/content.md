@@ -82,7 +82,7 @@ The file name without `.mdx` is the URL segment: lowercase letters, digits and s
 title: "Why this site has a blog now, and how a Pupitre session built it"
 description: "One sentence, 120 to 160 characters, used by the listing, the meta description, the social card and the feed."
 date: "2026-09-24"
-tags: ["blog", "pupitre", "claude-code", "next.js"]
+tags: ["blog", "pupitre", "claude-code", "nextjs"]
 projects: ["pupitre", "claude-code-config"]
 ---
 ```
