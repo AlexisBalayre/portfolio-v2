@@ -48,6 +48,7 @@ Alexis Balayre est un ingénieur IA français basé à Paris. Il conçoit, const
 
 ## Blog
 Articles techniques à https://alexis.balayre.com/fr/blog, du plus récent au plus ancien. Flux : https://alexis.balayre.com/fr/blog/rss.xml. Version anglaise : https://alexis.balayre.com/blog.
+- [De l'autocomplétion aux agents : ce que l'IA a changé au métier de développeur](https://alexis.balayre.com/fr/blog/how-my-job-evolved) (25 septembre 2026) : sept ans à confier toujours plus à la machine, des lignes de Copilot aux agents en parallèle et au harness engineering ; ce que le métier a gagné, ce qu'il a perdu, et ce qui ne se délègue pas. Projets liés : Claude Code config, agentspine, Pupitre, AI Daily Summary.
 - [Pourquoi ce site a désormais un blog, et comment une session Pupitre l'a construit](https://alexis.balayre.com/fr/blog/introducing-the-blog) (24 septembre 2026) : à quoi sert ce blog, comment un article est un fichier MDX publié par une pull request, et comment une session Pupitre au périmètre borné a construit la fonctionnalité pendant que le merge restait à l'auteur. Projets liés : Pupitre, Claude Code config.
 
 ## Hackathons et distinctions

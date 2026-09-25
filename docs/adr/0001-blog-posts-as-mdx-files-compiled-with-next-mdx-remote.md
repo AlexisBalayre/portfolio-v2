@@ -33,7 +33,7 @@ per-post `next/og` image and the project cards all read from that loader.
   fade-in, the only browser-dependent block, moved to `components/AboutMe.tsx`.
 - `siteUrl` and the other site constants moved from `app/layout.tsx` to `lib/site.ts` so the blog routes and the
   feed share them (`next-sitemap.config.js` keeps its own copy because it is CommonJS).
-- The MDX dialect is CommonMark plus JSX components; GitHub-flavoured extras (tables, task lists, footnotes)
-  and heading anchors would each need a remark or rehype plugin, added deliberately when a post needs them.
+- The MDX dialect is CommonMark plus JSX components. `remark-gfm` was added on 2026-09-25 when the first long-form
+  post needed a table; heading anchors or syntax highlighting would still be a deliberate plugin addition.
 - Every consumer compiles the posts it needs at build time; with a small number of posts this costs nothing,
   and `react`'s `cache` dedupes the work within one request.

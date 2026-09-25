@@ -48,6 +48,7 @@ Alexis Balayre is a French AI Engineer based in Paris. He designs, builds and op
 
 ## Blog
 Technical articles at https://alexis.balayre.com/blog, newest first. Feed: https://alexis.balayre.com/blog/rss.xml. French listing: https://alexis.balayre.com/fr/blog.
+- [From autocomplete to agents: what AI changed about being a developer](https://alexis.balayre.com/blog/how-my-job-evolved) (25 September 2026): seven years of handing more to the machine, from Copilot lines to parallel agents and harness engineering; what the job gained, what it lost, and what cannot be delegated. Related projects: Claude Code config, agentspine, Pupitre, AI Daily Summary. French version: https://alexis.balayre.com/fr/blog/how-my-job-evolved.
 - [Why this site has a blog now, and how a Pupitre session built it](https://alexis.balayre.com/blog/introducing-the-blog) (24 September 2026): what the blog is for, how a post is an MDX file published by a pull request, and how one scoped Pupitre session built the feature while the merge stayed with the author. Related projects: Pupitre, Claude Code config. French version: https://alexis.balayre.com/fr/blog/introducing-the-blog.
 
 ## Hackathons and Awards
