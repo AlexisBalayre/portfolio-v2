@@ -1,0 +1,49 @@
+name: IndexNow
+
+# Tells Bing, Naver, Seznam, Yandex and the other IndexNow engines which URLs changed, once the Vercel deployment
+# of the same push is live. The key is public by design (the engines fetch /<key>.txt to check it), so no secret.
+# Rotation: docs/reference/architecture.md, "Search engines and IndexNow".
+on:
+  push:
+    branches: [main]
+
+env:
+  SITE_URL: https://alexis.balayre.com
+  INDEXNOW_KEY: fb23c093cfa84e8398748c12b4a4a3a2
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Vercel builds the same push in parallel. The live sitemap carries the newest post date once the new build
+      # is up; wait up to ten minutes for it, then submit anyway: a stale list only re-crawls known URLs.
+      - name: Wait for the deployment
+        run: |
+          expected=$(grep -h '^date:' content/blog/*.mdx | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}' | sort | tail -1)
+          for attempt in $(seq 1 20); do
+            sleep 30
+            if curl -fsS "$SITE_URL/sitemap.xml" | grep -q "<lastmod>$expected</lastmod>"; then
+              echo "Live sitemap carries lastmod $expected after $attempt checks"
+              exit 0
+            fi
+          done
+          echo "::warning::Live sitemap did not show lastmod $expected within ten minutes; submitting the current one"
+
+      - name: Submit the live sitemap URLs
+        run: |
+          urls=$(curl -fsS "$SITE_URL/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed -e 's#<loc>##' -e 's#</loc>##')
+          test -n "$urls"
+          body=$(jq -n --arg host "${SITE_URL#https://}" --arg key "$INDEXNOW_KEY" --arg urls "$urls" \
+            '{host: $host, key: $key, urlList: ($urls | split("\n"))}')
+          status=$(curl -sS -o response.txt -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data "$body")
+          echo "IndexNow answered HTTP $status"
+          cat response.txt
+          case "$status" in
+            200|202) ;;
+            *) exit 1 ;;
+          esac
