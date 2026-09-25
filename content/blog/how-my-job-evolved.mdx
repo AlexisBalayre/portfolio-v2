@@ -1,0 +1,130 @@
+---
+title: "From autocomplete to agents: what AI changed about being a developer"
+description: "In seven years I went from reading docs cover to cover to a terminal full of agents. What that changed about the job, and what it hasn't."
+date: "2026-09-25"
+tags: [software-engineering, agentic-coding, career, claude-code]
+projects: [claude-code-config, agentspine, pupitre, ai-daily-summary]
+---
+
+February 2026. An OpenAI team [describes](https://openai.com/index/harness-engineering/) building a product in five months without writing a single line of code by hand. A million lines and around 1,500 merged PRs, all written by agents. Their principle: *"Humans steer. Agents execute."*
+
+September 2026. An anonymous developer, [@v0xium](https://x.com/v0xium/status/2101526107128529120), describes how things work at his company, where Claude Code generates almost everything: *"Nobody knows anything here. People are working 12 to 13 hours a day just to press enter."* His post gets close to [five million views in a day](https://tech.yahoo.com/ai/claude/articles/engineers-viral-post-captures-soul-145453359.html).
+
+Same tools, same year. On one side, engineers who steer. On the other, engineers who approve without understanding.
+
+I recognize myself in both stories. Agents now write more than 90% of the code I ship to production. And I have already pressed enter without understanding what I was approving.
+
+How did we get here? To understand it, ask one question: what do we hand over to the machine?
+
+<Image src="/assets/img/blog/how-my-job-evolved-timeline.svg" alt="Timeline of what we hand over to the machine: 2021, autocomplete, a line; 2022, chat, a snippet; 2025, agents, a task; 2025-26, parallel agents, many tasks; 2026, harness, the system" width="914" height="118" />
+
+## 2019: learning by building
+
+I started coding in 2019, and I have never learned any other way than by building. Every project forced something new on me, sometimes a framework, sometimes a whole language: PHP for [a website](https://github.com/AlexisBalayre/mcc-git), Python for [a sneaker bot](https://github.com/AlexisBalayre/ScredAIO) that watched Zalando and placed orders on its own, TypeScript for [a mobile app](https://github.com/AlexisBalayre/Village-Rallye), then Solidity for [my first smart contracts](https://github.com/AlexisBalayre/Sleepn-Contracts).
+
+The ritual never changed. A few YouTube videos to get started. The official documentation, read cover to cover. The examples copied, then tweaked until they broke, to understand how they worked. And when I got stuck, Stack Overflow: three contradicting answers, and the right one hidden in a comment under the accepted answer.
+
+At hackathons, we discovered a framework on Friday night and shipped with it on Saturday morning. In Solidity, where a single line can move funds and a deployed contract is hard to fix, we reread everything several times.
+
+And there were those nights hunting a silly bug with logs and `print` statements, until it finally clicked. It was slow. But you understood your code, because you had built every piece of it yourself.
+
+Keep that click in mind. We are about to lose it.
+
+## 2021: Copilot finishes the line
+
+GitHub Copilot completes our lines, sometimes whole functions. We are still the authors, with a faster keyboard. I try it and it doesn't stick. The job itself hasn't moved yet.
+
+## 2022: ChatGPT writes the snippet
+
+Late 2022, at CoinShares, I discover ChatGPT with some colleagues. First reflex: test it on Solidity. It explains the language's subtleties and already writes some code, even on tricky topics like bitwise operations.
+
+For the first time, we edit code written by a machine. That code is often almost right. According to the [2025 Stack Overflow survey](https://survey.stackoverflow.co/2025/ai), it is developers' top complaint about AI, cited by 66% of them. Almost-right code is cheap to generate and expensive to verify. Remember that sentence: it sums up everything that follows.
+
+For two years, from my master's thesis at Cranfield with Airbus to my RAG projects at Dassault Systèmes, a chat window stays open next to my editor. I still write every file. But more and more first drafts come out of it.
+
+## 2025: the agent opens the PR
+
+Then Cursor, Claude Code and Codex learn to navigate a codebase, edit dozens of files and rerun the tests until they pass. We write the ticket, the agent opens the PR. The developer becomes a reviewer.
+
+Faster? Not necessarily. In July 2025, [METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) found that experienced open source developers, working on tasks from their own repositories, took 19% longer with early-2025 AI tools. Yet they believed they had been 20% faster.
+
+I discover Claude Code in October 2025, a few weeks after joining Acolad. First surprise: the agent delivers working code, but ignores our conventions on style, naming and file organization. Repeating them in the prompt works some of the time. And in production, "some of the time" isn't enough. In early 2026, I start customizing it and move those rules out of the prompt so that code enforces them.
+
+## 2025-26: many agents, one attention span
+
+One reliable agent, then two, then several in parallel, each in its own Git worktree. The volume of code skyrockets. And the bottleneck is you.
+
+Four traps are waiting:
+
+- **Divergence**: two sessions solve the same problem in two incompatible ways.
+- **Review saturation**: code arrives faster than you can review it.
+- **Context drift**: over a long session, the agent loses sight of the original intent.
+- **Invisible debt**: shortcuts get merged without being documented.
+
+I fell into the second one. I approved branches I didn't really understand, because others were already waiting. That is exactly what @v0xium describes.
+
+## 2026: designing the harness
+
+This is where the job changes in nature. The question becomes: within what boundaries is the agent allowed to write?
+
+Those boundaries have a name: [harness engineering](https://martinfowler.com/articles/harness-engineering.html). An agent is the model plus everything around it: guides, which steer it before it acts, and sensors, which catch its mistakes afterwards. When it gets something wrong, you fix the harness, not the prompt.
+
+Each of my open source tools is one piece of it:
+
+- [claude-code-config](https://github.com/AlexisBalayre/claude-code-config) enforces rules through shell hooks that run without a model, instead of relying on the prompt. An agent can't argue its way past a hook.
+- [agentspine](https://github.com/AlexisBalayre/agentspine) shares a single configuration across five coding agents and checks that every guardrail actually blocks.
+- [Pupitre](https://github.com/AlexisBalayre/pupitre) runs parallel sessions in isolated worktrees, puts every branch through a quality gate and writes a decision record on every merge. Its premise: understanding is the real deliverable.
+- [ai-daily-summary](https://github.com/AlexisBalayre/ai-daily-summary) turns newsletters, RSS feeds and GitHub trends into a daily summary I can query from Claude through an MCP server.
+
+Today, my terminal stays open all day. A main session, running Fable, orchestrates the work. Several worker sessions, running Opus, each take a task, with their own subagents and their own history. It works better than a single session with subagents.
+
+I barely open VS Code anymore. Instead, I go through the open PRs.
+
+## What production taught me
+
+At Acolad, I build a real-time interpreting platform: under a second of latency, more than 80 languages. One day, a new pipeline configuration performs better in all our manual tests. Our evaluation framework settles it: excellent at its best, less consistent across languages. We only turn it on for the languages where it wins.
+
+Coding agents are no different. A demo shows the best case. Tests, quality gates and review history show the average. And the average is what ships to production.
+
+## What you can't delegate
+
+- **Accountability.** When an incident hits production, "the agent wrote it" is not an acceptable answer for anyone.
+- **Understanding.** If nobody knows how the system works, you become what @v0xium calls *"human meat proxies"*.
+- **Judgment.** An agent does what you ask. It will never tell you that you asked for the wrong thing.
+
+At SpaceXAI, Grok Bot went from first line of code to a working internal product in four weeks ([Lenny's Newsletter](https://www.lennysnewsletter.com/p/how-we-built-grok-bot-in-a-month)). The code moved fast. The human time went elsewhere: personally onboarding the first users and cutting everything that wasn't essential.
+
+## The job, then and now
+
+| Then                               | Now                                                             |
+| ---------------------------------- | --------------------------------------------------------------- |
+| Write the code                     | State the intent clearly enough for an agent to take it on      |
+| Know the conventions by heart      | Enforce them with hooks and automated checks                    |
+| Review a colleague's PR            | Design the quality gate that decides what reaches review        |
+| Keep tech debt in your head        | Track it in a ledger, with a review-by date                     |
+| Judge yourself by what you produce | Judge yourself by how well you still understand the system      |
+
+What gains value: architecture, verification, security and the ability to write a clear spec. What loses it: typing speed, memorizing APIs, writing boilerplate.
+
+## The questions that remain
+
+- If review still depends on humans, what happens when PRs keep multiplying?
+- A quality gate protects a bad starting point as well as a good one. Who checks the gate?
+- How do you measure what a team really understands about its own code?
+- If agents write the code, how does a junior become a senior?
+
+## The click
+
+I rarely spend a night chasing a bug anymore. The agent finds it in minutes. I get the fix, but not the click, nor what it used to teach me about the system. I miss it.
+
+In [a follow-up post](https://x.com/v0xium/status/2102385742723088417), @v0xium suggests a way forward: use LLMs at work, since that's what the company expects, and keep one hour a day to code by hand. *"That's all it takes to keep the muscle memory intact."*
+
+I've been doing that since 2019 without ever putting it that way. Side projects have always been how I learn, and my open source tools are the continuation.
+
+Maybe that's how we keep the click: by saving a space where we are still the ones hunting the bug.
+
+When did you last write a line of code by hand?
+
+In the next articles, I'll open the hood: my Claude Code setup, my development cycle with agents, and how I review PRs when there are more of them than I can read.
+
+Follow the blog through its [RSS feed](/blog/rss.xml).

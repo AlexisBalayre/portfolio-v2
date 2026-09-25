@@ -1,0 +1,130 @@
+---
+title: "De l'autocomplétion aux agents : ce que l'IA a changé au métier de développeur"
+description: "En sept ans, je suis passé de la doc lue d'un bout à l'autre à un terminal rempli d'agents. Ce que ça a changé au métier, et ce que ça ne changera jamais."
+date: "2026-09-25"
+tags: [software-engineering, agentic-coding, career, claude-code]
+projects: [claude-code-config, agentspine, pupitre, ai-daily-summary]
+---
+
+Février 2026. Une équipe d'OpenAI [raconte](https://openai.com/index/harness-engineering/) avoir construit un produit en cinq mois sans écrire une seule ligne de code à la main. Un million de lignes et environ 1 500 PR mergées, toutes écrites par des agents. Leur principe : « Les humains tiennent la barre, les agents exécutent. »
+
+Septembre 2026. Un développeur anonyme, [@v0xium](https://x.com/v0xium/status/2101526107128529120), décrit le fonctionnement de son entreprise, où Claude Code génère presque tout : « Ici, personne ne sait rien. Les gens travaillent 12 à 13 heures par jour juste pour appuyer sur Entrée. » Son post atteint près de [cinq millions de vues en une journée](https://tech.yahoo.com/ai/claude/articles/engineers-viral-post-captures-soul-145453359.html).
+
+Mêmes outils, même année. D'un côté, des ingénieurs qui pilotent. De l'autre, des ingénieurs qui valident sans comprendre.
+
+Je me reconnais dans les deux récits. Les agents écrivent aujourd'hui plus de 90 % du code que je mets en production. Et il m'est déjà arrivé d'appuyer sur Entrée sans comprendre ce que je validais.
+
+Comment en est-on arrivé là ? Pour le comprendre, il suffit de se poser une question : que confie-t-on à la machine ?
+
+<Image src="/assets/img/blog/how-my-job-evolved-timeline.fr.svg" alt="Frise de ce que l'on confie à la machine : 2021, autocomplétion, une ligne ; 2022, chat, un bout de code ; 2025, agents, une tâche ; 2025-26, agents en parallèle, plusieurs tâches ; 2026, harness, le système" width="914" height="118" />
+
+## 2019 : apprendre en construisant
+
+J'ai commencé à coder en 2019, et je n'ai jamais appris autrement qu'en construisant. Chaque projet m'imposait quelque chose de nouveau, parfois un framework, parfois un langage entier : PHP pour [un site](https://github.com/AlexisBalayre/mcc-git), Python pour [un bot sneakers](https://github.com/AlexisBalayre/ScredAIO) qui surveillait Zalando et passait des commandes tout seul, TypeScript pour [une app mobile](https://github.com/AlexisBalayre/Village-Rallye), puis Solidity pour [mes premiers smart contracts](https://github.com/AlexisBalayre/Sleepn-Contracts).
+
+Le rituel ne changeait jamais. Quelques vidéos YouTube pour démarrer. La documentation officielle, lue entièrement. Les exemples recopiés, puis modifiés jusqu'à ce qu'ils cassent, pour comprendre leur fonctionnement. Et quand ça bloquait, Stack Overflow : trois réponses contradictoires, et la bonne cachée dans un commentaire sous la réponse acceptée.
+
+En hackathon, on découvrait un framework le vendredi soir et on l'utilisait le samedi matin. En Solidity, où une seule ligne peut engager des fonds et où un contrat déployé se corrige difficilement, on relisait tout plusieurs fois.
+
+Et il y avait ces nuits à traquer un bug tout bête, à coups de logs et de `print`, jusqu'au déclic. C'était lent. Mais on comprenait son code, parce qu'on l'avait entièrement construit soi-même.
+
+Gardez ce déclic en tête. On va le perdre en route.
+
+## 2021 : Copilot termine la ligne
+
+GitHub Copilot complète nos lignes, parfois des fonctions entières. On reste l'auteur, avec un clavier plus rapide. Je l'essaie sans accrocher. Le métier, lui, ne bouge pas encore.
+
+## 2022 : ChatGPT écrit le bout de code
+
+Fin 2022, chez CoinShares, je découvre ChatGPT avec des collègues. Premier réflexe : le tester sur du Solidity. Il explique les subtilités du langage et écrit déjà un peu de code, même sur des sujets pointus comme les opérations bit à bit.
+
+Pour la première fois, on retouche du code écrit par une machine. Ce code est souvent presque bon. D'après l'[enquête Stack Overflow 2025](https://survey.stackoverflow.co/2025/ai), c'est même le premier reproche que les développeurs font à l'IA, cité par 66 % d'entre eux. Car du code presque bon coûte peu à générer et cher à vérifier. Retenez cette phrase : elle résume tout ce qui suit.
+
+Pendant deux ans, de mon mémoire à Cranfield, mené avec Airbus, à mes projets RAG chez Dassault Systèmes, une fenêtre de chat reste ouverte à côté de mon éditeur. J'écris encore chaque fichier. Mais les premiers jets en sortent de plus en plus souvent.
+
+## 2025 : l'agent ouvre la PR
+
+Puis Cursor, Claude Code et Codex savent parcourir une codebase, modifier des dizaines de fichiers et relancer les tests jusqu'à ce qu'ils passent. On écrit le ticket, l'agent ouvre la PR. Le développeur devient reviewer.
+
+Plus rapide ? Pas forcément. En juillet 2025, [METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/) montre que des développeurs open source expérimentés, sur des tâches issues de leurs propres dépôts, mettent 19 % de temps en plus avec les outils d'IA de début 2025. Ils estiment pourtant avoir gagné 20 %.
+
+Je découvre Claude Code en octobre 2025, quelques semaines après mon arrivée chez Acolad. Première surprise : l'agent livre du code fonctionnel, mais ignore nos conventions de style, de nommage et d'organisation des fichiers. Les répéter dans le prompt fonctionne de temps en temps. Et en production, « de temps en temps » ne suffit pas. Début 2026, je commence à le personnaliser et je sors ces règles du prompt pour les faire appliquer par du code.
+
+## 2025-26 : plusieurs agents, une seule attention
+
+Un agent fiable, puis deux, puis plusieurs en parallèle, chacun dans son propre worktree Git. Le volume de code produit s'envole. Et le goulot d'étranglement, c'est vous.
+
+Quatre pièges vous attendent :
+
+- **La divergence** : deux sessions règlent le même problème de deux façons incompatibles.
+- **La review saturée** : le code arrive plus vite qu'on ne peut le relire.
+- **La dérive du contexte** : au fil d'une longue session, l'agent perd de vue l'intention de départ.
+- **La dette invisible** : des raccourcis sont mergés sans être documentés.
+
+Je suis tombé dans le deuxième. J'ai validé des branches que je n'avais pas vraiment comprises, parce que d'autres attendaient déjà. C'est exactement ce que décrit @v0xium.
+
+## 2026 : concevoir le harness
+
+C'est là que le métier change de nature. La question devient : dans quel cadre l'agent a-t-il le droit d'écrire ?
+
+Ce cadre a un nom : le [harness engineering](https://martinfowler.com/articles/harness-engineering.html). Un agent, c'est le modèle plus tout ce qui l'entoure : des guides, qui l'orientent avant qu'il agisse, et des capteurs, qui détectent ses erreurs après coup. Quand il se trompe, on corrige le harness, pas le prompt.
+
+Chacun de mes outils open source en est une pièce :
+
+- [claude-code-config](https://github.com/AlexisBalayre/claude-code-config) fait appliquer les règles par des hooks shell, exécutés sans modèle, plutôt que par le prompt. Un agent ne peut pas négocier avec un hook.
+- [agentspine](https://github.com/AlexisBalayre/agentspine) partage une même configuration entre cinq agents de code et vérifie que chaque garde-fou bloque réellement.
+- [Pupitre](https://github.com/AlexisBalayre/pupitre) fait tourner des sessions en parallèle dans des worktrees isolés, soumet chaque branche à une quality gate et génère une fiche de décision à chaque merge. Son principe : la compréhension est le vrai livrable.
+- [ai-daily-summary](https://github.com/AlexisBalayre/ai-daily-summary) agrège newsletters, flux RSS et tendances GitHub en un résumé quotidien, interrogeable depuis Claude via un serveur MCP.
+
+Aujourd'hui, mon terminal reste ouvert en permanence. Une session principale, avec le modèle Fable, orchestre le travail. Plusieurs sessions workers, avec Opus, prennent chacune une tâche, avec leurs propres sous-agents et leur propre historique. C'est plus efficace qu'une seule session avec des sous-agents.
+
+Je n'ouvre presque plus VS Code. À la place, je passe en revue les PR ouvertes.
+
+## Ce que la prod m'a appris
+
+Chez Acolad, je construis une plateforme d'interprétation en temps réel : moins d'une seconde de latence, plus de 80 langues. Un jour, une nouvelle configuration du pipeline donne de meilleurs résultats dans tous nos tests manuels. Notre framework d'évaluation tranche : excellente dans ses meilleurs cas, moins régulière sur l'ensemble des langues. Nous ne l'activons que pour les langues où elle l'emporte.
+
+Il en va de même pour les agents de code. Une démo montre le meilleur cas. Les tests, les quality gates et l'historique des reviews montrent la moyenne. Et c'est la moyenne qui part en production.
+
+## Ce qui ne se délègue pas
+
+- **La responsabilité.** Quand un incident survient en production, « c'est l'agent qui l'a écrit » n'est une réponse valable pour personne.
+- **La compréhension.** Si personne ne sait comment le système fonctionne, on devient ce que @v0xium appelle des « human meat proxies », des intermédiaires en chair et en os.
+- **Le jugement.** Un agent fait ce qu'on lui demande. Il ne vous dira jamais que vous avez demandé la mauvaise chose.
+
+Chez SpaceXAI, Grok Bot est passé de la première ligne de code à un produit interne fonctionnel en quatre semaines ([Lenny's Newsletter](https://www.lennysnewsletter.com/p/how-we-built-grok-bot-in-a-month)). Le code est allé vite. Le temps des humains est passé ailleurs : accompagner personnellement les premiers utilisateurs et supprimer tout ce qui n'était pas indispensable.
+
+## Le métier, avant et maintenant
+
+| Avant                              | Maintenant                                                           |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| Écrire le code                     | Poser l'intention assez clairement pour qu'un agent s'en charge      |
+| Connaître les conventions par cœur | Les faire appliquer par des hooks et des vérifications automatiques |
+| Relire la PR d'un collègue         | Concevoir la quality gate qui décide de ce qui arrive en review      |
+| Garder la dette technique en tête  | La tenir dans un registre, avec une date de réexamen                 |
+| Se juger sur ce qu'on produit      | Se juger sur ce qu'on comprend encore du système                     |
+
+Ce qui prend de la valeur : l'architecture, la vérification, la sécurité et la capacité à écrire une spec claire. Ce qui en perd : la vitesse de frappe, la mémorisation des API, l'écriture de boilerplate.
+
+## Les questions qui restent
+
+- Si la review repose toujours sur des humains, que se passe-t-il quand les PR se multiplient ?
+- Une quality gate protège un mauvais point de départ aussi bien qu'un bon. Qui vérifie la gate ?
+- Comment mesurer ce qu'une équipe comprend vraiment de son propre code ?
+- Si les agents écrivent le code, comment un junior devient-il senior ?
+
+## Le déclic
+
+Je passe rarement une nuit à chasser un bug aujourd'hui. L'agent le trouve en quelques minutes. J'obtiens le correctif, mais je n'ai plus le déclic, ni ce qu'il m'apprenait sur le système. Ça me manque.
+
+Dans [la suite de son post](https://x.com/v0xium/status/2102385742723088417), @v0xium propose une piste : utiliser les LLM au travail, puisque c'est ce que l'entreprise attend, et garder une heure par jour pour coder à la main. « C'est tout ce qu'il faut pour garder la mémoire musculaire intacte. »
+
+Je le fais depuis 2019 sans l'avoir jamais formulé ainsi. Les projets perso ont toujours été ma façon d'apprendre, et mes outils open source en sont la suite.
+
+C'est peut-être comme ça qu'on garde le déclic : en se réservant un espace où c'est encore nous qui cherchons le bug.
+
+Et vous, quand avez-vous écrit votre dernière ligne de code à la main ?
+
+Dans les prochains articles, j'ouvre le capot : ma configuration de Claude Code, mon cycle de développement avec des agents, et ma façon de faire la review quand il y a plus de PR que je ne peux en lire.
+
+Vous pouvez suivre le blog via son [flux RSS](/fr/blog/rss.xml).
