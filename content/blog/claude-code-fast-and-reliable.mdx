@@ -1,0 +1,125 @@
+---
+title: "Claude Code: moving fast without giving up reliability"
+description: "Hooks, rules, skills, subagents: how I set up Claude Code so it is both efficient and trustworthy."
+date: "2026-10-02"
+tags: [claude-code, agentic-coding, software-engineering, developer-tools]
+projects: [claude-code-config]
+---
+
+Claude Code is fast. Very fast. In a few minutes, it reads a codebase, edits ten files and announces it's done.
+
+The problem is what hides behind that "done". Code that fails the typecheck. Ignored conventions. And comments everywhere: a three-line function with a comment that repeats its name, an obvious `if` explained in full sentences. By the end of the day, the codebase is cluttered with noise nobody asked for.
+
+Speed is worthless if I have to double-check everything afterwards. So the whole point is to get both at once: an efficient agent, and a result I can trust.
+
+Here's how I do it, with the setup I use every day and published as open source: [claude-code-config](https://github.com/AlexisBalayre/claude-code-config).
+
+## The principle: what must always hold isn't requested, it's enforced
+
+An instruction in `CLAUDE.md` goes through the model. It reads it, weighs it against the rest of its context, and decides. Usually correctly. But the longer the session, the less that instruction weighs.
+
+A hook doesn't go through the model. It's a shell script Claude Code runs at a specific point: before a tool runs, at the end of a turn, before the context is compacted. If it exits with code `2`, the action is blocked. An agent can't argue its way past a hook.
+
+The whole setup rests on that split: **what must always hold goes into a hook, what requires judgment stays with the model.** Reliability comes from the first rule, efficiency from the second.
+
+## Efficient: frame the work before coding
+
+Most back-and-forth with an agent comes from a vague request. The agent fills the gaps with assumptions, and I only find the wrong ones in review.
+
+So I rarely start with "code this for me". Three skills do the upfront work:
+
+- **`grill-me`** flips the roles: the agent asks me questions until the blind spots in my request surface.
+- **`to-spec`** turns the discussion into a spec.
+- **`to-tickets`** breaks the spec into tickets precise enough for an agent to take on alone.
+
+These are skills: methods the agent only loads when it needs them. The setup ships 34 of them, and I only pay for the ones I use. More on that just below.
+
+## Efficient: optimize the context
+
+Every token loaded is paid for on every turn, and dilutes the instructions a little more. The heavier the context, the more the agent costs and the less it follows what you ask. Optimizing context means loading the right information, at the right time, for as short as possible.
+
+The setup splits context into four layers, from most expensive to free:
+
+| Layer              | Files                    | When it loads                           | Cost                            |
+| ------------------ | ------------------------ | --------------------------------------- | ------------------------------- |
+| Always-on memory   | `AGENTS.md`, `CLAUDE.md` | Every session                           | ~1.7k tokens                    |
+| On-demand context  | `rules/`, skills         | When a file or a task calls for it      | Once per session                |
+| Isolated context   | `agents/` (subagents)    | When the agent delegates                | Outside the main conversation   |
+| Outside the model  | `hooks/`                 | On every event                          | Zero tokens                     |
+
+### Rules and skills: two different triggers
+
+Rules and skills both belong to on-demand context, but they answer different questions.
+
+A **rule** answers "what must be respected here?". It's tied to file paths. The first time the agent reads or edits a backend file, the backend rule fires and injects its conventions. The model has nothing to decide: the file being touched triggers the load.
+
+A **skill** answers "how do we carry out this task?". It's tied to a type of work: writing a spec, doing TDD, diagnosing a bug. Only its one-line description stays in context permanently. The model decides to load the full skill when the task matches, or I invoke it directly with `/skill-name`.
+
+|                          | Rule                            | Skill                                |
+| ------------------------ | ------------------------------- | ------------------------------------ |
+| Answers                  | What must be respected here?    | How do we carry out this task?       |
+| Trigger                  | A file touched in an area       | A matching task, or `/name`          |
+| Who decides              | Nobody, it's automatic          | The model, or me                     |
+| Content                  | Conventions                     | A step-by-step method                |
+| Always in context        | Nothing                         | A one-line description               |
+
+In short: conventions go into rules, methods go into skills.
+
+### Six rules for a lean context
+
+1. **Keep always-on memory to the bare minimum.** `AGENTS.md` and `CLAUDE.md` only hold what every task needs: the role, the Git workflow, a few writing rules. Everything else goes.
+2. **Make rules pure triggers.** A rule holds nothing but a path and an import. The convention itself lives in `docs/conventions/`, where any tool or human can read it.
+3. **Never make the agent read the same thing twice.** A convention already injected by a rule shouldn't be read again by hand. Conversely, MCP tool results don't trigger any rule: before editing an area, the agent first reads two or three existing files to activate its conventions.
+4. **Write short, precise skill descriptions, and delete the skills you don't need.** A vague description loads the wrong skill. `/adapt-to-project` automatically removes the ones that don't belong in the project.
+5. **Delegate heavy work to subagents.** A security review or an architecture exploration runs in its own context window. Only the summary comes back to the main conversation.
+6. **Take everything mechanical out of the context.** Formatting, linting, checking a file name: a hook does it for zero tokens. And before every compaction, `pre-compact-preserve` reinjects what matters, the branch, the modified files and the latest test results, so the agent doesn't lose the thread.
+
+## Efficient: one task, one worktree, one session
+
+I never work on main. Every task gets its own Git worktree and its own session. If an attempt fails, I delete the whole worktree instead of unwinding commits one by one.
+
+That's also what lets me run several sessions in parallel without them stepping on each other. To move between them, two skills: **`handoff`** summarizes a session's state so another can pick it up without rereading everything, and **`wait-what`** explains what the agent just did when I'm no longer sure I'm following.
+
+## Reliable: seven hooks, zero negotiation
+
+| Event                  | Hook                    | What it does                                                             |
+| ---------------------- | ----------------------- | ------------------------------------------------------------------------ |
+| Before a shell command | `git-safety`            | Blocks `git reset --hard`, force pushes, `rm -rf` and any commit to main |
+| Before a write         | `protect-generated`     | Forbids editing generated files                                          |
+| Before a write         | `validate-file-naming`  | Rejects new files that break the naming rules                            |
+| End of turn            | `quality-checks`        | Runs formatter, linter and typecheck on modified files                   |
+| End of turn            | `convention-spot-check` | Checks structural rules on the diff                                      |
+| End of turn            | `comment-pruner`        | Hands the cleanup of new comments to a subagent                          |
+| Before compaction      | `pre-compact-preserve`  | Keeps the branch, modified files and latest test results                 |
+
+The one I use most is `quality-checks`. Every time the agent thinks it's done, the hook runs the formatter, the linter and the typecheck. If anything breaks, the error goes back to the agent, which has to fix it before handing back control. The agent can no longer tell me "done" on code that doesn't compile.
+
+## Reliable: a hook decides when, a subagent decides what
+
+Back to the comments. A script can't judge on its own whether a comment is useful. "Increment the counter" above `count += 1` is noise. "Retry twice because the provider's API sometimes returns a 502" is valuable information. It takes judgment. But leaving that judgment to the main agent means relying on an instruction it eventually forgets.
+
+The `comment-pruner` hook combines both. At the end of every turn, it checks whether the session added comments. If so, it delegates the triage to a dedicated subagent that works in its own context window. The trigger is guaranteed, the judgment is isolated, and the main conversation doesn't pay for it.
+
+It's the pattern I reuse everywhere: **a hook decides when, a subagent decides what.** The setup has twelve subagents built this way, seven of them dedicated to PR review in CI.
+
+## Reliable anywhere: one file to adapt
+
+No hook is tied to a language. They all read their settings from `.claude/project.env`: the lint command, the typecheck command, the main branch name, the file naming pattern, the generated paths. An empty key disables the matching check: an unconfigured hook blocks nothing.
+
+To fill that file, there's a skill: `/adapt-to-project`. It scans the codebase, detects the stack, fills `project.env`, generates per-area conventions and their rules, then removes the skills the project doesn't need. The rest of the setup stays the same from one project to the next.
+
+## What it doesn't solve
+
+A hook guarantees a rule is applied, not that the rule is right. A misconfigured linter will block good code just as stubbornly.
+
+Above all, hooks can't see intent. Code can pass the formatter, the linter, the typecheck and every convention, and still solve the wrong problem. No script catches that. That's why review stays human.
+
+## Key takeaways
+
+- **To move fast:** frame the work before coding, keep the context lean, isolate every task.
+- **To be reliable:** what must always hold goes into a hook.
+- **When you need both:** a hook decides when, a subagent decides what.
+
+The setup is open source: [claude-code-config](https://github.com/AlexisBalayre/claude-code-config). Copy it into a repo, run `/adapt-to-project`, and tell me which rule you move out of the prompt first.
+
+In the next article, I walk through my full development cycle: from spec to PR, with one session orchestrating and several agents executing in parallel.

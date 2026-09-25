@@ -1,0 +1,125 @@
+---
+title: "Claude Code : aller vite sans sacrifier la fiabilité"
+description: "Hooks, rules, skills, subagents : comment je configure Claude Code pour qu'il soit à la fois efficace et digne de confiance."
+date: "2026-10-02"
+tags: [claude-code, agentic-coding, software-engineering, developer-tools]
+projects: [claude-code-config]
+---
+
+Claude Code va vite. Très vite. En quelques minutes, il lit une codebase, modifie dix fichiers et annonce que c'est terminé.
+
+Le problème, c'est ce que cache ce « terminé ». Du code qui ne passe pas le typecheck. Des conventions ignorées. Et des commentaires partout : une fonction de trois lignes accompagnée d'un commentaire qui répète son nom, un `if` évident expliqué en toutes lettres. Au bout d'une journée, la codebase est encombrée de bruit que personne n'a demandé.
+
+Aller vite ne sert à rien si je dois tout revérifier ensuite. Tout le travail consiste donc à obtenir les deux en même temps : un agent efficace, et un résultat auquel je peux faire confiance.
+
+Voici comment je m'y prends, à l'aide de la configuration que j'utilise tous les jours et que j'ai publiée en open source : [claude-code-config](https://github.com/AlexisBalayre/claude-code-config).
+
+## Le principe : ce qui doit toujours être respecté ne se demande pas, il s'impose
+
+Une consigne dans le `CLAUDE.md` passe par le modèle. Il la lit, la pondère avec le reste de son contexte, et décide. Souvent correctement. Mais plus la session s'allonge, moins la consigne pèse.
+
+Un hook, lui, ne passe pas par le modèle. C'est un script shell que Claude Code exécute à un moment précis : avant qu'un outil s'exécute, à la fin d'un tour, avant une compaction du contexte. S'il renvoie le code de sortie `2`, l'action est bloquée. Un agent ne peut pas négocier avec un hook.
+
+Toute la config repose sur cette répartition : **ce qui doit toujours être respecté va dans un hook, ce qui demande du jugement reste au modèle.** La fiabilité vient de la première règle, l'efficacité de la seconde.
+
+## Efficace : cadrer avant de coder
+
+La plupart des allers-retours avec un agent viennent d'une demande floue. L'agent comble les trous avec des suppositions, et je ne découvre les mauvaises qu'en review.
+
+Je commence donc rarement par « code-moi ça ». Trois skills font le travail en amont :
+
+- **`grill-me`** inverse les rôles : c'est l'agent qui me pose des questions, jusqu'à ce que les zones floues de ma demande apparaissent.
+- **`to-spec`** transforme la discussion en spec.
+- **`to-tickets`** découpe la spec en tickets assez précis pour qu'un agent les prenne seul.
+
+Ce sont des skills : des méthodes que l'agent ne charge qu'au moment où il en a besoin. La config en contient 34, et je ne paie que celles que j'utilise. J'y reviens juste en dessous.
+
+## Efficace : optimiser le contexte
+
+Chaque token chargé est payé à chaque tour, et dilue un peu plus les consignes. Plus le contexte est chargé, plus l'agent coûte cher et moins il respecte ce qu'on lui demande. Optimiser le contexte, c'est donc charger la bonne information, au bon moment, et le moins longtemps possible.
+
+La config sépare le contexte en quatre couches, de la plus coûteuse à la gratuite :
+
+| Couche                | Fichiers                  | Quand elle est chargée                     | Coût                               |
+| --------------------- | ------------------------- | ------------------------------------------ | ---------------------------------- |
+| Mémoire permanente    | `AGENTS.md`, `CLAUDE.md`  | À chaque session                           | ~1,7k tokens                       |
+| Contexte à la demande | `rules/`, skills          | Quand un fichier ou une tâche le demande   | Une fois par session               |
+| Contexte isolé        | `agents/` (subagents)     | Quand l'agent délègue                      | Hors de la conversation principale |
+| Hors modèle           | `hooks/`                  | À chaque événement                         | Zéro token                         |
+
+### Rules et skills : deux déclencheurs différents
+
+Rules et skills appartiennent toutes les deux au contexte à la demande, mais elles ne répondent pas à la même question.
+
+Une **rule** répond à « qu'est-ce qui doit être respecté ici ? ». Elle est liée à des chemins de fichiers. La première fois que l'agent lit ou modifie un fichier du backend, la rule du backend s'active et injecte ses conventions. Le modèle n'a rien à décider : c'est le fichier touché qui déclenche le chargement.
+
+Une **skill** répond à « comment mène-t-on cette tâche ? ». Elle est liée à un type de travail : écrire une spec, faire du TDD, diagnostiquer un bug. Seule sa description d'une ligne reste en permanence dans le contexte. C'est le modèle qui décide de la charger en entier quand la tâche correspond, ou moi qui l'invoque directement avec `/nom-de-la-skill`.
+
+|                                 | Rule                            | Skill                                |
+| ------------------------------- | ------------------------------- | ------------------------------------ |
+| Répond à                        | Que faut-il respecter ici ?     | Comment mener cette tâche ?          |
+| Déclenchement                   | Un fichier touché dans une zone | Une tâche qui correspond, ou `/nom`  |
+| Qui décide                      | Personne, c'est automatique     | Le modèle, ou moi                    |
+| Contenu                         | Des conventions                 | Une méthode, étape par étape         |
+| En permanence dans le contexte  | Rien                            | Une ligne de description             |
+
+En résumé : les conventions vont dans des rules, les méthodes dans des skills.
+
+### Six règles pour garder un contexte léger
+
+1. **Réduire la mémoire permanente au strict nécessaire.** `AGENTS.md` et `CLAUDE.md` ne contiennent que ce qui sert à chaque tâche : le rôle, le workflow Git, quelques règles d'écriture. Tout le reste en sort.
+2. **Faire des rules de simples déclencheurs.** Une rule ne contient qu'un chemin et un import. La convention elle-même vit dans `docs/conventions/`, où n'importe quel outil ou humain peut la lire.
+3. **Ne pas faire lire deux fois la même chose.** Une convention déjà injectée par une rule ne doit pas être relue à la main par l'agent. À l'inverse, les résultats d'un outil MCP ne déclenchent aucune rule : avant de modifier une zone, l'agent lit d'abord deux ou trois fichiers existants pour activer ses conventions.
+4. **Écrire des descriptions de skills courtes et précises, et supprimer celles qui ne servent pas.** Une description vague fait charger la mauvaise skill. `/adapt-to-project` retire automatiquement celles qui n'ont pas lieu d'être dans le projet.
+5. **Déléguer le travail lourd aux subagents.** Une revue de sécurité ou une exploration d'architecture se fait dans leur propre fenêtre de contexte. Seul le résumé revient dans la conversation principale.
+6. **Sortir du contexte tout ce qui est mécanique.** Formater, linter, vérifier un nommage : un hook le fait pour zéro token. Et avant chaque compaction, `pre-compact-preserve` réinjecte l'essentiel, la branche, les fichiers modifiés et les derniers résultats de tests, pour que l'agent ne perde pas le fil.
+
+## Efficace : une tâche, un worktree, une session
+
+Je ne travaille jamais sur main. Chaque tâche a son worktree Git et sa session. Si la tentative échoue, je supprime le worktree entier au lieu de défaire les commits un par un.
+
+C'est aussi ce qui permet de lancer plusieurs sessions en parallèle sans qu'elles se marchent dessus. Pour passer de l'une à l'autre, deux skills : **`handoff`** résume l'état d'une session pour qu'une autre la reprenne sans tout relire, et **`wait-what`** m'explique ce que l'agent vient de faire quand je ne suis plus sûr de suivre.
+
+## Fiable : sept hooks, zéro négociation
+
+| Événement                | Hook                    | Ce qu'il fait                                                                  |
+| ------------------------ | ----------------------- | ------------------------------------------------------------------------------ |
+| Avant une commande shell | `git-safety`            | Bloque `git reset --hard`, le force push, `rm -rf` et tout commit sur main     |
+| Avant une écriture       | `protect-generated`     | Interdit de modifier un fichier généré                                         |
+| Avant une écriture       | `validate-file-naming`  | Refuse un nouveau fichier qui ne respecte pas les règles de nommage            |
+| Fin de tour              | `quality-checks`        | Lance formatter, linter et typecheck sur les fichiers modifiés                 |
+| Fin de tour              | `convention-spot-check` | Vérifie des règles structurelles sur le diff                                   |
+| Fin de tour              | `comment-pruner`        | Confie à un subagent le nettoyage des commentaires ajoutés                     |
+| Avant compaction         | `pre-compact-preserve`  | Conserve la branche, les fichiers modifiés et les derniers résultats de tests  |
+
+Celui que j'utilise le plus, c'est `quality-checks`. Chaque fois que l'agent pense avoir terminé, le hook lance le formatter, le linter et le typecheck. Si quelque chose casse, l'erreur est renvoyée à l'agent, qui doit corriger avant de rendre la main. L'agent ne peut plus m'annoncer « c'est fini » sur du code qui ne compile pas.
+
+## Fiable : un hook décide quand, un subagent décide quoi
+
+Revenons aux commentaires. Un script ne peut pas juger seul si un commentaire est utile. « Incrémente le compteur » au-dessus de `count += 1` est du bruit. « On relance deux fois parce que l'API du fournisseur renvoie parfois un 502 » est une information précieuse. Il faut du jugement. Mais laisser ce jugement à l'agent principal revient à dépendre d'une consigne qu'il finit par oublier.
+
+Le hook `comment-pruner` combine les deux. À la fin de chaque tour, il vérifie si la session a ajouté des commentaires. Si oui, il délègue le tri à un subagent dédié, qui travaille dans sa propre fenêtre de contexte. Le déclenchement est garanti, le jugement est isolé, et la conversation principale n'en paie pas le prix.
+
+C'est le schéma que je réutilise partout : **un hook décide quand, un subagent décide quoi.** La config compte douze subagents construits sur ce modèle, dont sept dédiés à la review des PR en CI.
+
+## Fiable partout : un seul fichier à adapter
+
+Aucun hook n'est lié à un langage. Tous lisent leurs paramètres dans `.claude/project.env` : la commande de lint, celle du typecheck, le nom de la branche principale, le motif de nommage des fichiers, les chemins générés. Une clé vide désactive le contrôle correspondant : un hook non configuré ne bloque rien.
+
+Pour remplir ce fichier, il existe une skill : `/adapt-to-project`. Elle parcourt la codebase, détecte la stack, remplit `project.env`, génère les conventions par zone et leurs rules, puis supprime les skills inutiles pour ce projet. Le reste de la config ne change pas d'un projet à l'autre.
+
+## Ce que ça ne règle pas
+
+Un hook garantit qu'une règle est appliquée, pas qu'elle est bonne. Un linter mal configuré bloquera du bon code avec la même obstination.
+
+Surtout, les hooks ne perçoivent pas l'intention. Un code peut passer le formatter, le linter, le typecheck et toutes les conventions, et résoudre le mauvais problème. Aucun script ne le détecte. C'est pour cette raison que la review reste humaine.
+
+## À retenir
+
+- **Pour aller vite :** cadrer avant de coder, garder le contexte court, isoler chaque tâche.
+- **Pour être fiable :** ce qui doit toujours être respecté va dans un hook.
+- **Quand il faut les deux :** un hook décide quand, un subagent décide quoi.
+
+La config est open source : [claude-code-config](https://github.com/AlexisBalayre/claude-code-config). Copiez-la dans un repo, lancez `/adapt-to-project`, et dites-moi quelle est la première règle que vous sortez du prompt.
+
+Dans le prochain article, je détaille mon cycle de développement complet : de la spec à la PR, avec une session qui orchestre et plusieurs agents qui exécutent en parallèle.
