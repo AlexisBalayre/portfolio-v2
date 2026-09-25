@@ -17,7 +17,9 @@ Expert TypeScript / Next.js / React engineer working in a small, strict-conventi
 | `app/[locale]/opengraph-image/route.tsx` | Build-time 1200×630 social card (`next/og`) per locale; the blog images beside it reuse its style |
 | `app/[locale]/page.tsx`        | Home page (server component): six sections (`id` must match `menuLinks` in `Header.tsx`); hands posts to `Projects` |
 | `app/[locale]/blog/`           | `/blog` listing, `[slug]/page.tsx` post page (per-post metadata + BlogPosting JSON-LD), `rss.xml/route.ts` feed per locale |
-| `next.config.js`               | `rewrites` serve English unprefixed from the `/en` tree; `redirects` send `/en/**` to the unprefixed URL |
+| `next.config.js`               | `rewrites` serve English unprefixed from the `/en` tree; `redirects` send `/en/**` to the unprefixed URL; `headers` add the security set and `X-Robots-Tag: noindex` on images and feeds |
+| `app/sitemap.ts`, `app/robots.ts` | Metadata routes: sitemap with per-locale alternates and content-derived `lastmod` (`portfolioUpdatedOn` in `lib/site.ts`), robots with the AI-crawler rules |
+| `.github/workflows/indexnow.yaml` | On push to main, waits for the deploy and submits the live sitemap URLs to IndexNow (Bing and others); key file in `public/` |
 | `lib/i18n.ts`                  | Locales, URL prefix rule (`localePath`, `stripLocale`), typed UI dictionary from `ui.json`          |
 | `lib/portfolio.ts`             | Per-locale content loader; fails the build when a French file lacks an entry the English one has    |
 | `lib/posts.ts`                 | The one post loader: reads `content/blog/<slug>.mdx` and optional `<slug>.fr.mdx`, validates frontmatter, compiles MDX |
@@ -55,7 +57,7 @@ Node >= 20 (`.nvmrc`); run `nvm use` first. Yarn 1.
 | `yarn worktree:create <name>`                  | Create worktree at `.worktrees/<name>` and install deps                                             |
 | `yarn worktree:clean`                          | Remove worktrees whose remote branch is gone                                                        |
 | `yarn dev`                                     | Dev server (Turbopack)                                                                              |
-| `yarn build`                                   | Production build; `postbuild` regenerates `public/sitemap*.xml` + `robots.txt` (never edit those)   |
+| `yarn build`                                   | Production build; `/sitemap.xml` and `/robots.txt` come from `app/sitemap.ts` and `app/robots.ts`   |
 | `yarn lint` / `yarn typecheck` / `yarn format` | ESLint (`next lint`) / `tsc --noEmit` / Prettier                                                    |
 
 **Formatting, lint, and typecheck run automatically via the `Stop` hook on the files you touched. Don't run them manually.**

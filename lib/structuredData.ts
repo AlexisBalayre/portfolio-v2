@@ -263,6 +263,23 @@ export const buildBlog = (profile: BlogProfile, posts: BlogPostEntry[]) => ({
   })),
 });
 
+export interface Breadcrumb {
+  name: string;
+  url: string;
+}
+
+// Home > Blog > Post in the reader's locale; search results show it in place of the raw URL.
+export const buildBreadcrumbs = (crumbs: Breadcrumb[]) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: crumbs.map((crumb, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: crumb.name,
+    item: crumb.url,
+  })),
+});
+
 // "<" must never reach the <script> element: a "</script" inside any string would close it early.
 // \u003c is a valid JSON escape, so consumers parse an identical graph.
 export const serialiseStructuredData = (graph: unknown): string => JSON.stringify(graph).replace(/</g, "\\u003c");

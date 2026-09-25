@@ -1,0 +1,50 @@
+name: IndexNow
+
+# Tells Bing, Naver, Seznam, Yandex and the other IndexNow engines which URLs changed, once the production
+# deployment is live. Vercel reports every deployment to GitHub, so the job runs on the successful Production
+# deployment_status rather than guessing when the build of a push has finished. The key is public by design
+# (the engines fetch /<key>.txt to check it), so no secret. Rotation: docs/reference/architecture.md,
+# "Search engines and IndexNow".
+on:
+  deployment_status:
+
+permissions:
+  contents: read
+
+env:
+  SITE_URL: https://alexis.balayre.com
+  INDEXNOW_KEY: fb23c093cfa84e8398748c12b4a4a3a2
+
+jobs:
+  submit:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # The deployment is live, but the CDN may still serve the previous sitemap for a moment.
+      - name: Fetch the live sitemap
+        run: |
+          for attempt in $(seq 1 5); do
+            if curl -fsS --max-time 20 "$SITE_URL/sitemap.xml" -o sitemap.xml; then
+              break
+            fi
+            echo "Sitemap not reachable yet (attempt $attempt)"
+            sleep 20
+          done
+          test -s sitemap.xml
+          echo "Live sitemap fetched after $attempt attempt(s)"
+
+      - name: Submit the sitemap URLs
+        run: |
+          urls=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed -e 's#<loc>##' -e 's#</loc>##')
+          test -n "$urls"
+          body=$(jq -n --arg host "${SITE_URL#https://}" --arg key "$INDEXNOW_KEY" --arg urls "$urls" \
+            '{host: $host, key: $key, urlList: ($urls | split("\n"))}')
+          status=$(curl -sS --max-time 20 -o /dev/null -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data "$body")
+          echo "IndexNow answered HTTP $status for $(printf '%s\n' "$urls" | wc -l | tr -d ' ') URLs"
+          case "$status" in
+            200|202) ;;
+            *) exit 1 ;;
+          esac

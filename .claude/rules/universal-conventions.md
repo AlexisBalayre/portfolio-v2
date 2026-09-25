@@ -39,8 +39,8 @@ paths:
 
 ## Content stays in JSON
 
-- No portfolio copy hardcoded in components (names, dates, descriptions, project links). It lives in `public/assets/data/*.json`. The only exceptions are the About Me block in `page.tsx` and the SEO constants in `app/layout.tsx`.
-- No hardcoded site URL outside `app/layout.tsx` (`siteUrl`) and `next-sitemap.config.js`.
+- No portfolio copy hardcoded in components (names, dates, descriptions, project links). It lives in `public/assets/data/<locale>/*.json` (UI strings in `ui.json`).
+- No hardcoded site URL outside `lib/site.ts` (`siteUrl`), which `app/[locale]/layout.tsx`, `app/sitemap.ts` and `app/robots.ts` import.
 
 ## Comments and clean code
 

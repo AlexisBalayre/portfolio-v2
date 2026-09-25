@@ -37,7 +37,7 @@ const TimelineCard = ({ item, locale }: { item: TimelineItem; locale: Locale }) 
       <Image
         src={"/assets/img/" + item.logo}
         alt={logoAlt(item.title, getDictionary(locale).timeline)}
-        className="w-14 text-white"
+        className="w-14 h-14 object-contain text-white"
         width={56}
         height={56}
       />

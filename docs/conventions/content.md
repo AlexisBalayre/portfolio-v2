@@ -208,3 +208,4 @@ A content change rarely stops at one file. When you edit the JSON:
 4. **`about.json`**: the `Role`, `Specialisations`, intro and bio when they drift from the newest experience entry, in both locales.
 5. **Resume**: the site links to `https://alexis-resume.balayre.com/`; update it separately if the change belongs on the CV.
 6. **Blog posts**: a new post needs an `llms.txt` line (and an `llms.fr.txt` one) and, if it is about a project without a card, the card first. The sitemap, feeds, social images, JSON-LD, hreflang alternates and the "Read more on the blog" list on the cards are generated.
+7. **`portfolioUpdatedOn` in `lib/site.ts`**: set it to today's date when you change the JSON. It is the home page's sitemap `lastmod` (unless a post is newer); a post needs nothing, its frontmatter date is its own `lastmod`.

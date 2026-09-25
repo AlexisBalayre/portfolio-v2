@@ -12,12 +12,13 @@ import {
   feedTitle,
   feedUrl,
   languageAlternates,
+  localeUrl,
   siteName,
   siteUrl,
   socialImage,
   twitterHandle,
 } from "~~/lib/site";
-import { buildBlogPosting, serialiseStructuredData } from "~~/lib/structuredData";
+import { buildBlogPosting, buildBreadcrumbs, serialiseStructuredData } from "~~/lib/structuredData";
 
 interface PostPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -92,6 +93,12 @@ export default async function PostPage({ params }: PostPageProps) {
     },
     post,
   );
+  const breadcrumbs = buildBreadcrumbs([
+    { name: authorName, url: localeUrl(locale) },
+    { name: t.blog.title, url: blogUrl(locale) },
+    // The canonical, so a French route that falls back to English points its trail at the English post.
+    { name: post.title, url: post.canonicalUrl },
+  ]);
 
   return (
     <div className="pt-10 mx-auto w-full mt-20">
@@ -164,6 +171,11 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: serialiseStructuredData(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: serialiseStructuredData(breadcrumbs) }}
       />
     </div>
   );

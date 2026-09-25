@@ -6,10 +6,16 @@
   "engines": {
     "node": ">=20"
   },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "ios_saf >= 16.4"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint --max-warnings=0",
     "lint:fix": "next lint --fix",
@@ -24,7 +30,6 @@
     "@vercel/analytics": "^1.5.0",
     "next": "^15.5.19",
     "next-mdx-remote": "6.0.0",
-    "next-sitemap": "^4.2.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "remark-gfm": "4.0.1"

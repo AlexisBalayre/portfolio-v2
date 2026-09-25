@@ -13,7 +13,7 @@ description: Resolve an in-progress git merge or rebase conflict. Use when a mer
 
 4. **Regenerate, don't hand-merge.** Conflict markers in generated files are never resolved by hand:
    - `yarn.lock`: merge `package.json` first, take either side of the lockfile wholesale, then re-run `yarn install` to regenerate it.
-   - `public/sitemap*.xml`, `public/robots.txt`: take either side, then re-run `yarn build` (the `postbuild` step regenerates them from `next-sitemap.config.js`). The other generated paths in `GENERATED_PATHS_REGEX` (`.claude/project.env`), `next-env.d.ts` and `tsconfig.tsbuildinfo`, are rewritten by the next build or typecheck: take either side.
+   - The generated paths in `GENERATED_PATHS_REGEX` (`.claude/project.env`), `next-env.d.ts` and `tsconfig.tsbuildinfo`, are rewritten by the next build or typecheck: take either side.
 
 5. **Run the automated checks** and fix anything the merge broke. Formatting, lint, and typechecking run automatically via the Stop hook; run `yarn build` when the conflict touched `app/`, `lib/`, `next.config.js`, or `styles/` (the site has no test suite). The pre-commit hook (`scripts/pre-commit`) runs lint and typecheck; failures that already exist on the base branch are not the merge's fault, and `--no-verify` is acceptable only for those.
 

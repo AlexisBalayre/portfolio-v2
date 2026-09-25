@@ -16,7 +16,7 @@ Answer architecture questions about this portfolio grounded in project documenta
 | Page structure, sections, how a section renders               | `docs/reference/architecture.md`     | `app/[locale]/page.tsx`, `components/*.tsx`       |
 | Where content comes from, JSON shapes, adding an entry        | `docs/conventions/content.md`        | `docs/reference/architecture.md`         |
 | Navigation, header menu, scroll-to-section                    | `docs/reference/architecture.md`     | `components/Header.tsx`                  |
-| SEO: metadata, Open Graph, JSON-LD, sitemap, robots, llms.txt | `docs/reference/architecture.md`     | `app/[locale]/layout.tsx`, `next-sitemap.config.js` |
+| SEO: metadata, Open Graph, JSON-LD, sitemap, robots, llms.txt | `docs/reference/architecture.md`     | `app/[locale]/layout.tsx`, `app/sitemap.ts`, `app/robots.ts` |
 | Styling, theme, Tailwind v4 + daisyUI, timeline CSS           | `docs/conventions/frontend.md`       | `styles/globals.css`                     |
 | Build, deploy, Node/Yarn toolchain, hooks and quality gate    | `docs/reference/architecture.md`     | `docs/workflow.md`, `package.json`       |
 | Coding rules (naming, exports, imports)                       | `docs/conventions/general.md`        | `docs/conventions/frontend.md`           |

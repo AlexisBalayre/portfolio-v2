@@ -1,12 +1,15 @@
 // lib/site.ts
-// The site-wide constants shared by the root layout, the blog routes and the RSS feed.
-// next-sitemap.config.js repeats siteUrl and the locale prefix rule because it is CommonJS and cannot import this file.
+// The site-wide constants shared by the root layout, the blog routes, the RSS feed and the sitemap.
 import { defaultLocale, getDictionary, localePath, locales, type Locale } from "~~/lib/i18n";
 
 export const siteUrl = "https://alexis.balayre.com";
 export const siteName = "Alexis Balayre | AI Engineer";
 export const authorName = "Alexis Balayre";
 export const twitterHandle = "@alexisbalayre";
+
+// The day the portfolio JSON under public/assets/data/ last changed: the home page's sitemap lastmod when no post
+// is newer. Bump it with the content; a build date would claim a change on every deploy and be ignored.
+export const portfolioUpdatedOn = "2026-09-25";
 
 // Absolute URL of a page in a locale: the English home is siteUrl itself, without a trailing slash.
 export const localeUrl = (locale: Locale, path = "/"): string => {
