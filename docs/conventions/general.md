@@ -10,7 +10,7 @@ Enforced by `.claude/hooks/validate-file-naming.sh` on every new file.
 
 | Location | Pattern | Example | Why |
 | :--- | :--- | :--- | :--- |
-| `app/` | Next.js reserved names only (`page`, `layout`, `loading`, `error`, `not-found`, `route`, `sitemap`, `robots`, `manifest`, `opengraph-image`, …), all under `app/[locale]/` | `app/[locale]/page.tsx` | The App Router gives these files meaning; anything else under `app/` is either a route segment folder or misplaced UI. Every route sits under the locale segment so it is built once per language. |
+| `app/` | Next.js reserved names only (`page`, `layout`, `loading`, `error`, `not-found`, `route`, `sitemap`, `robots`, `manifest`, `opengraph-image`, …), under `app/[locale]/` except the site-wide `sitemap.ts`, `robots.ts`, `not-found.tsx` and the pass-through `layout.tsx` at the root | `app/[locale]/page.tsx`, `app/sitemap.ts` | The App Router gives these files meaning; anything else under `app/` is either a route segment folder or misplaced UI. Every page sits under the locale segment so it is built once per language; the sitemap and robots files describe the whole site once. |
 | `components/` | PascalCase, one component per file | `Header.tsx`, `ProjectCard.tsx` | Matches the exported component name. |
 | `public/assets/logos/` | PascalCase `*Logo.tsx` | `GithubLogo.tsx` | Inline SVG React components. |
 | `hooks/` | `use` + PascalCase, re-exported from `hooks/index.ts` | `useOutsideClick.ts` | React hook naming rule; the barrel keeps `import { useX } from "~~/hooks"` stable. |
@@ -56,8 +56,9 @@ refuses a missing dictionary key.
 What stays in code: proper nouns that are not copy (`Alexis Balayre`, the site URL, e-mail, social profile URLs,
 the resume and Calendly URLs) and structural tokens (section ids, project ids, tier keys, the locale list).
 
-No hardcoded site URL anywhere else; `siteUrl` in `lib/site.ts` and `siteUrl` in `next-sitemap.config.js` are the two
-sources, and the two files also share the locale prefix rule (`/fr`, English unprefixed).
+No hardcoded site URL anywhere else; `siteUrl` in `lib/site.ts` is the one source, and `app/sitemap.ts`, `app/robots.ts`
+and the layout all import it from there. The one other copy is `SITE_URL` in `.github/workflows/indexnow.yaml`, which
+runs outside the build.
 
 ## Comments
 

@@ -42,7 +42,7 @@ yarn worktree:clean                   # remove worktrees whose remote branch is 
 | Worktree cleanup | `scripts/worktree-clean.sh` | `yarn worktree:clean` removes worktrees whose remote branch is gone. |
 | Quality gate | `.claude/hooks/quality-checks.sh` | On every `Stop`, formats + lints the dirty TS files and typechecks the repo; blocks on failure. |
 | Content gate | `.claude/hooks/convention-spot-check.sh` + `.claude/spot-checks.tsv` | JSON validity/shape, logo files exist, image hosts allowed, `llms.txt` sync; reported once per Stop cycle. |
-| Generated-file protection | `.claude/hooks/protect-generated.sh` | Blocks edits to the sitemap, robots, `next-env.d.ts`, build output, `yarn.lock`. |
+| Generated-file protection | `.claude/hooks/protect-generated.sh` | Blocks edits to `next-env.d.ts`, build output, `yarn.lock`. The sitemap and robots are metadata routes under `app/`, not files. |
 | Context survival | `.claude/hooks/pre-compact-preserve.sh` | Preserves the current branch, worktree path, modified files, and check results across compaction. |
 | Visibility | `.claude/statusline.sh` | Shows the active branch (red on `main`), model and effort, context usage, 5h/7d rate limits, and cost. |
 | `CLAUDE.md` | repo root | States the rule in always-on context: PRs only, worktrees only, never `main`. |
