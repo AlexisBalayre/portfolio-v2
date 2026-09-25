@@ -14,6 +14,7 @@ import {
   languageAlternates,
   siteName,
   siteUrl,
+  socialImage,
   twitterHandle,
 } from "~~/lib/site";
 import { buildBlogPosting, serialiseStructuredData } from "~~/lib/structuredData";
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
   const { locale: localeParam, slug } = await params;
   const locale = toLocale(localeParam);
   const { post } = await getPost(slug, locale);
+  const images = [socialImage(locale, `/blog/${slug}/opengraph-image`, getDictionary(locale).og.postAlt)];
 
   return {
     title: post.title,
@@ -60,6 +62,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       modifiedTime: post.date,
       authors: [siteUrl],
       tags: post.tags,
+      images,
     },
     twitter: {
       card: "summary_large_image",
@@ -67,6 +70,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       description: post.description,
       creator: twitterHandle,
       site: twitterHandle,
+      images,
     },
   };
 }

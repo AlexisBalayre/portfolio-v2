@@ -18,9 +18,9 @@ nothing is detected or remembered.
 
 - **`app/[locale]/` plus rewrites** (chosen): one implementation of every page, image and feed; the locale is a
   route param read by `generateMetadata`, the JSON-LD builders and the components. The rewrite is a static routing
-  rule, so the pages remain SSG and the deploy target needs nothing beyond `next.config.js`. The cost is that the
-  `/en/**` twins are reachable too (they carry the unprefixed canonical and are left out of the sitemap) and that the
-  auto-injected `og:image` URL of an English page points at its `/en/...` image.
+  rule, so the pages remain SSG and the deploy target needs nothing beyond `next.config.js`. Two permanent
+  redirects send a direct hit on `/en` or `/en/**` back to the unprefixed URL, so the twins are never indexable
+  duplicates (redirects run before rewrites and are not re-applied to a rewrite destination).
 - **Two route trees** (`app/` for English, `app/fr/` for French, thin files re-exporting shared page components):
   no rewrite, but twice the route files, page components moved out of `app/` and two places to keep in step for
   every new route. Rejected as duplication that the rewrite removes.
@@ -53,5 +53,14 @@ nothing is detected or remembered.
 - The JSON-LD `WebSite` and `Person` nodes are shared across locales through their `@id`; `ProfilePage`, the
   projects `ItemList`, `Blog` and `BlogPosting` carry `inLanguage` and a per-locale URL. The `Person` facts are
   parsed from the English titles (`<role> at <organisation>`), so the French timeline titles need no parseable shape.
-- Every metadata image file exports `generateStaticParams` for the full locale (and slug) set: the layout's
-  params are not handed down to image routes at build time.
+- The social cards are route handlers (`opengraph-image/route.tsx`) rather than the `opengraph-image.tsx` file
+  convention: the convention advertises the route's own `/en/...` URL on English pages, even with explicit
+  `openGraph.images`. Each page lists its card explicitly with `socialImage()` (unprefixed for English, a
+  localised alt), and each handler exports `generateStaticParams` for the full locale (and slug) set because the
+  layout's params are not handed down to it at build time.
+- There is one 404 page, `app/not-found.tsx`, prerendered as `/_not-found` with its own `<html lang="en">` and the
+  site shell, served for every URL the router refuses (`dynamicParams = false` on the layout and the post route,
+  no catch-all). A localised `app/[locale]/not-found.tsx` reached through `notFound()` at request time was tried
+  and rejected: in Next 15.5 a request-time not-found is streamed as the bare `__next_error__` document and the
+  styled page only appears after client rendering, and a Suspense boundary around it returns status 200. The
+  prerendered page switches its copy and `lang` to French on the client for `/fr/*` addresses.

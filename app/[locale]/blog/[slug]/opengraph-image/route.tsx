@@ -1,16 +1,16 @@
-// app/[locale]/blog/[slug]/opengraph-image.tsx
+// app/[locale]/blog/[slug]/opengraph-image/route.tsx
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { defaultLocale, getDictionary, locales, toLocale } from "~~/lib/i18n";
 import { formatPostDate, getAllPosts, getPost } from "~~/lib/posts";
 
-// The alt is one static export per file, so it reads in the default locale.
-export const alt = getDictionary(defaultLocale).og.postAlt;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
+// A route handler rather than the opengraph-image file convention: the convention would advertise the
+// /en/... image URL on English pages, while the pages set openGraph.images to the unprefixed one.
+export const dynamic = "force-static";
 export const dynamicParams = false;
+
+const size = { width: 1200, height: 630 };
 
 // Every English slug exists in every locale: a missing translation renders the English body with a notice.
 // The parent layout's params are not handed down here, so the locale is enumerated too.
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   return locales.flatMap(locale => posts.map(({ slug }) => ({ locale, slug })));
 }
 
-export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+export async function GET(_request: Request, { params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale: localeParam, slug } = await params;
   const locale = toLocale(localeParam);
   const t = getDictionary(locale);

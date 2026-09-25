@@ -1,21 +1,21 @@
-// app/[locale]/opengraph-image.tsx
+// app/[locale]/opengraph-image/route.tsx
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { defaultLocale, getDictionary, locales, toLocale } from "~~/lib/i18n";
+import { getDictionary, locales, toLocale } from "~~/lib/i18n";
 
-// The alt is one static export per file, so it reads in the default locale.
-export const alt = getDictionary(defaultLocale).og.homeAlt;
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
-
+// A route handler rather than the opengraph-image file convention: the convention would advertise the
+// /en/... image URL on English pages, while the pages set openGraph.images to the unprefixed one.
+export const dynamic = "force-static";
 export const dynamicParams = false;
+
+const size = { width: 1200, height: 630 };
 
 export function generateStaticParams() {
   return locales.map(locale => ({ locale }));
 }
 
-export default async function OpenGraphImage({ params }: { params: Promise<{ locale: string }> }) {
+export async function GET(_request: Request, { params }: { params: Promise<{ locale: string }> }) {
   const t = getDictionary(toLocale((await params).locale));
   const photo = await readFile(join(process.cwd(), "public/assets/img/alexis.jpg"));
   const photoSrc = `data:image/jpeg;base64,${photo.toString("base64")}`;

@@ -25,3 +25,12 @@ export const languageAlternates = (path: string, available: readonly Locale[] = 
     ...available.map(locale => [locale, localeUrl(locale, path)]),
     ["x-default", localeUrl(defaultLocale, path)],
   ]);
+
+// The social cards are route handlers (no automatic og:image), so each page lists its card explicitly;
+// metadataBase makes the path absolute, unprefixed for English.
+export const socialImage = (locale: Locale, path: string, alt: string) => ({
+  url: localePath(locale, path),
+  width: 1200,
+  height: 630,
+  alt,
+});

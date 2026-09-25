@@ -13,6 +13,7 @@ import {
   languageAlternates,
   siteName,
   siteUrl,
+  socialImage,
   twitterHandle,
 } from "~~/lib/site";
 import { buildBlog, serialiseStructuredData } from "~~/lib/structuredData";
@@ -24,6 +25,7 @@ interface BlogPageProps {
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
   const locale = toLocale((await params).locale);
   const t = getDictionary(locale);
+  const images = [socialImage(locale, "/blog/opengraph-image", t.og.blogAlt)];
 
   return {
     title: t.blog.title,
@@ -43,6 +45,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
       description: t.blog.description,
       locale: ogLocales[locale],
       alternateLocale: locales.filter(other => other !== locale).map(other => ogLocales[other]),
+      images,
     },
     twitter: {
       card: "summary_large_image",
@@ -50,6 +53,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
       description: t.blog.description,
       creator: twitterHandle,
       site: twitterHandle,
+      images,
     },
   };
 }

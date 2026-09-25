@@ -14,6 +14,7 @@ import {
   localeUrl,
   siteName,
   siteUrl,
+  socialImage,
   twitterHandle,
 } from "~~/lib/site";
 import { buildStructuredData, serialiseStructuredData } from "~~/lib/structuredData";
@@ -23,8 +24,9 @@ interface LocaleLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
-// Only en and fr are routes; anything else is a 404 at build time. The unprefixed English paths are
-// rewrites to /en/** (next.config.js), so this layout is the root layout of every page.
+// Only en and fr are routes; the unprefixed English paths are rewrites to /en/** (next.config.js). Any other
+// param, here or in a child segment, is refused at the router and answered with the prerendered app/not-found.tsx
+// (a notFound() thrown at request time would be served as Next's bare error document instead, see that file).
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -35,6 +37,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   const locale = toLocale((await params).locale);
   const t = getDictionary(locale);
   const pageUrl = localeUrl(locale);
+  const images = [socialImage(locale, "/opengraph-image", t.og.homeAlt)];
 
   return {
     metadataBase: new URL(siteUrl),
@@ -66,6 +69,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       description: t.site.socialDescription,
       locale: ogLocales[locale],
       alternateLocale: locales.filter(other => other !== locale).map(other => ogLocales[other]),
+      images,
     },
     twitter: {
       card: "summary_large_image",
@@ -73,6 +77,7 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
       description: t.site.socialDescription,
       creator: twitterHandle,
       site: twitterHandle,
+      images,
     },
     robots: {
       index: true,

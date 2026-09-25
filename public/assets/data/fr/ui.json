@@ -120,5 +120,10 @@
     "linkedinAria": "LinkedIn d'Alexis Balayre",
     "githubAria": "GitHub d'Alexis Balayre",
     "copyright": "Copyright © {year} Alexis Balayre. Tous droits réservés."
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "description": "Il n'y a rien à cette adresse. La page a peut-être été déplacée, ou le lien est erroné.",
+    "backHome": "Retour à l'accueil"
   }
 }

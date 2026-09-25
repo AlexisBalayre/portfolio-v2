@@ -1,13 +1,13 @@
 [
   {
     "logo": "cranfield_logo2.png",
-    "title": "Cranfield University - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics\" target=\"_blank\">MSc in Computational and Software Techniques in Engineering</a>",
+    "title": "Cranfield University - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://www.cranfield.ac.uk/courses/taught/computational-intelligence-for-data-analytics\" target=\"_blank\" rel=\"noopener noreferrer\">MSc in Computational and Software Techniques in Engineering</a>",
     "description": "MSc à Cranfield University dans le cadre d'un double diplôme avec l'ISEP. <br/><br/> Cranfield University, au Royaume-Uni, est un établissement public réputé, exclusivement consacré à l'enseignement et à la recherche de troisième cycle. Spécialisée en sciences, ingénierie, technologie et management, elle est la seule université britannique réservée au troisième cycle. <br/><br/> Modules suivis : <br/> - Machine Learning and Big Data <br/> - Artificial Intelligence <br/> - High Performance Technical Computing  <br/> - Cloud Computing <br/> - Small-Scale Parallel Programming <br/> - Management for Technology",
     "period": "Sept. 2023 - Sept. 2024"
   },
   {
     "logo": "isep.png",
-    "title": "ISEP - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://en.isep.fr/studying-at-isep/isep-engineering-master-degree/\" target=\"_blank\">Diplôme d'ingénieur</a>",
+    "title": "ISEP - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://en.isep.fr/studying-at-isep/isep-engineering-master-degree/\" target=\"_blank\" rel=\"noopener noreferrer\">Diplôme d'ingénieur</a>",
     "description": "Cycle ingénieur à l'ISEP, à Paris. Spécialisation Data Intelligence. <br/><br/> L'ISEP est une école d'ingénieurs du numérique située à Paris. Elle forme des ingénieurs généralistes dans les domaines clés du numérique : informatique et cybersécurité - électronique et robotique - télécommunications et Internet des objets - imagerie - intelligence artificielle.",
     "period": "2021 - 2024"
   },
@@ -19,7 +19,7 @@
   },
   {
     "logo": "isep.png",
-    "title": "ISEP - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://en.isep.fr/cii/\" target=\"_blank\">Cycle Intégré International (CII)</a>",
+    "title": "ISEP - <a class=\"font-bold text-primary hover:text-primary-content\" href=\"https://en.isep.fr/cii/\" target=\"_blank\" rel=\"noopener noreferrer\">Cycle Intégré International (CII)</a>",
     "description": "Années préparatoires à l'école d'ingénieurs ISEP, à Paris. <br/><br/> Le CII suit un programme propre à l'ISEP, équilibré entre trois domaines d'enseignement : sciences fondamentales du numérique | techniques et technologies | langues, cultures, humanités et développement durable. Il comprend un semestre international dès la deuxième année.",
     "period": "2019 - 2021"
   }

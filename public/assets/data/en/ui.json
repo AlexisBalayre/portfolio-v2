@@ -120,5 +120,10 @@
     "linkedinAria": "Linkedin of Alexis Balayre",
     "githubAria": "Github of Alexis Balayre",
     "copyright": "Copyright © {year} Alexis Balayre. All Rights Reserved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "There is nothing at this address. The page may have moved, or the link may be wrong.",
+    "backHome": "Back to the home page"
   }
 }

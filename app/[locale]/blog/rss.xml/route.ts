@@ -20,7 +20,7 @@ const rfc822 = (date: string): string => new Date(date).toUTCString();
 export async function GET(_request: Request, { params }: { params: Promise<{ locale: string }> }) {
   const locale = toLocale((await params).locale);
   const t = getDictionary(locale);
-  // The feed mirrors the listing: an untranslated post is listed under its route in this locale.
+  // An untranslated post is listed, but under its English URL: the French route is only a fallback.
   const posts = await getAllPosts(locale);
   const lastBuildDate = rfc822(posts[0]?.date ?? new Date().toISOString());
 
@@ -28,8 +28,8 @@ export async function GET(_request: Request, { params }: { params: Promise<{ loc
     .map(
       post => `    <item>
       <title>${escapeXml(post.title)}</title>
-      <link>${post.url}</link>
-      <guid isPermaLink="true">${post.url}</guid>
+      <link>${post.canonicalUrl}</link>
+      <guid isPermaLink="true">${post.canonicalUrl}</guid>
       <pubDate>${rfc822(post.date)}</pubDate>
       <description>${escapeXml(post.description)}</description>
 ${post.tags.map(tag => `      <category>${escapeXml(tag)}</category>`).join("\n")}

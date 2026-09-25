@@ -1,6 +1,7 @@
 // lib/i18n.ts
 // The locales, the URL prefix rule and the UI dictionary. Client-safe: no fs, no next/navigation.
 // See docs/adr/0002-bilingual-routes-under-a-locale-segment-with-rewrites.md.
+import { notFound } from "next/navigation";
 import en from "~~/public/assets/data/en/ui.json";
 import fr from "~~/public/assets/data/fr/ui.json";
 
@@ -14,7 +15,7 @@ export const isLocale = (value: string): value is Locale => (locales as readonly
 
 // Route params are plain strings; dynamicParams = false keeps unknown locales out, this narrows the type.
 export const toLocale = (value: string): Locale => {
-  if (!isLocale(value)) throw new Error(`Unknown locale "${value}"`);
+  if (!isLocale(value)) notFound();
   return value;
 };
 

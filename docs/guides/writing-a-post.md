@@ -38,7 +38,7 @@ Body text.
 ```
 
 Every frontmatter field is required. `projects` lists the `id` of one or more entries in
-`public/assets/data/projects.json` (it may be empty: `[]`); an unknown id fails the build. `date` is the publication
+`public/assets/data/en/projects.json` (it may be empty: `[]`); an unknown id fails the build. `date` is the publication
 day in `YYYY-MM-DD`; posts are listed newest first.
 
 ## 3. Write the body
@@ -90,7 +90,7 @@ error naming the file and the field.
 
 - `public/llms.txt`: add the post to the **Blog** section (title, URL, one-line description, the French URL when a
   translation exists); mirror the line in `public/llms.fr.txt`.
-- `public/assets/data/projects.json`: if the post is about a project that has no card yet, add the card first
+- `public/assets/data/en/projects.json` and `fr/projects.json`: if the post is about a project that has no card yet, add the card first
   (shape in [../conventions/content.md](../conventions/content.md#projectsjson)); the post links to it by `id`.
 - Nothing else: the sitemap, the feed, the social image, the JSON-LD and the "Read more on the blog" list on the
   project cards are generated from the file at build time.
