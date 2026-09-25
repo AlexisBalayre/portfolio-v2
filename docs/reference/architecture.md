@@ -73,23 +73,24 @@ next.config.js headers:   every response ──▶ security headers;  */opengrap
 - `browserslist` in `package.json` targets evergreen browsers (Chrome, Edge and Firefox 111+, Safari 16.4+), so SWC ships no transforms or polyfills for older engines. Next's own guarded polyfill module (`Array.prototype.at`, `Object.hasOwn`, ...) is not governed by it.
 - `next.config.js`: `reactStrictMode`, `poweredByHeader: false`, `compress`, `images.remotePatterns`, the four locale `rewrites` (`/`, `/opengraph-image`, `/blog`, `/blog/*` to `/en/**`), the two `/en/**` `redirects`, the `headers()` above, and env-gated `ignoreBuildErrors` / `ignoreDuringBuilds` (`NEXT_PUBLIC_IGNORE_BUILD_ERROR=true`, for emergencies only).
 - Quality gate: `yarn lint` (`next lint`, ESLint legacy config), `yarn typecheck` (`tsc --noEmit`), `yarn format` (Prettier). The Claude Code Stop hook runs all three on touched files; `scripts/pre-commit` runs lint + typecheck for human commits. There is no test suite.
-- CI (`.github/workflows/lint.yaml`) runs `yarn lint`, `yarn typecheck`, and `yarn build` on pushes and PRs to `main`, on the Node version from `.nvmrc`. `.github/workflows/indexnow.yaml` runs on every push to `main` (see below).
+- CI (`.github/workflows/lint.yaml`) runs `yarn lint`, `yarn typecheck`, and `yarn build` on pushes and PRs to `main`, on the Node version from `.nvmrc`. `.github/workflows/indexnow.yaml` runs after each successful Production deployment (see below).
 - `@vercel/analytics` is a dependency but is not currently mounted in `layout.tsx`.
 
 ## Search engines and IndexNow
 
 Google reads `/sitemap.xml` (registered in Search Console) and follows the `Sitemap:` line of `/robots.txt`. Bing,
 Naver, Seznam, Yandex and the other [IndexNow](https://www.indexnow.org/) engines are pinged by
-`.github/workflows/indexnow.yaml` on every push to `main`: the job waits for the live sitemap to carry the newest
-post date from `content/blog/` (Vercel builds the same push in parallel; ten minutes at most), then POSTs every
-`<loc>` of the live sitemap to `https://api.indexnow.org/indexnow` in one request. The key is
+`.github/workflows/indexnow.yaml` after each successful Production deployment: Vercel reports every deployment to
+GitHub as a `deployment_status` event, the job runs on the successful Production one, fetches the live sitemap (a
+few retries, in case the CDN still serves the previous one) and POSTs every `<loc>` to
+`https://api.indexnow.org/indexnow` in one request. A content date is never used as a deploy marker. The key is
 `public/<key>.txt`, a file whose name and content are the same 32-hex string, and the same string is
 `INDEXNOW_KEY` in the workflow. It is public by design (the engines fetch the file to check it), so nothing is a
 secret.
 
 To rotate the key: `openssl rand -hex 16`, rename `public/<old>.txt` to `public/<new>.txt` with the new string as
 its only content, set `INDEXNOW_KEY` in `.github/workflows/indexnow.yaml` to the same string, and merge; the next
-push to `main` submits with it. Bing Webmaster Tools shows the submissions under IndexNow.
+production deployment submits with it. Bing Webmaster Tools shows the submissions under IndexNow.
 
 ## Extension points
 

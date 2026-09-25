@@ -96,7 +96,8 @@ export default async function PostPage({ params }: PostPageProps) {
   const breadcrumbs = buildBreadcrumbs([
     { name: authorName, url: localeUrl(locale) },
     { name: t.blog.title, url: blogUrl(locale) },
-    { name: post.title, url: post.url },
+    // The canonical, so a French route that falls back to English points its trail at the English post.
+    { name: post.title, url: post.canonicalUrl },
   ]);
 
   return (
