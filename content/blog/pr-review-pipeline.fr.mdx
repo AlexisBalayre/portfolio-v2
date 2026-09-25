@@ -1,7 +1,8 @@
 ---
 title: "Une review de PR est un pipeline, pas un prompt"
 description: "Pourquoi la review intégrée de Claude Code et Greptile ne m'ont pas suffi, et comment j'ai construit une review de PR en CI : six reviewers spécialisés, un validateur, un modèle en lecture seule et des métriques pour l'améliorer."
-date: "2026-10-16"
+date: "2026-09-25"
+order: 4
 tags: [code-review, claude-code, agentic-coding, github-actions, software-engineering]
 projects: [claude-code-config]
 ---
@@ -103,7 +104,7 @@ Le problème n'était pas le modèle. C'était l'architecture. Une review fiable
 <figcaption>Les scripts décident quand et publient. Les modèles analysent, sans jamais pouvoir écrire sur la PR.</figcaption>
 </figure>
 
-La règle de répartition est la même que dans le reste de ma config : **ce qui doit être fiable est fait par un script, ce qui demande du jugement est fait par un modèle.** Le modèle analyse. Il ne décide ni quand il tourne, ni de ce qui est publié sur la PR.
+La règle de répartition est la même que dans [le reste de ma config](/fr/blog/claude-code-fast-and-reliable) : **ce qui doit être fiable est fait par un script, ce qui demande du jugement est fait par un modèle.** Le modèle analyse. Il ne décide ni quand il tourne, ni de ce qui est publié sur la PR.
 
 ## 1. Le preflight : un script décide quand reviewer
 
@@ -206,4 +207,4 @@ Enfin, elle ne s'améliore que si j'y consacre du temps. Les records ne servent 
 
 Tout est open source dans [claude-code-config](https://github.com/AlexisBalayre/claude-code-config) : le workflow GitHub Actions, les six reviewers, le validateur, le script de publication et `review-retro`. L'installation tient en trois étapes : installer l'app GitHub de Claude, enregistrer un token, créer la branche de métriques.
 
-Cet article clôt la série sur ma façon de travailler avec des agents. Si vous mettez en place votre propre review, dites-moi ce que vos données vous apprennent.
+Cet article clôt [la série](/fr/blog/how-my-job-evolved) sur ma façon de travailler avec des agents. Si vous mettez en place votre propre review, dites-moi ce que vos données vous apprennent.
