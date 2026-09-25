@@ -1,0 +1,209 @@
+---
+title: "A PR review is a pipeline, not a prompt"
+description: "Why Claude Code's built-in review and Greptile weren't enough for me, and how I built a PR review in CI: six specialized reviewers, a validator, a read-only model and metrics to improve it."
+date: "2026-10-16"
+tags: [code-review, claude-code, agentic-coding, github-actions, software-engineering]
+projects: [claude-code-config]
+---
+
+With several agents running in parallel, PRs come in faster than I can read them. I needed a first filter: something that analyzes every PR before I do and tells me where to look.
+
+I started with off-the-shelf options: Claude Code's built-in review, then Greptile. Neither stuck. Missed bugs, off-topic comments, a cost that climbed with every push, and no way of knowing whether the review was getting better over time.
+
+So I rebuilt the review as a system, with stages, separate responsibilities and measurements. It's part of [claude-code-config](https://github.com/AlexisBalayre/claude-code-config) and runs in GitHub Actions on every PR.
+
+This article is the last link in the [development cycle](/blog/dev-cycle-with-agents) I described previously: what happens between the moment an agent opens a PR and the moment I read it.
+
+## Why off-the-shelf reviews didn't stick
+
+### Claude Code's built-in review
+
+On paper, [Claude Code's Code Review](https://code.claude.com/docs/en/code-review) ticks a lot of boxes: several specialized agents, a verification step against false positives, severity levels. In practice, it didn't work for me, for four reasons:
+
+- **It only gives you the essentials.** The built-in review surfaces few things, in a few lines. It's readable, but anything that isn't obvious slips through.
+- **It misses problems.** Without real knowledge of my conventions and my project, it missed bugs that a reviewer familiar with the code would have caught. And when it got things wrong, the noise drowned out the real signals.
+- **The cost.** The documentation quotes $15 to $25 per review on average, billed on every run. With agents that push often, the bill follows the number of pushes.
+- **The black box.** I couldn't see what the agents were doing, I couldn't change their instructions in any depth, and I had no data to measure review quality over time.
+
+### Greptile and the tools on the market
+
+Next I tried [Greptile](https://www.greptile.com/). It indexes the whole codebase and learns from the team's reactions to reduce noise over the weeks. The idea is good, but three things stopped me:
+
+- **Comments that were too generic.** It didn't know my conventions and flagged points that were irrelevant to my project.
+- **A per-seat cost,** on top of my Claude subscription.
+- **No control.** No way to modify the reviewers, add a stage, or keep the review data to analyze it myself.
+
+### What I concluded
+
+The problem wasn't the model. It was the architecture. A reliable review needs to know my conventions, separate responsibilities, check its own conclusions, and produce data I can analyze. So I built my own, with the same model, in my own repo.
+
+## The pipeline at a glance
+
+<figure>
+<svg viewBox="0 0 500 570" width="100%" role="img" aria-label="Review pipeline: a scripted preflight triggers an orchestrator, which spawns six specialized reviewers in parallel. A validator tries to refute important findings. A script posts the review. Metrics feed review-retro, which proposes improvements. The whole model part is read-only." fill="currentColor">
+<rect x="75" y="0" width="260" height="26" rx="13" opacity="0.08"/>
+<text x="205" y="17" textAnchor="middle" fontSize="12" opacity="0.8">PR opened · push · @claude review</text>
+<line x1="205" y1="26" x2="205" y2="43" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5"/>
+<path d="M 201 42 L 205 48 L 209 42 Z" opacity="0.55"/>
+<rect x="105.0" y="48" width="200" height="42" rx="9" fill="none" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.5"/>
+<text x="205.0" y="66" textAnchor="middle" fontSize="14" fontWeight="600">Preflight</text>
+<text x="205.0" y="81" textAnchor="middle" fontSize="11" opacity="0.6">full or incremental</text>
+<line x1="205" y1="90" x2="205" y2="117" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5"/>
+<path d="M 201 116 L 205 122 L 209 116 Z" opacity="0.55"/>
+<rect x="10" y="106" width="410" height="242" rx="12" fill="none" stroke="var(--color-primary, #2563eb)" strokeDasharray="5 4" strokeWidth="1.2"/>
+<text x="26" y="338" fontSize="9.5" letterSpacing="0.08em" fill="var(--color-primary, #2563eb)" fontWeight="600">Read-only</text>
+<rect x="105.0" y="122" width="200" height="42" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="205.0" y="140" textAnchor="middle" fontSize="14" fontWeight="600">Orchestrator</text>
+<text x="205.0" y="155" textAnchor="middle" fontSize="11" opacity="0.6">spawns the relevant reviewers</text>
+<line x1="205" y1="164" x2="205" y2="180" stroke="var(--color-primary, #2563eb)" strokeWidth="1.5"/>
+<rect x="20.0" y="188" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="79.0" y="206.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">correctness</text>
+<rect x="146.0" y="188" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="205.0" y="206.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">security</text>
+<rect x="272.0" y="188" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="331.0" y="206.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">context</text>
+<rect x="20.0" y="224" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="79.0" y="242.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">conventions</text>
+<rect x="146.0" y="224" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="205.0" y="242.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">maintainability</text>
+<rect x="272.0" y="224" width="118" height="28" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="331.0" y="242.0" textAnchor="middle" fontSize="11" fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace">docs</text>
+<line x1="205" y1="252" x2="205" y2="270" stroke="var(--color-primary, #2563eb)" strokeWidth="1.5"/>
+<path d="M 201 264 L 205 270 L 209 264 Z" fill="var(--color-primary, #2563eb)"/>
+<rect x="105.0" y="270" width="200" height="42" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="205.0" y="288" textAnchor="middle" fontSize="14" fontWeight="600">Validator</text>
+<text x="205.0" y="303" textAnchor="middle" fontSize="11" opacity="0.6">tries to refute important findings</text>
+<line x1="205" y1="312" x2="205" y2="359" stroke="var(--color-primary, #2563eb)" strokeWidth="1.5"/>
+<path d="M 201 358 L 205 364 L 209 358 Z" fill="var(--color-primary, #2563eb)"/>
+<rect x="105.0" y="364" width="200" height="42" rx="9" fill="none" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.5"/>
+<text x="205.0" y="382" textAnchor="middle" fontSize="14" fontWeight="600">Poster</text>
+<text x="205.0" y="397" textAnchor="middle" fontSize="11" opacity="0.6">anchors and posts one review</text>
+<line x1="305.0" y1="385" x2="323.0" y2="385" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5"/>
+<path d="M 323.0 381 L 329.0 385 L 323.0 389 Z" opacity="0.55"/>
+<rect x="329.0" y="372" width="151.0" height="26" rx="13" opacity="0.08"/>
+<text x="404.5" y="389" textAnchor="middle" fontSize="11" opacity="0.85">Review posted on the PR</text>
+<line x1="205" y1="406" x2="205" y2="425" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5"/>
+<path d="M 201 424 L 205 430 L 209 424 Z" opacity="0.55"/>
+<rect x="105.0" y="430" width="200" height="42" rx="9" fill="none" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.5"/>
+<text x="205.0" y="448" textAnchor="middle" fontSize="14" fontWeight="600">Metrics</text>
+<text x="205.0" y="463" textAnchor="middle" fontSize="11" opacity="0.6">ci/review-metrics branch</text>
+<line x1="205" y1="472" x2="205" y2="491" stroke="currentColor" strokeOpacity="0.45" strokeWidth="1.5"/>
+<path d="M 201 490 L 205 496 L 209 490 Z" opacity="0.55"/>
+<rect x="105.0" y="496" width="200" height="42" rx="9" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.5"/>
+<text x="205.0" y="514" textAnchor="middle" fontSize="14" fontWeight="600">review-retro</text>
+<text x="205.0" y="529" textAnchor="middle" fontSize="11" opacity="0.6">finds what keeps failing</text>
+<path d="M 305.0 517 H 490 V 206 H 426" fill="none" stroke="var(--color-primary, #2563eb)" strokeWidth="1.5" strokeDasharray="4 3"/>
+<path d="M 432 202 L 426 206 L 432 210 Z" fill="var(--color-primary, #2563eb)"/>
+<text x="482" y="455" textAnchor="end" fontSize="11" fill="var(--color-primary, #2563eb)">improvement PR</text>
+<rect x="0" y="552" width="14" height="12" rx="3" stroke="var(--color-primary, #2563eb)" fill="var(--color-primary, #2563eb)" fillOpacity="0.1" strokeWidth="1.3"/>
+<text x="20" y="562" fontSize="11.5" opacity="0.75">Model</text>
+<rect x="90" y="552" width="14" height="12" rx="3" fill="none" stroke="currentColor" strokeOpacity="0.4" strokeWidth="1.3"/>
+<text x="110" y="562" fontSize="11.5" opacity="0.75">Deterministic script</text>
+</svg>
+<figcaption>Scripts decide when to run and what gets posted. Models analyze, and can never write to the PR.</figcaption>
+</figure>
+
+The split is the same as in the rest of my setup: **what must be reliable is done by a script, what requires judgment is done by a model.** The model analyzes. It decides neither when it runs nor what gets posted to the PR.
+
+## 1. The preflight: a script decides when to review
+
+Before any model is started, a deterministic script checks that a review makes sense.
+
+- **Triggers.** A PR is opened, marked ready for review, receives a new push, or gets an `@claude review` comment. Triggering on every push is essential: without it, code pushed after the first review would be merged without being read.
+- **Who can trigger it.** Only the repo owner. The review runs on my subscription, so no contributor gets to start it on my behalf.
+- **No duplicate work.** If this commit has already been reviewed successfully, the script stops. If several pushes land at once, they collapse into a single follow-up review.
+- **Full or incremental.** The script computes the merge base and picks the mode. In incremental mode, the review carries over the important issues from the previous review and simply checks whether they've been fixed. The reviewers are told not to report them a second time.
+
+The result: the model only runs when there's something new to read.
+
+## 2. Six specialized reviewers
+
+A single model looking for "everything" ends up looking for nothing in depth. So the review is split across six subagents, each with its own domain, brief and model. The orchestrator only starts those whose area the diff touches: a PR that only changes docs doesn't involve the security reviewer.
+
+| Reviewer                 | Model                          | What it looks for                                                        |
+| ------------------------ | ------------------------------ | ------------------------------------------------------------------------ |
+| `review-correctness`     | Opus                           | Behavioral regressions the tests don't cover                             |
+| `review-security`        | Opus                           | Trust boundaries: authentication, routes, inputs, secrets                |
+| `review-context`         | Sonnet                         | Consistency with the spec, protocols and infra (CORS, HTTP, Docker, CI)  |
+| `review-conventions`     | Sonnet                         | Compliance with the project's documented conventions                     |
+| `review-maintainability` | Sonnet, Opus on large diffs    | Code readability and maintainability                                     |
+| `review-docs`            | Sonnet                         | Added prose: docstrings, comments, markdown                              |
+
+This is where the "only the essentials" problem gets solved. Each reviewer digs into a single topic, with the project's conventions in front of it, instead of skimming every topic at once.
+
+Every issue found, a finding, follows the same format: a precise location, a severity (`important` to fix before merging, `nit` for minor, `pre-existing` for issues already there before the PR), a confidence level, and a one-line description. Important findings add an explanation, a link to the code in question, and when possible a fix ready to apply.
+
+The orchestrator then merges duplicates found by several reviewers, downgrades to `nit` any "important" finding that admits it has no practical consequence, and drops anything outside the PR's scope.
+
+## 3. The validator: paying for precision where it matters
+
+Six reviewers each digging into their own topic find more. They also raise more false alarms. That's the validator's job.
+
+It doesn't reread everything. It only handles `important` findings, the ones that will become inline comments on the diff. Its brief sums it up: validation buys precision, never recall, and precision is only worth paying for where the machine is about to act loudly.
+
+For each important finding, the validator tries to refute it:
+
+- **Is the mechanism proven?** "This function can return `null`" must be shown in the code, not inferred from a variable name.
+- **Does the code really come from this PR?** A moved or pre-existing issue isn't the author's doing.
+- **Has the author already declared it?** A deliberate choice stated in the PR isn't a bug.
+
+Whatever doesn't hold up is removed from the review, but not forgotten: every refuted finding is kept along with the reason it was rejected. Those rejections are later used to improve the reviewers.
+
+## 4. The model can't write anything to the PR
+
+A reviewer reads code written by someone else, sometimes an agent, sometimes a stranger. That code can contain text designed to manipulate it: a comment asking it to approve the PR, or to post something else.
+
+The defense is simple: the model has no way to write. Its list of allowed tools is read-only: `Read`, `Grep`, `Glob`, `git diff`, `git log`, `gh pr view`, `gh pr diff`. No `gh pr comment`, no `gh pr review`. It returns a structured result, and that's all.
+
+A separate script reads that result, anchors each important finding to the right line of the diff, posts a single review and updates the commit status. A PR whose diff tells the reviewer to post something simply has no channel to make it happen.
+
+This separation brings a second benefit: posting is guaranteed. If the review crashes midway, the script still posts a "not reviewed" status. An unreviewed PR can no longer pass for a PR with no issues.
+
+Same logic for permissions: the job that archives the metrics is the only one allowed to write to the repo, and no model is involved in it.
+
+## 5. Measure, then improve: review-retro
+
+This is the part that has helped me most, and the one no tool on the market gave me.
+
+Every review produces a record: the reviewers started, the mode, the findings posted, the ones the validator refuted with the reason, and incidents in the process itself. These records are archived in a dedicated branch of the repo, `ci/review-metrics`, which keeps them indefinitely. GitHub artifacts, on the other hand, expire after 90 days.
+
+Once there's enough history, I run the `review-retro` skill. It analyzes those records and looks for patterns:
+
+- reviewers whose findings are often refuted;
+- findings that fail to anchor to a line of the diff;
+- issues I found myself that the review had missed;
+- the cost of each reviewer relative to what it brings.
+
+For each recurring problem, it traces the cause back to the configuration: a reviewer's brief, the orchestration logic, the validator, the workflow. Then it proposes a fix as a PR, which I review like any other.
+
+Two rules keep it reliable. It stays dormant until there's enough data, instead of drawing conclusions from three reviews. And it's never allowed to muzzle an entire reviewer just to improve the numbers.
+
+The review is no longer a black box. It's a system I can measure and improve, one PR at a time.
+
+## 6. After the review: address the comments, then read
+
+Once the review has posted its comments, I often run the `address-review-comments` skill. It fetches the open threads, rereads the current code, and sorts the comments into two groups: obvious fixes, and decisions to make.
+
+For a disagreement about whether the code is correct, it calls in a validator. For a design question, it asks me questions. Then it stops and shows me its plan before touching the code. It only implements what each comment asks for, replies in every thread, and leaves open the ones we decided not to address. The brief is clear: the validator and the questions inform, I decide.
+
+Only then comes my own review, in the order described in the article on my [development cycle](/blog/dev-cycle-with-agents): the CI review, the agent's explanation with `wait-what`, the full diff, then local tests. The automated review doesn't replace mine. It tells me where to look first.
+
+## What it doesn't solve
+
+The automated review finds problems in the code. It doesn't know whether the PR meets the right need. A perfectly written feature can solve the wrong problem, and no reviewer will see it without the product context.
+
+It also has a cost. Six reviewers and a validator use more tokens than a single prompt. The preflight, incremental mode and selective reviewer launch exist to keep that cost down, and `review-retro` measures what each reviewer brings relative to what it costs.
+
+Finally, it only improves if I put time into it. The records are useless if nobody analyzes them.
+
+## Key takeaways
+
+- **A reliable review is a system, not a prompt.** Scripts for what must be reliable, models for what requires judgment.
+- **Specialize to find more.** Six reviewers each digging into one topic see what a generalist reviewer skims over.
+- **Validate to be trusted.** Every important finding must survive an attempt to refute it before it shows up on the PR.
+- **Never let the model write.** It analyzes, a script posts.
+- **Measure to improve.** Without data, you can't tell whether the review is getting better.
+
+It's all open source in [claude-code-config](https://github.com/AlexisBalayre/claude-code-config): the GitHub Actions workflow, the six reviewers, the validator, the posting script and `review-retro`. Setup takes three steps: install Claude's GitHub app, register a token, create the metrics branch.
+
+This article wraps up the series on how I work with agents. If you set up your own review, tell me what your data teaches you.
