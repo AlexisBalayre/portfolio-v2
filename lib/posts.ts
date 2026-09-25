@@ -15,6 +15,8 @@ export interface PostFrontmatter {
   date: string;
   tags: string[];
   projects: string[];
+  // Same-day ordering: a higher value lists first. Omitted means 0; posts on different days ignore it.
+  order: number;
 }
 
 export interface Post extends PostFrontmatter {
@@ -68,7 +70,7 @@ const isStringList = (value: unknown): value is string[] =>
 
 // Frontmatter is untyped YAML: a missing or malformed field must fail the build, not ship a broken post.
 const validateFrontmatter = (file: string, frontmatter: Record<string, unknown>): PostFrontmatter => {
-  const { title, description, date, tags, projects: related } = frontmatter;
+  const { title, description, date, tags, projects: related, order = 0 } = frontmatter;
 
   if (typeof title !== "string" || title.trim() === "") throw new Error(`${file}: "title" must be a non-empty string`);
   if (typeof description !== "string" || description.trim() === "") {
@@ -85,17 +87,20 @@ const validateFrontmatter = (file: string, frontmatter: Record<string, unknown>)
   }
   if (!isStringList(tags) || tags.length === 0) throw new Error(`${file}: "tags" must be a non-empty list of strings`);
   if (!isStringList(related)) throw new Error(`${file}: "projects" must be a list of project ids`);
+  if (typeof order !== "number" || !Number.isInteger(order) || order < 0) {
+    throw new Error(`${file}: "order" must be a non-negative integer when present`);
+  }
   const unknownProjects = related.filter(id => !projectIds.has(id));
   if (unknownProjects.length > 0) {
     throw new Error(`${file}: unknown project id(s) ${unknownProjects.join(", ")}; ids live in projects.json`);
   }
 
-  return { title, description, date, tags, projects: related };
+  return { title, description, date, tags, projects: related, order };
 };
 
 // A translation keeps the English date, tags and projects: they identify the post, its copy does not.
 const assertSameIdentity = (file: string, source: PostFrontmatter, translation: PostFrontmatter) => {
-  const differing = (["date", "tags", "projects"] as const).filter(
+  const differing = (["date", "tags", "projects", "order"] as const).filter(
     field => String(translation[field]) !== String(source[field]),
   );
   if (differing.length > 0) {
@@ -161,7 +166,8 @@ export const getAllPosts = cache(async (locale: Locale): Promise<Post[]> => {
     return slug && !fileLocale ? [slug] : [];
   });
   const posts = await Promise.all(slugs.map(async slug => (await readPost(slug, locale)).post));
-  return posts.filter(isPublished).sort((a, b) => b.date.localeCompare(a.date));
+  // Newest day first; within a day the higher order first, so a series published together reads in sequence.
+  return posts.filter(isPublished).sort((a, b) => b.date.localeCompare(a.date) || b.order - a.order);
 });
 
 export const formatPostDate = (date: string, locale: Locale): string =>

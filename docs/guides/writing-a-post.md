@@ -40,7 +40,8 @@ Body text.
 Every frontmatter field is required. `projects` lists the `id` of one or more entries in
 `public/assets/data/en/projects.json` (it may be empty: `[]`); an unknown id fails the build. `date` is the publication
 day in `YYYY-MM-DD`, read in the Paris time zone; posts are listed newest first, and a date after today schedules the
-post (step 6).
+post (step 6). Publishing several posts on one day? Give each an `order` (higher lists first) so the series reads in
+sequence.
 
 ## 3. Write the body
 

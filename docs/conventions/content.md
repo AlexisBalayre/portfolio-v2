@@ -149,8 +149,9 @@ projects: ["pupitre", "claude-code-config"]
 | `date` | `YYYY-MM-DD` | Publication day, a calendar day in `Europe/Paris`; posts list newest first. A day after today schedules the post ([below](#scheduled-posts)). Doubles as `dateModified` until a post is revised. |
 | `tags` | string[] | One or more lowercase, hyphenated topics (`claude-code`, `merge-gate`). Rendered as badges, `article:tag` and feed `<category>`. |
 | `projects` | string[] | Zero or more `id`s from `projects.json`. The post links to those cards; each card lists the post. |
+| `order` | integer, optional | Same-day ordering only: among posts sharing a `date`, the higher `order` lists first (listing and feeds). Omitted means `0`. Use it when a series is published on one day so it reads in sequence. |
 
-All five fields are required. `lib/posts.ts` validates them and throws with the file and field name, so a bad post
+The five fields are required and `order` is optional. `lib/posts.ts` validates them and throws with the file and field name, so a bad post
 fails `yarn build` rather than rendering empty.
 
 ### Scheduled posts
