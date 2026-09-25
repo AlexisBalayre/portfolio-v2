@@ -1,4 +1,11 @@
 // @ts-check
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -45,6 +52,17 @@ const nextConfig = {
       { source: "/opengraph-image", destination: "/en/opengraph-image" },
       { source: "/blog", destination: "/en/blog" },
       { source: "/blog/:path*", destination: "/en/blog/:path*" },
+    ];
+  },
+
+  // Sources match the request path before the rewrites, so the unprefixed English routes are covered too.
+  async headers() {
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // The social cards and the feeds are linked from the pages, not pages of their own: crawlable (robots.txt
+      // allows them) but never listed as results. The HTML pages carry no X-Robots-Tag.
+      { source: "/:path*/opengraph-image", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
+      { source: "/:path*/rss.xml", headers: [{ key: "X-Robots-Tag", value: "noindex" }] },
     ];
   },
 

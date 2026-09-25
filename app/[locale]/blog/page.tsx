@@ -11,12 +11,13 @@ import {
   feedTitle,
   feedUrl,
   languageAlternates,
+  localeUrl,
   siteName,
   siteUrl,
   socialImage,
   twitterHandle,
 } from "~~/lib/site";
-import { buildBlog, serialiseStructuredData } from "~~/lib/structuredData";
+import { buildBlog, buildBreadcrumbs, serialiseStructuredData } from "~~/lib/structuredData";
 
 interface BlogPageProps {
   params: Promise<{ locale: string }>;
@@ -73,6 +74,10 @@ export default async function BlogPage({ params }: BlogPageProps) {
     },
     posts,
   );
+  const breadcrumbs = buildBreadcrumbs([
+    { name: authorName, url: localeUrl(locale) },
+    { name: t.blog.title, url: blogUrl(locale) },
+  ]);
 
   return (
     <div className="pt-10 mx-auto w-full mt-20">
@@ -88,7 +93,7 @@ export default async function BlogPage({ params }: BlogPageProps) {
           <a
             href={localePath(locale, "/blog/rss.xml")}
             className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-primary-content"
-            aria-label={t.blog.feedAria}
+            title={t.blog.feedAria}
           >
             <RssIcon className="h-4 w-4" />
             {t.blog.subscribe}
@@ -140,6 +145,11 @@ export default async function BlogPage({ params }: BlogPageProps) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: serialiseStructuredData(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: serialiseStructuredData(breadcrumbs) }}
       />
     </div>
   );
